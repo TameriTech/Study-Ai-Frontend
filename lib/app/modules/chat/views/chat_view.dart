@@ -1,17 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../../color_constants.dart';
 import '../../../routes/app_routes.dart';
-import '../../profile/controllers/profile_controller.dart';
-import '../../profile/views/profile_view.dart';
-import 'package:latlong2/latlong.dart';
 
 import '../controllers/chat_controller.dart';
 

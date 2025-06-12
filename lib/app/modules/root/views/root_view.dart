@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:studyai/color_constants.dart';
 import '../../../../common/helper.dart';
@@ -29,9 +28,9 @@ class RootView extends GetView<RootController> {
           children: [
             CustomBottomNavigationItem(
               icon: controller.currentIndex.value == 0?Image.asset(
-        'assets/images/Fichiers_bold.png',
-        ):Image.asset(
-        'assets/images/Fichiers.png',
+                'assets/images/Fichiers_bold.png',
+              ):Image.asset(
+                'assets/images/Fichiers.png',
               ),
               label: 'Fichier',
             ),
