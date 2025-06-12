@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class QuizzSettingItemWidget extends StatelessWidget {
+class QuizSettingItemWidget extends StatelessWidget {
 
-  QuizzSettingItemWidget({
+  QuizSettingItemWidget({
     required this.value,
     required this.label,
     required this.onDecrease,
@@ -47,9 +46,6 @@ class QuizzSettingItemWidget extends StatelessWidget {
           ),
         ],
       ),
-    );;
+    );
   }
-
-
-
 }

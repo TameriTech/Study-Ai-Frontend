@@ -1,22 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
-import '../../../models/setting_model.dart';
-import '../../../routes/app_routes.dart';
-import '../../../services/permission_service.dart';
-import '../../../services/settings_services.dart';
 import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
 import '../controllers/auth_controller.dart';
-
 
 class RegisterViews extends GetView<AuthController> {
 
@@ -128,7 +116,6 @@ class RegisterViews extends GetView<AuthController> {
                         ),
                       ),
 
-
                     ],) :
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -162,11 +149,8 @@ class RegisterViews extends GetView<AuthController> {
                       ),
                       const SizedBox(width: 20,),
 
-
-
                     ],):
                   SizedBox()).marginOnly(bottom: 20),
-
 
                   Obx(() =>  !controller.minimumInformationStep1.value?
                   buildMinimumInformationStep1(context):!controller.minimumInformationStep2.value?
@@ -177,11 +161,8 @@ class RegisterViews extends GetView<AuthController> {
               ),
             ),
           )
-      
       ),
     );
-
-
   }
 
   buildMinimumInformationStep1(BuildContext context){
@@ -201,43 +182,42 @@ class RegisterViews extends GetView<AuthController> {
           onChanged: (value) => controller.currentUser.value.fullName = value,
           validator: (input) => input!.length < 3 ? 'input at least 3 characters' : null,
         ),
-    TextFieldWidget(
-    suffixIcon: Icon(null),
-    suffix: Icon(null),
-    readOnly: false,
-    labelText: 'Gmail',
-    hintText: 'user@gmail.com',
-    isFirst: true,
-    onChanged: (value) => {
-    controller.currentUser.value.email = value,
-    },
-    validator: (input) => !input!.contains('@') ? 'Input an email' : null,
+        TextFieldWidget(
+          suffixIcon: Icon(null),
+          suffix: Icon(null),
+          readOnly: false,
+          labelText: 'Gmail',
+          hintText: 'user@gmail.com',
+          isFirst: true,
+          onChanged: (value) => {
+            controller.currentUser.value.email = value,
+          },
+          validator: (input) => !input!.contains('@') ? 'Input an email' : null,
 
-    ),
-    Obx(() => TextFieldWidget(
-    suffix: Icon(null),
-    readOnly: false,
-    isFirst: true,
-    labelText: 'Mot de passe',
-    hintText: "••••••••••••••••",
-    textController: TextEditingController(text: controller.currentUser.value.password),
-    obscureText: !controller.hidePassword.value,
-    onChanged: (value) => {
-    controller.currentUser.value.password = value
-    },
-    validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
-    keyboardType: TextInputType.visiblePassword,
-    suffixIcon: IconButton(
-    onPressed: () {
-    controller.hidePassword.value = !controller.hidePassword.value;
-    },
-    color: Theme.of(context).focusColor,
-    icon: Icon(controller.hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-    ),
-
-    ),),
-
-
+        ),
+        Obx(() =>
+            TextFieldWidget(
+              suffix: Icon(null),
+              readOnly: false,
+              isFirst: true,
+              labelText: 'Mot de passe',
+              hintText: "••••••••••••••••",
+              textController: TextEditingController(text: controller.currentUser.value.password),
+              obscureText: !controller.hidePassword.value,
+              onChanged: (value) => {
+                controller.currentUser.value.password = value
+              },
+              validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
+              keyboardType: TextInputType.visiblePassword,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  controller.hidePassword.value = !controller.hidePassword.value;
+                },
+                color: Theme.of(context).focusColor,
+                icon: Icon(controller.hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+              ),
+            ),
+        ),
       ],
     );
   }
@@ -266,11 +246,7 @@ class RegisterViews extends GetView<AuthController> {
             ),).marginOnly(bottom: 20),
           ),
         ],
-
-        
-
       ],
-
     );
   }
 
@@ -298,9 +274,6 @@ class RegisterViews extends GetView<AuthController> {
             ),).marginOnly(bottom: 20),
           )
         ],
-
-        
-
       ],
     );
   }
@@ -317,24 +290,19 @@ class RegisterViews extends GetView<AuthController> {
           height: 223,
             child: Text("C’est presque termine " , style: Get.textTheme.labelLarge,).marginOnly(bottom: 20)),
         ),
-        
-
-            SizedBox(
-              width: 167,
-              height: 7,
-              child: LinearProgressIndicator(
-                        //value: controller.progress.value, // Current progress
-                        color: tertiaryColor,
-                        backgroundColor: Color(0xffF3F1D3),
-                      ),
-            ),
-
-        
+        SizedBox(
+          width: 167,
+          height: 7,
+          child: LinearProgressIndicator(
+            //value: controller.progress.value, // Current progress
+            color: tertiaryColor,
+            backgroundColor: Color(0xffF3F1D3),
+          ),
+        ),
         Visibility(
           visible: !controller.registerInfoHalfSaved.value,
-            child: Text('Creation du profil scolaire ')).marginOnly(top: Get.height/20)
-
-
+            child: Text('Creation du profil scolaire ')
+        ).marginOnly(top: Get.height/20)
       ],
     );
   }
@@ -349,14 +317,12 @@ class RegisterViews extends GetView<AuthController> {
           haveBorder: false,
           text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
-    if (controller.registerFormKey.currentState!.validate()) {
-      controller.minimumInformationStep1.value = !controller.minimumInformationStep1.value;
-    }
-
-
-
+            if (controller.registerFormKey.currentState!.validate()) {
+              controller.minimumInformationStep1.value = !controller.minimumInformationStep1.value;
+            }
           }),
-    ):!controller.minimumInformationStep2.value?
+    )
+        : !controller.minimumInformationStep2.value?
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
@@ -367,7 +333,7 @@ class RegisterViews extends GetView<AuthController> {
             controller.minimumInformationStep2.value = !controller.minimumInformationStep2.value;
 
           }),
-    ):!controller.minimumInformationStep3.value?
+    ) :!controller.minimumInformationStep3.value?
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
@@ -381,10 +347,7 @@ class RegisterViews extends GetView<AuthController> {
             controller.register();
 
           }),
-    ):SizedBox(),).marginOnly(left: 20, right:20, bottom: 0);
+    ) :SizedBox(),
+    ).marginOnly(left: 20, right:20, bottom: 0);
   }
-
-
-
-
 }

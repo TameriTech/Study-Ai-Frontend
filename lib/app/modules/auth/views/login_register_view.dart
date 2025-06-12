@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:studyai/app/modules/global_widgets/block_button_widget.dart';
 import 'package:studyai/app/modules/global_widgets/text_field_widget.dart';
 import '../../../../color_constants.dart';
@@ -261,7 +257,6 @@ class LoginRegisterView extends GetView<AuthController> {
                     ),
                   ).marginOnly(top: 10),
 
-
                   Align(
                     alignment: Alignment.center,
                     child: GestureDetector(
@@ -275,13 +270,10 @@ class LoginRegisterView extends GetView<AuthController> {
                         },
                         child: Text("Ajouter un nouveau compte", style: TextStyle(color: Color(0xff474646), fontSize: 16, fontWeight: FontWeight.w400),)),
                   ).marginOnly(top: Get.height/12)
-
-
-
-
                 ],
               ),
-            ).marginOnly(top: 180))
+            ).marginOnly(top: 180)
+        )
       ],
     );
   }

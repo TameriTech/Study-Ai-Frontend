@@ -1,16 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../../../color_constants.dart';
-import 'package:image_picker/image_picker.dart';
-
 import '../../../services/auth_service.dart';
 import '../controllers/chat_controller.dart';
-
-// ignore: must_be_immutable
 
 class ChatPlatform extends GetView<ChatController> {
   final _myListKey = GlobalKey<AnimatedListState>();
@@ -18,7 +11,6 @@ class ChatPlatform extends GetView<ChatController> {
   // final String code;
 
   ChatPlatform();
-
 
   Widget chatList() {
     return Obx(

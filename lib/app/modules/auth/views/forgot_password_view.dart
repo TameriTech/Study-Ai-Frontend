@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import '../../../../color_constants.dart';
-import '../../../models/setting_model.dart';
-import '../../../services/settings_services.dart';
 import '../controllers/auth_controller.dart';
 
 class ForgotPasswordView extends GetView<AuthController> {

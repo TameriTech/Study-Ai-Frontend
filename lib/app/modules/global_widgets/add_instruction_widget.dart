@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../color_constants.dart';
-import '../../../common/ui.dart';
 
 class AddInstructionWidget extends StatelessWidget {
 

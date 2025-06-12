@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:studyai/app/modules/quizz/controllers/quizz_controller.dart';
 import 'package:studyai/app/repositories/files_repository.dart';
 import 'package:studyai/app/repositories/quizz_repository.dart';
 import 'package:studyai/color_constants.dart';
@@ -12,6 +10,7 @@ import '../../../models/file_card_model.dart';
 import '../../../models/question_model.dart';
 import '../../../models/user_model.dart';
 import '../../../services/auth_service.dart';
+import '../../quiz/controllers/quiz_controller.dart';
 
 
 class FilesController extends GetxController with GetTickerProviderStateMixin{
@@ -22,7 +21,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
   ].obs;
    var courseGenerationState = ['start','ongoing','failed', 'generated'];
   var courseList = [].obs;
-  var quizzList = [].obs;
+  var quizList = [].obs;
   var revisionList = [].obs;
 
   RxDouble progress = 0.0.obs;
@@ -111,7 +110,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
   getCompleteFileList() async {
     filesList.clear();
     courseList.clear();
-    quizzList.clear();
+    quizList.clear();
     revisionList.clear();
     filesLoading.value = true;
     var courseData = await getUserCourses(userId: currentUser.value.userId!)??[];
@@ -124,7 +123,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     filesList.sort((a, b) => b.createdAt.compareTo(a.createdAt),);
 
     courseList.value = filesList.where((element) => element.type == "Course",).toList();
-    quizzList.value = filesList.where((element) => element.type == "Quizz",).toList();
+    quizList.value = filesList.where((element) => element.type == "Quizz",).toList();
     revisionList.value = filesList.where((element) => element.type == "Revision",).toList();
 
     filesLoading.value = false;
@@ -136,13 +135,10 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     switch (type.toLowerCase()) {
       case "course":
         return courseColor;
-        break;
       case "revision":
         return revisionColor;
-        break;
       case "quizz":
         return quizzColor;
-        break;
       default:
         return;
     }
@@ -378,10 +374,8 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
         print("revisions: ${fileCardModel.revisionData}");
         revisionList.add(fileCardModel);
 
-
       }
       return revisionList;
-
 
     } catch(e){
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
@@ -390,7 +384,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     finally {
       //loading.value = false;
     }
-
   }
 
   Future getUserQuizzes({required int userId}) async {
@@ -410,19 +403,13 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
           subtitle:  quizz[0]['level_of_difficulty'],
           createdAt: quizz[0]['created_at'],
           quizzData: quizz,
-
-
         );
         quizzList.add(fileCardModel);
-
-
       }
       return quizzList;
 
-
     } catch(e){
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
-
     }
     finally {
       //loading.value = false;
@@ -465,23 +452,23 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
       currentQuestionIndex.value--;
     }
   }
-  extractQuestionsFromQuizzes(dynamic quizz){
+  extractQuestionsFromQuizzes(dynamic quiz){
     questions.clear();
     correctAnswers.clear();
     selectedAnswers.clear();
 
-    for(var data in quizz){
-      var extractedChoices = Get.find<QuizzController>().extractChoices(quizz[0]["choices"]);
+    for(var data in quiz){
+      var extractedChoices = Get.find<QuizController>().extractChoices(quiz[0]["choices"]);
 
-      var extractedCorrectIndex = Get.find<QuizzController>().extractCorrectIndex(extractedChoices, quizz[0]["correct_answer"]);
+      var extractedCorrectIndex = Get.find<QuizController>().extractCorrectIndex(extractedChoices, quiz[0]["correct_answer"]);
 
-      var extractedUserAnswerIndex = Get.find<QuizzController>().extractCorrectIndex(extractedChoices, quizz[0]["user_answer"]);
+      var extractedUserAnswerIndex = Get.find<QuizController>().extractCorrectIndex(extractedChoices, quiz[0]["user_answer"]);
 
       questions.add(
           Question(
-            questionId: quizz[0]['id_quiz'],
-            title: quizz[0]["course_name"],
-            text: quizz[0]["question"],
+            questionId: quiz[0]['id_quiz'],
+            title: quiz[0]["course_name"],
+            text: quiz[0]["question"],
             userAnswerIndex: extractedUserAnswerIndex,
             options: extractedChoices,
             correctIndex: extractedCorrectIndex,));

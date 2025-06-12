@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:studyai/app/modules/global_widgets/block_button_widget.dart';
-import 'package:studyai/app/modules/global_widgets/text_field_widget.dart';
 import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
 import '../../routes/app_routes.dart';
 import '../auth/controllers/auth_controller.dart';
 
-class Onboardingscreen extends GetView<AuthController> {
+class OnboardingScreen extends GetView<AuthController> {
 
   //backgroundColor: Colors.white,
   @override

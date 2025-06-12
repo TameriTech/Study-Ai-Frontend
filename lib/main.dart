@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
       themeMode: Get.find<SettingsService>().getThemeMode(),
       theme: Get.find<SettingsService>().getLightTheme(),
       darkTheme: Get.find<SettingsService>().getDarkTheme(),
-      home:  Onboardingscreen(),
+      home:  OnboardingScreen(),
       localizationsDelegates: [
         //AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

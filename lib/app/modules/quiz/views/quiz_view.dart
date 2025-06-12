@@ -1,27 +1,27 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/modules/files/controllers/files_controller.dart';
 import 'package:studyai/app/modules/files/widgets/file_card.dart';
 import 'package:studyai/app/modules/global_widgets/add_instruction_widget.dart';
-import 'package:studyai/app/modules/quizz/controllers/quizz_controller.dart';
-import 'package:studyai/app/modules/quizz/widgets/quizz_setting_item.dart';
 import 'package:studyai/app/modules/global_widgets/block_button_widget.dart';
 import 'package:studyai/app/modules/root/controllers/root_controller.dart';
 import 'package:studyai/app/routes/app_routes.dart';
 import 'package:studyai/color_constants.dart';
 import 'package:studyai/common/ui.dart';
 
-class QuizzView extends GetView<QuizzController> {
-  const QuizzView({super.key});
+import '../controllers/quiz_controller.dart';
+import '../widgets/quiz_setting_item.dart';
+
+class QuizView extends GetView<QuizController> {
+  const QuizView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
       body: Obx(() {
-        if (controller.generationState.value == QuizzGenerationState.start || controller.generationState.value == QuizzGenerationState.failed) {
+        if (controller.generationState.value == QuizGenerationState.start || controller.generationState.value == QuizGenerationState.failed) {
           return _buildQuizSetup(context);
         } else {
           return _buildQuizInterface();
@@ -34,7 +34,7 @@ class QuizzView extends GetView<QuizzController> {
     return  ListView(
 
       children: [
-        Text('Generer un Quizz', style: TextStyle(fontSize: 24),).marginOnly(left: 20, bottom: 10),
+        Text('Générer un Quiz', style: TextStyle(fontSize: 24),).marginOnly(left: 20, bottom: 10),
         Container(
           height: Get.height,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -50,44 +50,45 @@ class QuizzView extends GetView<QuizzController> {
                   showModalBottomSheet(context: context,
                     builder: (context) => Container(
                       padding: EdgeInsets.all(20),
-                      child:Obx(() => Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList().isNotEmpty?
-                      GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                          childAspectRatio: 1.2,
+                      child: Obx(() =>
+                        Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList().isNotEmpty?
+                        GridView.builder(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                            childAspectRatio: 1.2,
+                          ),
+                          itemCount: Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList().length,
+                          itemBuilder: (context, index) {
+                            final file = Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList()[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                                controller.selectedCourse.value = file;
+                              },
+                              child: FileCard(
+                                title: file.title,
+                                color: Get.find<FilesController>().getFileCardColor(file.type),
+                                timeInfo: file.timeInfo,
+                                level: file.level,
+                                progress: file.progress,
+                                subtitle: file.subtitle,
+                                type: file.type,
+                                createdAt: file.createdAt,
+                              ),
+                            );
+
+
+                          },
+                        ) :
+                        Center(
+                          child: Text("Aucun cours disponible"
+                          ),
                         ),
-                        itemCount: Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList().length,
-                        itemBuilder: (context, index) {
-                          final file = Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList()[index];
-                          return InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              controller.selectedCourse.value = file;
-                            },
-                            child: FileCard(
-                              title: file.title,
-                              color: Get.find<FilesController>().getFileCardColor(file.type),
-                              timeInfo: file.timeInfo,
-                              level: file.level,
-                              progress: file.progress,
-                              subtitle: file.subtitle,
-                              type: file.type,
-                              createdAt: file.createdAt,
-                            ),
-                          );
-
-
-                        },
-                      )
-                        :Center(
-                        child: Text("Aucun cours disponible"
-                        ),
-                      ),)
-                      ,
-
-                    ),);
+                      ),
+                    ),
+                  );
                 },
                 child: Obx(()=> controller.selectedCourse.value.title == ''?Container(
                   padding: EdgeInsets.symmetric(vertical: 20),
@@ -103,7 +104,8 @@ class QuizzView extends GetView<QuizzController> {
                       Text('choisir le cour')
                     ],
                   )
-                  ,):SizedBox(
+                )
+                    : SizedBox(
                   width: Get.width,
                   height: 150,
                   child: FileCard(
@@ -130,7 +132,7 @@ class QuizzView extends GetView<QuizzController> {
                 maxLines: 16,
               ).marginOnly(bottom: 20),
 
-              Obx(() =>  QuizzSettingItemWidget(
+              Obx(() =>  QuizSettingItemWidget(
                 value: controller.numberOfQuestions.value.toString(),
                 label: "Nombre de questions",
                 onDecrease: (){
@@ -142,7 +144,7 @@ class QuizzView extends GetView<QuizzController> {
                 },
               ),),
 
-              Obx(() =>  QuizzSettingItemWidget(
+              Obx(() =>  QuizSettingItemWidget(
                 value: controller.difficultyLevels[controller.difficultyIndex.value],
                 label: "Niveau de difficulte",
                 onDecrease: (){
@@ -155,7 +157,7 @@ class QuizzView extends GetView<QuizzController> {
                 },
               ),),
 
-              Obx(() =>  QuizzSettingItemWidget(
+              Obx(() =>  QuizSettingItemWidget(
                 value: controller.questionTypes[controller.questionTypeIndex.value],
                 label: "Type de question",
                 onDecrease: (){
@@ -173,7 +175,7 @@ class QuizzView extends GetView<QuizzController> {
                 child: BlockButtonWidget(
                     color: primaryColor,
                     haveBorder: false,
-                    text: Text('Generer le quizz', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                    text: Text('Générer le quiz', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
                     onPressed: (){
                       if(Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList().isNotEmpty){
                         controller.startGenerationProgress(
@@ -185,7 +187,7 @@ class QuizzView extends GetView<QuizzController> {
                         showDialog(context: context,
 
                             builder: (context) => Obx(() => Dialog(
-                              backgroundColor: QuizzGenerationState.ongoing == controller.generationState.value?Colors.transparent:bgColor,
+                              backgroundColor: QuizGenerationState.ongoing == controller.generationState.value?Colors.transparent:bgColor,
                               alignment: Alignment.center,
                               shape: Border.symmetric(horizontal: BorderSide.none, vertical: BorderSide.none),
                               insetPadding: EdgeInsets.zero,
@@ -204,7 +206,7 @@ class QuizzView extends GetView<QuizzController> {
                                     ).marginOnly(bottom: 40),
                                     Text('Generation du quizz en cours...'),
                                     Spacer(),
-                                    Obx(() => QuizzGenerationState.failed == controller.generationState.value?
+                                    Obx(() => QuizGenerationState.failed == controller.generationState.value?
                                     Container(
                                       decoration: BoxDecoration(
                                           color: Colors.white,
@@ -225,9 +227,6 @@ class QuizzView extends GetView<QuizzController> {
                       else{
                         Get.showSnackbar(Ui.warningSnackBar(message: 'Vous devez avoir un cours disponible pour generer un quizz'));
                       }
-
-
-
                     }),
               ).marginOnly(top: 20),
             ],

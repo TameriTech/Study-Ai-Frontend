@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HistoricWidget extends StatelessWidget {
   const HistoricWidget({Key? key, required this.smallDescription, required this.onPressed, required this.date, required this.course }) : super(key: key);

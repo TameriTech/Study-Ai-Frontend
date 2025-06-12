@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
 import '../../../../color_constants.dart';
 import '../../../routes/app_routes.dart';
-
 import '../controllers/chat_controller.dart';
-
 
 
 class ChatView extends GetView<ChatController> {
@@ -13,9 +11,9 @@ class ChatView extends GetView<ChatController> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    //final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final isSmallScreen = screenHeight < 700;
+    //final isSmallScreen = screenHeight < 700;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -30,14 +28,14 @@ class ChatView extends GetView<ChatController> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   constraints: BoxConstraints(
-                    maxHeight: isSmallScreen ? screenHeight * 0.4 : screenHeight * 0.5,
+                    maxHeight: 400,
                   ),
                   decoration: BoxDecoration(
                     color: bgColorChatScreen,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Historique de discussion',
@@ -67,7 +65,7 @@ class ChatView extends GetView<ChatController> {
                       ),
 
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.bottomCenter,
                         child: GestureDetector(
                           onTap: () => Get.toNamed(Routes.HISTORY),
                           child: Text(
@@ -77,7 +75,7 @@ class ChatView extends GetView<ChatController> {
                               color: Colors.blue,
                             ),
                           ),
-                        ).marginOnly(top: 8),
+                        ).marginOnly(top: 10),
                       ),
                     ],
                   ),
@@ -94,6 +92,7 @@ class ChatView extends GetView<ChatController> {
                   ),
                 ).marginOnly(bottom: 10),
 
+                SizedBox(height: 20),
                 /// Exercise Scroll Cards
                 SizedBox(
                   height: 200,
@@ -110,6 +109,7 @@ class ChatView extends GetView<ChatController> {
                                 topLeft: Radius.circular(30),
                                 topRight: Radius.circular(30),
                               ),
+                              border: Border.all(color: Colors.grey, width: 2),
                               image: const DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage('assets/images/new_account.png'),
@@ -120,8 +120,16 @@ class ChatView extends GetView<ChatController> {
                             bottom: 0,
                             child: Container(
                               width: screenWidth * 0.4,
+                              decoration: BoxDecoration(
+                                color: bgColor,
+                                border: Border(
+                                    right: BorderSide(color: Colors.grey, width: 2),
+                                    left: BorderSide(color: Colors.grey, width: 2),
+                                    bottom: BorderSide(color: Colors.grey, width: 2),
+                                )
+                              ),
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                              color: bgColor,
+
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

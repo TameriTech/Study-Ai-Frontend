@@ -36,9 +36,9 @@ class QuizTab extends GetView<FilesController> {
                       mainAxisSpacing: 16,
                       childAspectRatio: 1,
                     ),
-                    itemCount: controller.quizzList.length,
+                    itemCount: controller.quizList.length,
                     itemBuilder: (context, index) {
-                      final file = controller.quizzList[index];
+                      final file = controller.quizList[index];
                       return GestureDetector(
                         onTap: () async {
                           controller.currentQuestionIndex.value = 0;

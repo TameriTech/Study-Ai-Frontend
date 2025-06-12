@@ -9,17 +9,16 @@ import '../../../../common/ui.dart';
 import '../../../models/user_model.dart';
 import '../../../services/auth_service.dart';
 
-enum QuizzGenerationState { start, ongoing, failed, generated }
+enum QuizGenerationState { start, ongoing, failed, generated }
 
 
-
-class QuizzController extends GetxController {
+class QuizController extends GetxController {
   final Rx<UserModel> currentUser = Get.find<AuthService>().user;
   final RxDouble progress = 0.0.obs;
   Timer? _generationTimer;
   Timer? _questionTimer;
   final Duration generationDuration = const Duration(seconds: 1);
-   Rx<QuizzGenerationState> generationState = QuizzGenerationState.start.obs;
+   Rx<QuizGenerationState> generationState = QuizGenerationState.start.obs;
 
   // Quiz configuration
   final RxInt numberOfQuestions = 1.obs;
@@ -98,7 +97,7 @@ class QuizzController extends GetxController {
       required int questionsNumber,
       required String instruction}) async {
     try {
-      generationState.value = QuizzGenerationState.start; // Initial state
+      generationState.value = QuizGenerationState.start; // Initial state
 
       // --- Step 1: Perform API calls ---
 
@@ -151,11 +150,11 @@ class QuizzController extends GetxController {
             updateCount++;
 
 
-            generationState.value = QuizzGenerationState.ongoing;
+            generationState.value = QuizGenerationState.ongoing;
 
             if (updateCount >= totalUpdates) {
               _generationTimer?.cancel();
-              generationState.value = QuizzGenerationState.generated;
+              generationState.value = QuizGenerationState.generated;
               startQuestionTimer();
               Navigator.of(Get.context!).pop();
 
@@ -167,7 +166,7 @@ class QuizzController extends GetxController {
 
     } catch (e) {
       // --- Step 4: Handle error during API call ---
-      generationState.value = QuizzGenerationState.failed;
+      generationState.value = QuizGenerationState.failed;
 
       _generationTimer?.cancel();
 
@@ -193,9 +192,6 @@ class QuizzController extends GetxController {
     }
     return [];
   }
-
-
-
 
   extractCorrectIndex(dynamic extractedChoices, correctAnswerLetter) {
     if (correctAnswerLetter.toString().toUpperCase() == 'A') {
@@ -304,7 +300,7 @@ class QuizzController extends GetxController {
     questions.value = newQuestions;
     selectedAnswers.value = List.filled(newQuestions.length, null);
     currentQuestionIndex.value = 0;
-    generationState.value = QuizzGenerationState.generated;
+    generationState.value = QuizGenerationState.generated;
     startQuestionTimer();
   }
 

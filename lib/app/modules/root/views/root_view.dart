@@ -49,7 +49,7 @@ class RootView extends GetView<RootController> {
               ):Image.asset(
                 'assets/images/chat.png',
               ),
-              label: 'Chat',
+              label: 'AI',
             ),
             CustomBottomNavigationItem(
               icon: controller.currentIndex.value == 3?Image.asset(

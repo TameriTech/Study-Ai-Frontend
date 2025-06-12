@@ -1,24 +1,22 @@
 // coverage:ignore-file
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:studyai/app/models/file_card_model.dart';
 import 'package:studyai/app/modules/files/controllers/files_controller.dart';
 import 'package:studyai/app/modules/files/views/files_view.dart';
 import 'package:studyai/app/modules/chat/views/chat_view.dart';
 import 'package:studyai/app/modules/profile/views/profile_view.dart';
-import 'package:studyai/app/modules/quizz/controllers/quizz_controller.dart';
-import 'package:studyai/app/modules/quizz/views/quizz_view.dart';
 import 'package:studyai/app/services/auth_service.dart';
 import '../../../routes/app_routes.dart';
 import '../../auth/controllers/auth_controller.dart';
+import '../../quiz/controllers/quiz_controller.dart';
+import '../../quiz/views/quiz_view.dart';
 
 
 
 
 class RootController extends GetxController {
   final currentIndex = 0.obs;
-
 
   RootController() {
   }
@@ -30,7 +28,7 @@ class RootController extends GetxController {
 
   List<Widget> pages = [
     const FilesView(),
-    const QuizzView(),
+    const QuizView(),
     const ChatView(),
     const ProfileView(),
 
@@ -43,8 +41,8 @@ class RootController extends GetxController {
       await Get.offNamed(Routes.LOGIN);
     } else {
       if(_index == 1){
-        Get.find<QuizzController>().generationState = QuizzGenerationState.start.obs;
-        Get.find<QuizzController>().selectedCourse = FileCardModel(title: '', timeInfo: '', type: '', createdAt: '').obs;
+        Get.find<QuizController>().generationState = QuizGenerationState.start.obs;
+        Get.find<QuizController>().selectedCourse = FileCardModel(title: '', timeInfo: '', type: '', createdAt: '').obs;
       }
       if(_index == 0){
         //Get.find<FilesController>().getCompleteFileList();
