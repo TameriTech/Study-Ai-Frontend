@@ -1,8 +1,10 @@
-import 'dart:async';
+import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
+import 'package:chat_bubbles/bubbles/bubble_special_two.dart';
+import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import '../../../services/auth_service.dart';
+import '../../../../color_constants.dart';
 import '../controllers/chat_controller.dart';
 
 class ChatPlatform extends GetView<ChatController> {
@@ -15,43 +17,52 @@ class ChatPlatform extends GetView<ChatController> {
   Widget chatList() {
     return Obx(
           () {
-        if (controller.isLoading.value) {
-          return CircularProgressIndicator();
-        } else {
-          return ListView.builder(
-              key: _myListKey,
-              reverse: true,
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              itemCount: 0,
-              shrinkWrap: false,
-              primary: true,
-              itemBuilder: (context, index) {
-                List receivedMessages = [];
-                Future.delayed(Duration.zero, (){
-                  controller.messages.sort((a, b) => b["date"].compareTo(a["date"]));
-                });
-                if(Get.find<AuthService>().user.value.userId != controller.messages[index]['author_id']){
-                  receivedMessages.add(controller.messages[index]);
-                }
+            return ListView.builder(
+                key: _myListKey,
+                controller: controller.scrollController,
+                reverse: false,
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                itemCount: controller.messagesSent.length,
+                shrinkWrap: false,
+                itemBuilder: (context, index) {
 
-                return Column(
-                    children: [
-                      if(Get.find<AuthService>().user.value.userId == controller.messages[index]['author_id'])...[
-                        getSentMessageTextLayout(context, controller.messages[index], index),
-                        if(index == 0)...[
-                          for(var a in controller.messagesSent)...[
-                            getSentMessage(context, a)
-                          ],
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if(controller.messagesSent[index].sender == "user")...[
+                          BubbleSpecialTwo(
+                            text: controller.messagesSent[index].text,
+                            isSender: true,
+                            color: Color(0xFFFCF398),
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
+                          ),
+                          if(controller.isLoading.value)
+                            Row(
+                              mainAxisSize: MainAxisSize.min, // shrink wrap width to the spinner
+                              mainAxisAlignment: MainAxisAlignment.start, // align left inside row
+                              children: [
+                                SpinKitThreeBounce(color: courseColor, size: 20),
+                              ],
+                            )
                         ],
-                      ]else...[
-                        getReceivedMessageTextLayout(context, controller.messages[index], index),
-                      ],
-                    ]
-                );
-              }
-          );
-        }
+                        if(controller.messagesSent[index].sender == "bot")
+                          BubbleSpecialOne(
+                              text: controller.messagesSent[index].text,
+                              isSender: false,
+                              color: Color(0xFFFFFFFF),
+                              textStyle: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                              )
+                          )
+                      ]
+                  );
+                }
+            );
       },
     );
   }
@@ -109,15 +120,16 @@ class ChatPlatform extends GetView<ChatController> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      backgroundColor: bgColor,
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
           elevation: 0,
+          backgroundColor: Colors.transparent,
           centerTitle: false,
           leading: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                  icon: new Icon(Icons.arrow_back_ios, color: Get.theme.hintColor),
+                  icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
                   onPressed: () {
                     Navigator.pop(context);
                   }
@@ -129,498 +141,49 @@ class ChatPlatform extends GetView<ChatController> {
           leadingWidth: 110,
 
       ),
-
       body: RefreshIndicator(
           onRefresh: ()async{
-            print(Get.width);
             //controller.refreshMessages();
           },
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
              Expanded(child: chatList()),
-              Container(
-                decoration: BoxDecoration(
-                  color: Get.theme.primaryColor,
-                  boxShadow: [BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.10), offset: Offset(0, -4), blurRadius: 10)],
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                        width: Get.width-Get.width/80,
-                        height: 80,
-                        child: TextFormField(
-                         // controller: controller.chatTextController,
-                          style: Get.textTheme.bodyLarge?.merge(TextStyle(fontSize: 18)),
-                          //expands: true,
-                          //keyboardType: TextInputType.number,
-                          maxLines: 5,
-                          //onChanged: (value)=> controller.checkValue(value),
 
-                          textInputAction: TextInputAction.done,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(20),
-                            hintText: 'Comment here'.tr,
-                            hintStyle: TextStyle(color: Get.theme.focusColor.withOpacity(0.8)),
-                            suffixIcon:SizedBox(
-                                width: 100,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
+              MessageBar(
+                onSend: (_) async{
 
-                                    //IconButton(
-                                    //onPressed: () async {
-                                    // //controller.ticketFiles.clear();
-                                    // controller.ticketFiles.clear();
-                                    // await controller.pickImage(ImageSource.gallery);
-                                    //
-                                    // //Navigator.pop(Get.context);
-                                    // controller.enableImageSend.value = true;
-                                    //}, icon: Icon(Icons.attach_file)),
-
-                                    IconButton(
-                                      padding: EdgeInsetsDirectional.only(end: 10, start: 10),
-                                      onPressed: () async{
-                                        // if(controller.enableImageSend.value){
-                                        //
-                                        //   print(controller.enableImageSend.value);
-                                        //   String message = '';
-                                        //   message = controller.chatTextController.text;
-                                        //   await controller.messagesSent.add([controller.ticketFiles[controller.ticketFiles.length-1], message]);
-                                        //   print(controller.messagesSent);
-                                        //   var messageId = await controller.sendMessage(ticketId, Get.find<MyAuthService>().myUser.value.id, message);
-                                        //   await controller.uploadTicketMessageImage(ticketId, controller.ticketFiles[controller.ticketFiles.length-1],messageId );
-                                        //   Timer(Duration(milliseconds: 100), () {
-                                        //     controller.chatTextController.clear();
-                                        //     controller.enableImageSend.value = false;
-                                        //     controller.enableSend.value = false;
-                                        //   });
-                                        //
-                                        //
-                                        // }
-                                        // else{
-                                        //
-                                        //   String message = '';
-                                        //   message = controller.chatTextController.text;
-                                        //   if(message.isNotEmpty){
-                                        //     controller.messagesSent.add(message);
-                                        //     controller.sendMessage(ticketId, Get.find<MyAuthService>().myUser.value.id, message);
-                                        //     Timer(Duration(milliseconds: 100), () {
-                                        //       controller.chatTextController.clear();
-                                        //       controller.enableSend.value = false;
-                                        //     });
-                                        //   }
-                                        // }
-
-
-
-                                      },
-                                      icon: Icon(
-                                        Icons.send_outlined,
-                                        //color: controller.enableSend.value ? Get.theme.colorScheme.secondary : inactive,
-                                        size: 30,
-                                      ),
-                                    )
-                                  ],
-                                )
-                            ),
-                            border: UnderlineInputBorder(borderSide: BorderSide.none),
-                            enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-                            focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-                          ),
-                        ))
-                  ],
-                ),
-              )
+                  controller.messagesSent.add(Message(text: controller.msgController.text, sender: 'user'));
+                  await controller.sendPrompt(controller.msgController.text);
+                },
+                onTextChanged: (value) {
+                  controller.msgController.text = value;
+                },
+                actions: [
+                  InkWell(
+                    child: Icon(
+                      Icons.attach_file,
+                      color: Colors.black,
+                      size: 24,
+                    ),
+                    onTap: () {},
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8, right: 8),
+                    child: InkWell(
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.green,
+                        size: 24,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
             ],
           )
       ),
-    );
-  }
-
-  Widget getSentMessageTextLayout(context, var message, int index) {
-    return Container(
-      constraints: BoxConstraints(
-          maxWidth: Get.width
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Flexible(
-              fit: FlexFit.loose,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Get.theme.focusColor.withOpacity(0.2),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
-                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 14),
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      //constraints: BoxConstraints(
-                      //  maxWidth: Get.width - 40),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Container(
-                                margin: const EdgeInsets.only(top: 5.0),
-                                child: RichText(
-                                    text: TextSpan(
-                                        children: [
-                                          TextSpan(text: message['body'].length<4?'':message['body'].substring(3,message['body'].toString().length-4)+ "\n",
-                                          ),
-                                        ]
-                                    )
-                                )
-                            ),
-                            message['attachment_ids'].toString() != '[]'?
-                            GestureDetector(
-                              onTap: (){
-                                showDialog(
-                                    context: context, builder: (_){
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Material(
-                                          child: IconButton(onPressed: ()=> Navigator.pop(context), icon: Icon(Icons.close, size: 20))
-                                      ),
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                                        child: FadeInImage(
-                                          width: Get.width,
-                                          height: Get.height/2,
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage('https://preprod.hubkilo.com/ticket/attachment/${message['attachment_ids'][0]}?unique=true&file_response=true',
-                                              //headers: Domain.getTokenHeaders()
-                                          ),
-                                          placeholder: AssetImage(
-                                              "assets/img/loading.gif"),
-                                          imageErrorBuilder:
-                                              (context, error, stackTrace) {
-                                            return Center(
-                                                child: Container(
-                                                    width: Get.width/1.5,
-                                                    height: Get.height/3,
-                                                    color: Colors.white,
-                                                    child: Center(
-                                                        child: Icon(Icons.person, size: 150)
-                                                    )
-                                                )
-                                            );
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  );
-                                });
-                              },
-                              child: Card(
-                                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      child: FadeInImage(
-                                        width: 120,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage('https://preprod.hubkilo.com/ticket/attachment/${message['attachment_ids'][0]}?unique=true&file_response=true',
-                                           // headers: Domain.getTokenHeaders()
-                                        ),
-                                        placeholder: AssetImage(
-                                            "assets/img/loading.gif"),
-                                        imageErrorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Image.asset(
-                                              'assets/img/240_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg',
-                                              width: 100,
-                                              height: 100,
-                                              fit: BoxFit.fitWidth);
-                                        },
-                                      )
-                                  )
-                              ),
-                            )
-                                :SizedBox()
-                          ]
-                      )
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text( DateFormat('d, MMM y | HH:mm').format(DateTime.parse(message['date'])),
-                        overflow: TextOverflow.fade,
-                        softWrap: false,)
-                        )
-                ],
-              )
-          ),
-          ClipOval(
-              child: FadeInImage(
-                width: 30,
-                height: 30,
-                fit: BoxFit.cover,
-                image: NetworkImage('/image/res.partner//image_1920?unique=true&file_response=true',
-                    //headers: Domain.getTokenHeaders()
-                ),
-                placeholder: AssetImage(
-                    "assets/img/loading.gif"),
-                imageErrorBuilder:
-                    (context, error, stackTrace) {
-                  return Image.asset(
-                      'assets/img/téléchargement (3).png',
-                      width: 30,
-                      height: 30,
-                      fit: BoxFit.fitWidth);
-                },
-              )
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget getSentMessage(context, var message) {
-
-    return message is List ?
-    Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: (){
-              showDialog(
-                  context: context, builder: (_){
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Material(
-                        child: IconButton(onPressed: ()=> Navigator.pop(context), icon: Icon(Icons.close, size: 20))
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      child: Image.file(
-                        message[0],
-                        width: Get.width,
-                        height: Get.height/2,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  ],
-                );
-              });
-            },
-            child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.only(top: 5.0),
-                        child: RichText(
-                            text: TextSpan(
-                                children: [
-                                  TextSpan(text: "ppppppp", ),
-                                ]
-                            )
-                        )
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      child: Image.file(
-                        message[0],
-                        //controller.ticketFiles[index],
-                        fit: BoxFit.cover,
-                        width: 120,
-                        height:100,
-                      ),
-                    )
-                  ],
-                )
-            ),
-          ),
-        ]
-    ):
-    Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Flexible(
-              fit: FlexFit.loose,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Get.theme.focusColor.withOpacity(0.2),
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Container(
-                            margin: const EdgeInsets.only(top: 5.0),
-                            child: RichText(
-                                text: TextSpan(
-                                    children: [
-                                      TextSpan(text: 'lllllllll' ),
-                                    ]
-                                )
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text( DateFormat('d, MMM y | HH:mm').format(DateTime.now()),
-                        overflow: TextOverflow.fade,
-                        softWrap: false, )
-                    ),
-                ],
-              )
-          ),
-        ]
-    )
-    ;
-
-  }
-
-  Widget getReceivedMessageTextLayout(context, var message, int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipOval(
-            child: FadeInImage(
-              width: 30,
-              height: 30,
-              fit: BoxFit.cover,
-              image: NetworkImage('/image/res.partner/image_1920?unique=true&file_response=true',
-                  //headers: Domain.getTokenHeaders()
-              ),
-
-              placeholder: AssetImage(
-                  "assets/img/loading.gif"),
-              imageErrorBuilder:
-                  (context, error, stackTrace) {
-                return Image.asset(
-                    'assets/img/téléchargement (3).png',
-                    width: 30,
-                    height: 30,
-                    fit: BoxFit.fitWidth);
-              },
-            )
-        ),
-        Flexible(
-            fit: FlexFit.loose,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    decoration: BoxDecoration(
-                        color: Get.theme.colorScheme.secondary,
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(15), bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 14),
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                              margin: const EdgeInsets.only(top: 5.0),
-                              child: RichText(
-                                  text: TextSpan(
-                                      children: [
-                                        TextSpan(text: message['body']!= ''?message['body'].toString().substring(3,message['body'].toString().length-4)+ "\n": '',
-                                        ),
-                                      ]
-                                  )
-                              )
-                          ),
-                          message['attachment_ids'].toString() != '[]'?
-                          GestureDetector(
-                            onTap: (){
-                              showDialog(
-                                  context: context, builder: (_){
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Material(
-                                        child: IconButton(onPressed: ()=> Navigator.pop(context), icon: Icon(Icons.close, size: 20))
-                                    ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      child: FadeInImage(
-                                        width: Get.width,
-                                        height: Get.height/2,
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage('https://preprod.hubkilo.com/ticket/attachment/${message['attachment_ids'][0]}?unique=true&file_response=true',
-                                            //headers: Domain.getTokenHeaders()
-                                        ),
-                                        placeholder: AssetImage(
-                                            "assets/img/loading.gif"),
-                                        imageErrorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Center(
-                                              child: Container(
-                                                  width: Get.width/1.5,
-                                                  height: Get.height/3,
-                                                  color: Colors.white,
-                                                  child: Center(
-                                                      child: Icon(Icons.person, size: 150)
-                                                  )
-                                              )
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                );
-                              });
-                            },
-                            child: Card(
-                                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    child: FadeInImage(
-                                      width: 120,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage('https://preprod.hubkilo.com/ticket/attachment/${message['attachment_ids'][0]}?unique=true&file_response=true',
-                                          //headers: Domain.getTokenHeaders()
-                                      ),
-                                      placeholder: AssetImage(
-                                          "assets/img/loading.gif"),
-                                      imageErrorBuilder:
-                                          (context, error, stackTrace) {
-                                        return Image.asset(
-                                            'assets/img/240_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg',
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.fitWidth);
-                                      },
-                                    )
-                                )
-                            ),
-                          )
-                              :SizedBox()
-                        ]
-                    )
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                      DateFormat('HH:mm | d, MMM y').format(DateTime.parse(message['date'])),
-                      overflow: TextOverflow.fade,
-                      softWrap: false,
-
-                  ),
-                ),
-              ],
-            )
-        ),
-      ],
     );
   }
 }

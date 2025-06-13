@@ -11,8 +11,6 @@ import 'package:studyai/app/services/auth_service.dart';
 import 'package:studyai/common/ui.dart';
 
 
-
-
 class AuthController extends GetxController {
 
   Rx<UserModel> currentUser = Get.find<AuthService>().user;

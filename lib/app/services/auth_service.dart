@@ -4,7 +4,6 @@ import 'package:get_storage/get_storage.dart';
 import '../models/user_model.dart';
 import '../repositories/user_repository.dart';
 
-
 class AuthService extends GetxService {
   var user = UserModel().obs;
   GetStorage? _box;
