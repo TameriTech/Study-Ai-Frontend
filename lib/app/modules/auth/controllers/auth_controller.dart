@@ -76,7 +76,7 @@ class AuthController extends GetxController {
     if (loginFormKey.currentState!.validate()) {
       try{
         loginLoading.value = true;
-        int id = await userRepository.login(currentUser.value);
+        var id = await userRepository.login(currentUser.value);
         await getUser(id);
         Get.showSnackbar(Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
 

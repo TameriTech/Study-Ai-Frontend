@@ -457,18 +457,21 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     correctAnswers.clear();
     selectedAnswers.clear();
 
+
     for(var data in quiz){
-      var extractedChoices = Get.find<QuizController>().extractChoices(quiz[0]["choices"]);
+      var extractedChoices = Get.find<QuizController>().extractChoices(data["choices"]);
 
-      var extractedCorrectIndex = Get.find<QuizController>().extractCorrectIndex(extractedChoices, quiz[0]["correct_answer"]);
+      var extractedCorrectIndex = Get.find<QuizController>().extractCorrectIndex(extractedChoices, data["correct_answer"]);
 
-      var extractedUserAnswerIndex = Get.find<QuizController>().extractCorrectIndex(extractedChoices, quiz[0]["user_answer"]);
+      var extractedUserAnswerIndex = Get.find<QuizController>().extractCorrectIndex(extractedChoices, data["user_answer"]);
 
+
+      print("data is is is : $data");
       questions.add(
           Question(
-            questionId: quiz[0]['id_quiz'],
-            title: quiz[0]["course_name"],
-            text: quiz[0]["question"],
+            questionId: data['id_quiz'],
+            title: data["course_name"],
+            text: data["question"],
             userAnswerIndex: extractedUserAnswerIndex,
             options: extractedChoices,
             correctIndex: extractedCorrectIndex,));
@@ -495,7 +498,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
 
     }
     print('lrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is ${correctAnswers.toString()}');
-    print('lrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is ${selectedAnswers.toString()}');
+    print('Selected answer is  is ${selectedAnswers.toString()}');
   }
 
 

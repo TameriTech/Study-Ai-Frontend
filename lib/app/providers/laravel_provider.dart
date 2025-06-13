@@ -57,8 +57,19 @@ class LaravelApiClient extends GetxService {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
       throw const FormatException("Unable to process the data");
-    } catch (e) {
-      throw NetworkExceptions.getDioException(e);
+    }on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        throw "A user with this email already exists";
+      } else if (e.response?.statusCode == 403) {
+        throw "A user with this email already exists";
+      } else {
+        throw NetworkExceptions.getDioException(e);
+      }
+    }
+    catch (e) {
+
+        throw NetworkExceptions.getDioException(e);
+
     }//
   }
 
@@ -91,7 +102,15 @@ class LaravelApiClient extends GetxService {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
       throw const FormatException("Unable to process the data");
-    } catch (e) {
+    }on DioException catch (e) {
+      print(e.response?.statusCode);
+       if (e.response?.statusCode == 401) {
+        throw "Invalid credentials";
+      } else {
+        throw NetworkExceptions.getDioException(e);
+      }
+    }
+    catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
   }

@@ -55,6 +55,8 @@ class QuizController extends GetxController {
 
   var gotQuizzResultSuccessfully = false.obs;
 
+  var viewResponses = false.obs;
+
  // var extractedChoices = [];
   var extractedCorrectIndex;
 

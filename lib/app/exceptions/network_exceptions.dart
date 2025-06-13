@@ -14,7 +14,7 @@ abstract class NetworkExceptions {
       case 401:
       case 403:
         _get.Get.offAllNamed(Routes.LOGIN);
-        return "Unauthorized Request";
+        return "Unauthorized request";
         break;
       case 404:
         return "Not found";

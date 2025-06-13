@@ -419,15 +419,19 @@ class QuizView extends GetView<QuizController> {
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                   onPressed: () async {
-                    Get.find<FilesController>().extractQuestionsFromQuizzes(controller.quizzData);
+                    controller.viewResponses.value = true;
+                    controller.quizzData = await controller.getCourseQuizzes(courseId: controller.quizzData[0]['course_id']);
+                    await Get.find<FilesController>().extractQuestionsFromQuizzes(controller.quizzData);
+                    controller.viewResponses.value = false;
                     Navigator.of(context).pop();
                     Get.find<RootController>().changePageInRoot(0);
                     Get.toNamed(Routes.QUIZZ_POST_GENERATION_VIEW,);
                   },
-                  child: const Text(
+                  child: Obx(() => controller.viewResponses.value?CircularProgressIndicator(color: Colors.white,): Text(
                     "Voir les responses",
                     style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
+                  ),)
+
                 ),
               )
             ],
