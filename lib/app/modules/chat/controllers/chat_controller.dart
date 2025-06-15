@@ -42,7 +42,7 @@ class ChatController extends GetxController{
     ever(messagesSent, (_) => scrollBottom());
   }
 
-  Future sendPrompt(String question)async{
+  Future sendPrompt(String question, int id)async{
     isLoading.value = true;
     try {
       var headersList = {
@@ -52,7 +52,7 @@ class ChatController extends GetxController{
 
       var body = {
         "question": question,
-        "document_id": 0
+        "document_id": id
       };
 
       var req = http.Request('POST', url);
@@ -66,7 +66,7 @@ class ChatController extends GetxController{
         isLoading.value = false;
         var data = jsonDecode(resBody)["answer"];
 
-        const int chunkSize = 700;
+        const int chunkSize = 400;
         final List<String> chunks = [];
         for (int i = 0; i < data.length; i += chunkSize) {
           chunks.add(
@@ -88,6 +88,36 @@ class ChatController extends GetxController{
       }
     } catch (e) {
 
+    }
+  }
+
+  Future getFileId(String path)async{
+
+    try {
+      var headersList = {
+        'Content-Type': 'application/json'
+      };
+      var url = Uri.parse('${GlobalService().baseUrl}/documents?user_id=${currentUser.value.userId}');
+
+      var req = http.MultipartRequest('POST', url);
+      req.headers.addAll(headersList);
+
+      req.files.add(await http.MultipartFile.fromPath('file', path));
+
+      var res = await req.send();
+      final resBody = await res.stream.bytesToString();
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        isLoading.value = false;
+        var data = jsonDecode(resBody);
+        print(data);
+        //await sendPrompt(msgController.text, 0);
+      }
+      else {
+        print(res.reasonPhrase);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 

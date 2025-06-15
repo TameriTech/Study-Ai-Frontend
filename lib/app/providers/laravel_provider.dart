@@ -73,6 +73,49 @@ class LaravelApiClient extends GetxService {
     }//
   }
 
+  updateUser(UserModel user)async{
+    try{
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+      var data = user.toJson();
+      print('user${data}');
+      var response = await httpClient.request(
+        '$baseUrl/user/update/${user.userId}',
+        options: Options(
+          method: 'PUT',
+          headers: headers,
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        return UserModel.fromJson(response.data);
+      }
+      else {
+        print(response.statusMessage);
+      }
+    }on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on FormatException catch (_) {
+      throw const FormatException("Unable to process the data");
+    }on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        throw "A user with this email already exists";
+      } else if (e.response?.statusCode == 403) {
+        throw "A user with this email already exists";
+      } else {
+        throw NetworkExceptions.getDioException(e);
+      }
+    }
+    catch (e) {
+
+      throw NetworkExceptions.getDioException(e);
+
+    }//
+  }
+
 
   login(UserModel user)async{
     try{
