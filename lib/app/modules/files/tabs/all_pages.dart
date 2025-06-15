@@ -41,7 +41,7 @@ class AllPages extends GetView<FilesController> {
                           Text('No files')
                         ],)
                       )):
-                  SliverGrid.builder(
+                  Obx(() => SliverGrid.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 16,
@@ -82,7 +82,7 @@ class AllPages extends GetView<FilesController> {
                         ),
                       );
 
-                    },),)
+                    },),),)
 
 
                 ],

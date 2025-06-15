@@ -16,13 +16,15 @@ import '../../quiz/controllers/quiz_controller.dart';
 class FilesController extends GetxController with GetTickerProviderStateMixin{
 
   final Rx<UserModel> currentUser = Get.find<AuthService>().user;
-   RxList<dynamic> filesList = [
-
-  ].obs;
+   RxList<dynamic> filesList = [].obs;
    var courseGenerationState = ['start','ongoing','failed', 'generated'];
   var courseList = [].obs;
   var quizList = [].obs;
   var revisionList = [].obs;
+  var safeFilesList = [];
+  var safeCourseList = [];
+  var safeQuizList = [];
+  var safeRevisionList = [];
 
   RxDouble progress = 0.0.obs;
   Timer? _timer;
@@ -112,6 +114,10 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     courseList.clear();
     quizList.clear();
     revisionList.clear();
+    safeFilesList.clear();
+    safeCourseList.clear();
+    safeQuizList.clear();
+    safeRevisionList.clear();
     filesLoading.value = true;
     var courseData = await getUserCourses(userId: currentUser.value.userId!)??[];
     filesList.addAll(courseData);
@@ -125,6 +131,11 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     courseList.value = filesList.where((element) => element.type == "Course",).toList();
     quizList.value = filesList.where((element) => element.type == "Quizz",).toList();
     revisionList.value = filesList.where((element) => element.type == "Revision",).toList();
+
+    safeFilesList = filesList.value;
+    safeCourseList = courseList.value;
+    safeQuizList = quizList.value;
+    safeRevisionList = revisionList.value;
 
     filesLoading.value = false;
 
@@ -499,6 +510,21 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     }
     print('lrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is ${correctAnswers.toString()}');
     print('Selected answer is  is ${selectedAnswers.toString()}');
+  }
+
+  searchBasedOnName(String name){
+    print("Lenght is is is: ${filesList[0].title.toString().toLowerCase()}");
+    filesList.value =  filesList.where((fileCard) => fileCard.title.toString().toLowerCase().contains(name.toLowerCase()),).toList();
+    courseList.value = courseList.where((fileCard) => fileCard.title.toString().toLowerCase().contains(name.toLowerCase()),).toList();
+    revisionList.value = revisionList.where((fileCard) => fileCard.title.toString().toLowerCase().contains(name.toLowerCase()),).toList();
+    quizList.value  = quizList.where((fileCard) => fileCard.title.toString().toLowerCase().contains(name.toLowerCase()),).toList();
+
+    if(name.isEmpty){
+      filesList.value = safeFilesList;
+      courseList.value = safeCourseList;
+      quizList.value = safeQuizList;
+      revisionList.value = safeRevisionList;
+    }
   }
 
 

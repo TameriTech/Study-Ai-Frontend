@@ -60,11 +60,13 @@ class SearchTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.zero,
+      margin: EdgeInsets.zero,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30)
       ),
-     
+
         child :TextFormField(
           autofocus: focus??false,
           controller: textController?? TextEditingController(text: null),
