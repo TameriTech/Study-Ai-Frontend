@@ -145,12 +145,13 @@ class Ui {
 
   static InputDecoration getSearchInputDecoration({String hintText = '', required String errorText, required Widget suffixIcon, required Widget prefixIcon, required Widget suffix}) {
     return InputDecoration(
+      contentPadding: EdgeInsets.zero,
       hintText: hintText,
       hintStyle: Get.textTheme.headlineMedium!.merge(TextStyle(color: Colors.grey, fontSize: 16)),
       prefixIcon: prefixIcon != null ? prefixIcon.marginOnly(left: 14, right: 14) : SizedBox(),
       //prefixIconConstraints: prefixIcon != null ? BoxConstraints.expand(width: 38, height: 38) : BoxConstraints.expand(width: 0, height: 0),
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      contentPadding: EdgeInsets.all(20),
+      //contentPadding: EdgeInsets.all(20),
       border: OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid, color: Colors.black ), borderRadius: BorderRadius.circular(30),),
       focusedBorder: OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid, color: Colors.black), borderRadius: BorderRadius.circular(30)),
       enabledBorder: OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid,color: Colors.black), borderRadius: BorderRadius.circular(30)),

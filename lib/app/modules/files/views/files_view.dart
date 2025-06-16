@@ -72,12 +72,20 @@ class FilesView extends GetView<FilesController> {
               child: Column(
                 children: [
                   SearchTextFieldWidget(
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffADAAAA)),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400, color: Color(0xffADAAAA)),
                     hintText: "Rechercher un cour, quiz...",
                     errorText: '',
                       suffixIcon: Icon(null),
                       suffix: Icon(null),
-                      readOnly: false).marginSymmetric(horizontal: 16),
+                      readOnly: false,
+                    onChanged: (value){
+                      //if(value.length>=3){
+                        controller.searchBasedOnName(value);
+                     // }
+
+                    },
+                  )
+                      .marginSymmetric(horizontal: 16),
                   TabViewWidget(context),
                 ],
               ),

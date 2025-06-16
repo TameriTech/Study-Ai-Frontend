@@ -221,14 +221,24 @@ class LoginRegisterView extends GetView<AuthController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/logos_facebook.png',
-                        fit: BoxFit.cover,
+                      GestureDetector(
+                        child: Image.asset(
+                          'assets/images/logos_facebook.png',
+                          fit: BoxFit.cover,
+                        ),
+                        onTap: (){
+
+                        },
                       ),
 
-                      Image.asset(
-                        'assets/images/logos_google.png',
-                        fit: BoxFit.cover,
+                      GestureDetector(
+                        child: Image.asset(
+                          'assets/images/logos_google.png',
+                          fit: BoxFit.cover,
+                        ),
+                        onTap: (){
+                          controller.handleSignIn();
+                        },
                       ),
 
                       Image.asset(

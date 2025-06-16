@@ -65,8 +65,9 @@ class ChatController extends GetxController{
       if (res.statusCode >= 200 && res.statusCode < 300) {
         isLoading.value = false;
         var data = jsonDecode(resBody)["answer"];
+        print("AI response: $data");
 
-        const int chunkSize = 400;
+        const int chunkSize = 500;
         final List<String> chunks = [];
         for (int i = 0; i < data.length; i += chunkSize) {
           chunks.add(
@@ -75,12 +76,12 @@ class ChatController extends GetxController{
         }
         // ✅ Add each chunk as a separate message with a delay
         for (var chunk in chunks) {
-
-          messagesSent.add(Message(text: chunk, sender: 'bot'));
-          await Future.delayed(Duration(seconds: 2000));
-          isLoading.value = true;// Optional: simulate typing
-          await Future.delayed(Duration(seconds: 2000));
+          isLoading.value = true;
+          await Future.delayed(Duration(seconds: 1), (){
+            messagesSent.add(Message(text: chunk, sender: 'bot'));
+          });
           isLoading.value = false;
+          await Future.delayed(Duration(seconds: 1));
         }
       }
       else {

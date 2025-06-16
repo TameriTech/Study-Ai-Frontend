@@ -31,7 +31,6 @@ class RootController extends GetxController {
     const QuizView(),
     const ChatView(),
     const ProfileView(),
-
   ];
 
   Widget get currentPage => pages[currentIndex.value];

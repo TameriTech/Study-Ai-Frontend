@@ -1,73 +1,88 @@
 import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
-import 'package:chat_bubbles/bubbles/bubble_special_two.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:studyai/app/modules/chat/views/text_animation.dart';
 import '../../../../color_constants.dart';
 import '../controllers/chat_controller.dart';
 
 class ChatPlatform extends GetView<ChatController> {
+  ChatPlatform({super.key});
   final _myListKey = GlobalKey<AnimatedListState>();
   // final int ticketId;
   // final String code;
 
-  ChatPlatform();
-
   Widget chatList() {
     return Obx(
           () {
-            return ListView.builder(
-                key: _myListKey,
-                controller: controller.scrollController,
-                reverse: false,
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                itemCount: controller.messagesSent.length +1,
-                shrinkWrap: false,
-                itemBuilder: (context, index) {
+            if(controller.messagesSent.isEmpty){
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/logo.png', width: 200, height: 200),
+                  TypewriterText(
+                    text: "Welcome back! How can I help you today?",
+                    speed: Duration(milliseconds: 50),
+                    startDelay: Duration(seconds: 1), // speed between each character
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  )
+                ]
+              );
+            }else{
+              return ListView.builder(
+                  key: _myListKey,
+                  controller: controller.scrollController,
+                  reverse: false,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  itemCount: controller.messagesSent.length +1,
+                  shrinkWrap: false,
+                  itemBuilder: (context, index) {
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if(index == controller.messagesSent.length)...[
-                          if(controller.isLoading.value)
-                            Row(
-                              mainAxisSize: MainAxisSize.min, // shrink wrap width to the spinner
-                              mainAxisAlignment: MainAxisAlignment.start, // align left inside row
-                              children: [
-                                SpinKitThreeBounce(color: courseColor, size: 20),
-                              ]
-                            )
-                        ]else...[
-                          if(controller.messagesSent[index].sender == "user")...[
-                            BubbleSpecialTwo(
-                              text: controller.messagesSent[index].text,
-                              isSender: true,
-                              color: Color(0xFFFCF398),
-                              textStyle: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                          if(controller.messagesSent[index].sender == "bot")
-                            BubbleSpecialOne(
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if(index == controller.messagesSent.length)...[
+                            if(controller.isLoading.value)
+                              Row(
+                                  mainAxisSize: MainAxisSize.min, // shrink wrap width to the spinner
+                                  mainAxisAlignment: MainAxisAlignment.start, // align left inside row
+                                  children: [
+                                    SpinKitThreeBounce(color: courseColor, size: 20),
+                                  ]
+                              )
+                          ]else...[
+                            if(controller.messagesSent[index].sender == "user")...[
+                              BubbleSpecialOne(
                                 text: controller.messagesSent[index].text,
-                                isSender: false,
-                                color: Color(0xFFFFFFFF),
+                                isSender: true,
+                                color: courseColor,
                                 textStyle: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   color: Colors.black,
-                                )
-                            )
+                                ),
+                              ),
+                            ],
+                            if(controller.messagesSent[index].sender == "bot")
+                              BubbleSpecialOne(
+                                  text: controller.messagesSent[index].text,
+                                  isSender: false,
+                                  color: Color(0xFFFFFFFF),
+                                  textStyle: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                  )
+                              )
+                          ]
                         ]
-                      ]
-                  );
-                }
-            );
+                    );
+                  }
+              );
+            }
+
       },
     );
   }
@@ -129,21 +144,23 @@ class ChatPlatform extends GetView<ChatController> {
       appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          centerTitle: false,
-          leading: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }
-              ),
-
-            ],
+          title: Text("Tameri Study AI"),
+          leading: IconButton(
+              icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () {
+                Navigator.pop(context);
+              }
           ),
+          actions: [
+            InkWell(
+              onTap: (){
+                controller.messagesSent.clear();
+              },
+              child: Image.asset("assets/images/logo.png"),
+            )
+          ],
+          centerTitle: true,
           automaticallyImplyLeading: false,
-          leadingWidth: 110,
 
       ),
       body: RefreshIndicator(
@@ -156,6 +173,7 @@ class ChatPlatform extends GetView<ChatController> {
              Expanded(child: chatList()),
 
               MessageBar(
+                messageBarHintText: "Ask any question",
                 onSend: (_) async{
 
                   controller.messagesSent.add(Message(text: controller.msgController.text, sender: 'user'));
@@ -191,7 +209,7 @@ class ChatPlatform extends GetView<ChatController> {
                       }
                     },
                   ),
-                  Padding(
+                  /*Padding(
                     padding: EdgeInsets.only(left: 8, right: 8),
                     child: InkWell(
                       child: Icon(
@@ -201,7 +219,7 @@ class ChatPlatform extends GetView<ChatController> {
                       ),
                       onTap: () {},
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ],

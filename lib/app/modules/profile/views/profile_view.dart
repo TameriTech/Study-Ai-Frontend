@@ -24,7 +24,8 @@ class ProfileView extends GetView<ProfileController> {
           title: Text('Mon profile', style: TextStyle(fontSize: 24, color: Colors.white)),
           actions: [
             Obx((){
-              return InkWell(
+              return controller.currentUser.value.bestSubjects != "" ?
+                InkWell(
                   onTap: (){
                     controller.edit.value = !controller.edit.value;
                     controller.fullName.text = controller.currentUser.value.fullName.toString();
@@ -41,7 +42,7 @@ class ProfileView extends GetView<ProfileController> {
                     'assets/images/edit.png',
                     fit: BoxFit.cover,
                   ).marginOnly(right: 16)
-              );
+              ) : SizedBox.shrink();
             }),
             SizedBox(width: 10)
           ],
@@ -74,7 +75,7 @@ class ProfileView extends GetView<ProfileController> {
                       return Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         width: double.infinity,
-                        height: 350,
+                        height: Get.height/3.5,
                         decoration: const BoxDecoration(
                           color: Color(0xFF14213D),
                           borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
@@ -95,105 +96,123 @@ class ProfileView extends GetView<ProfileController> {
                   }),
                 ),
                 Obx((){
-                  return Positioned(
-                      top: controller.edit.value ? 0 : 280,
+                  return Positioned.fill(
+                      top: controller.edit.value ? 0 : Get.height/4.5,
                       left: 0,
                       right: 0,
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 30),
-                          Container(
-                              padding: EdgeInsets.all(20),
-                              width: double.infinity,
-                              height: controller.edit.value ? 650 : 200,
-                              margin: const EdgeInsets.symmetric(horizontal: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    blurRadius: 8,
-                                    offset: Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: Obx((){
-                                if(controller.currentUser.value.bestSubjects == ""){
-                                  return Column(
-                                    children: [
-                                      Text(
-                                        "Pense à finaliser ton\ninscription",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(height: 16),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.black,
-                                          shape: StadiumBorder(),
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 40,
-                                            vertical: 12,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          "Inscription",
-                                          style: TextStyle(color: Colors.white, fontSize: 18),
-                                        ),
-                                      ),
-                                      SizedBox(height: 12),
-                                      Text(
-                                        "Plus d’option et plus de\npersonnalisation",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[600],
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  );
-                                }else{
-                                  return controller.edit.value
-                                      ? TabViewWidget(context)
-                                      : Column(
-                                    children: [
-                                      ListTile(
-                                        leading: Icon(Icons.question_mark, color: Colors.red),
-                                        title: Text("Objectifs", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
-                                        subtitle: Text(controller.currentUser.value.bestSubjects.toString(),
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
-                                        ),
-                                      ),
-                                      ListTile(
-                                        leading: Icon(Icons.check_box_sharp, color: Colors.green),
-                                        title: Text("Cours préféré", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
-                                        subtitle: Text(controller.currentUser.value.learningObjectives.toString(),
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                }
-                              })
-                          ),
-                          const SizedBox(height: 40),
-                          Text(
-                            "Ma progression",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 30),
+                            Container(
+                                padding: EdgeInsets.all(20),
+                                width: double.infinity,
+                                height: controller.edit.value ? 650 : 350,
+                                margin: const EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    Obx((){
+                                      if(controller.currentUser.value.bestSubjects == ""){
+                                        return Column(
+                                          children: [
+                                            Text(
+                                              "Pense à finaliser ton\ninscription",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            SizedBox(height: 16),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.black,
+                                                shape: StadiumBorder(),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 40,
+                                                  vertical: 12,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                "Inscription",
+                                                style: TextStyle(color: Colors.white, fontSize: 18),
+                                              ),
+                                            ),
+                                            SizedBox(height: 12),
+                                            Text(
+                                              "Plus d’option et plus de\npersonnalisation",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey[600],
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        );
+                                      }else{
+                                        return controller.edit.value
+                                            ? TabViewWidget(context)
+                                            : Column(
+                                          children: [
+                                            ListTile(
+                                              trailing: Icon(Icons.question_mark, color: Colors.grey),
+                                              title: Text("Objectifs", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                              subtitle: Text(controller.currentUser.value.bestSubjects.toString(),
+                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
+                                              ),
+                                            ),
+                                            ListTile(
+                                              trailing: Icon(Icons.check_box_sharp, color: Colors.grey),
+                                              title: Text("Cours préféré", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                              subtitle: Text(controller.currentUser.value.learningObjectives.toString(),
+                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }
+                                    }),
+                                    SizedBox(height: 30),
+                                    ListTile(
+                                      title: Text("Se déconnecter", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                      trailing: Icon(Icons.logout, color: Colors.grey),
+                                      onTap: () => Get.toNamed(Routes.LOGIN),
+                                    ),
+                                    ListTile(
+                                      title: Text("Supprimer mon compte", style: TextStyle(fontSize: 16, color: Colors.red)),
+                                      trailing: Icon(Icons.delete_forever, color: Colors.red),
+                                      onTap: (){},
+                                    ),
+                                  ],
+                                )
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          progressionIndicator(context)
-                        ],
+                            const SizedBox(height: 40),
+                            Text(
+                              "Ma progression",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            progressionIndicator(context),
+                            SizedBox(height: 15)
+                          ],
+                        ),
                       )
                   );
                 })

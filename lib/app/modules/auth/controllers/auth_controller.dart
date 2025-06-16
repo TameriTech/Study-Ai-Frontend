@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studyai/app/models/user_model.dart';
+import 'package:studyai/app/modules/auth/controllers/google_api.dart';
 import 'package:studyai/app/modules/root/controllers/root_controller.dart';
 import 'package:studyai/app/providers/laravel_provider.dart';
 import 'package:studyai/app/repositories/user_repository.dart';
@@ -12,6 +14,11 @@ import 'package:studyai/common/ui.dart';
 
 
 class AuthController extends GetxController {
+
+  GoogleSignInAccount? _currentUser;
+  bool _isAuthorized = false; // has granted permissions?
+  String _contactText = '';
+
 
   Rx<UserModel> currentUser = Get.find<AuthService>().user;
   late GlobalKey<FormState> loginFormKey;
@@ -46,6 +53,17 @@ class AuthController extends GetxController {
   RxDouble progress = 0.0.obs;
   Timer? _timer;
   Duration duration = Duration(seconds: 10);
+
+  // final GoogleSignIn _googleSignIn = GoogleSignIn(
+  //   // Optional clientId
+  //   // clientId: '[YOUR_OAUTH_2_CLIENT_ID]',
+  //   scopes: <String>[PeopleServiceApi.contactsReadonlyScope],
+  // );
+  //
+  // GoogleSignInAccount? _currentUser;
+  // String _contactText = '';
+
+
 
 
   AuthController(){
@@ -177,6 +195,27 @@ class AuthController extends GetxController {
       }
 
     }
+
+  Future<void> handleSignIn() async {
+    try {
+      await GoogleApi.signIn();
+      debugPrint(GoogleApi.userinfo().toString());
+
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+  Future<void> handleSignOut(BuildContext context) async {
+    try {
+      await GoogleApi.signOut();
+      debugPrint(GoogleApi.userinfo().toString());
+      Get.offAllNamed(Routes.LOGIN);
+
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
 
 
 }
