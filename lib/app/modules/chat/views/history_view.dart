@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
 import '../../../../color_constants.dart';
+import '../../../routes/app_routes.dart';
 import '../controllers/chat_controller.dart';
 
 
@@ -24,7 +25,7 @@ class HistoryView extends GetView<ChatController> {
             child: const Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "Historique de discussion",
+            "Historique des discussions",
             style: TextStyle(
               fontSize: screenWidth * 0.055, // responsive font size
               fontWeight: FontWeight.w600,
@@ -46,7 +47,7 @@ class HistoryView extends GetView<ChatController> {
                   final item = controller.historicList[index % controller.historicList.length];
                   return HistoricWidget(
                     smallDescription: item.smallDescription,
-                    onPressed: () {},
+                    onPressed: () => Get.toNamed(Routes.CHAT_PLATFORM),
                     date: item.date,
                     course: item.course,
                   ).marginOnly(bottom: 16);

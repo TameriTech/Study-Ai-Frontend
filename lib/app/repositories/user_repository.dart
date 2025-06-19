@@ -14,6 +14,11 @@ class UserRepository {
       return _laravelApiClient.registerUser(user);
    }
 
+   Future updateUser(UserModel user) {
+      _laravelApiClient = Get.find<LaravelApiClient>();
+      return _laravelApiClient.updateUser(user);
+   }
+
    Future login(UserModel user) {
       try{
 

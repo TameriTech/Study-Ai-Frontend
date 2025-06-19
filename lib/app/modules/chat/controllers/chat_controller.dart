@@ -1,25 +1,13 @@
 
 import 'dart:convert';
-import 'dart:io';
-import 'dart:ui';
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_animations/flutter_map_animations.dart';
-import 'package:flutter_map_geojson/flutter_map_geojson.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/models/historic_model.dart';
-
-import '../../../../color_constants.dart';
-import '../../../../common/ui.dart';
 import '../../../models/user_model.dart';
-import '../../../repositories/files_repository.dart';
-import '../../../repositories/quizz_repository.dart';
-import '../../../repositories/user_repository.dart';
-import '../../../repositories/chat_repository.dart';
 import '../../../services/auth_service.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../services/global_services.dart';
 
 class ChatController extends GetxController{
   final Rx<UserModel> currentUser = Get
@@ -36,7 +24,13 @@ class ChatController extends GetxController{
 
   var messages = [];
 
-  var messagesSent = [];
+  final RxList<Message> _messagesSent = <Message>[].obs;
+
+  RxList<Message> get messagesSent => _messagesSent;
+
+  TextEditingController msgController = TextEditingController();
+
+  final ScrollController scrollController = ScrollController();
 
   ChatController() {
 
@@ -45,11 +39,107 @@ class ChatController extends GetxController{
   @override
   void onInit() async {
     super.onInit();
+    ever(messagesSent, (_) => scrollBottom());
   }
 
+  Future sendPrompt(String question, int id)async{
+    isLoading.value = true;
+    try {
+      var headersList = {
+        'Content-Type': 'application/json'
+      };
+      var url = Uri.parse('${GlobalService().baseUrl}/chat/ask');
 
+      var body = {
+        "question": question,
+        "document_id": id
+      };
+
+      var req = http.Request('POST', url);
+      req.headers.addAll(headersList);
+      req.body = json.encode(body);
+
+      var res = await req.send();
+      final resBody = await res.stream.bytesToString();
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        isLoading.value = false;
+        var data = jsonDecode(resBody)["answer"];
+
+        const int chunkSize = 400;
+        final List<String> chunks = [];
+        for (int i = 0; i < data.length; i += chunkSize) {
+          chunks.add(
+            data.substring(i, i + chunkSize > data.length ? data.length : i + chunkSize),
+          );
+        }
+        // ✅ Add each chunk as a separate message with a delay
+        for (var chunk in chunks) {
+
+          messagesSent.add(Message(text: chunk, sender: 'bot'));
+          await Future.delayed(Duration(seconds: 2000));
+          isLoading.value = true;// Optional: simulate typing
+          await Future.delayed(Duration(seconds: 2000));
+          isLoading.value = false;
+        }
+      }
+      else {
+        print(res.reasonPhrase);
+      }
+    } catch (e) {
+
+    }
+  }
+
+  Future getFileId(String path)async{
+
+    try {
+      var headersList = {
+        'Content-Type': 'application/json'
+      };
+      var url = Uri.parse('${GlobalService().baseUrl}/documents?user_id=${currentUser.value.userId}');
+
+      var req = http.MultipartRequest('POST', url);
+      req.headers.addAll(headersList);
+
+      req.files.add(await http.MultipartFile.fromPath('file', path));
+
+      var res = await req.send();
+      final resBody = await res.stream.bytesToString();
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        isLoading.value = false;
+        var data = jsonDecode(resBody);
+        print(data);
+        //await sendPrompt(msgController.text, 0);
+      }
+      else {
+        print(res.reasonPhrase);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void scrollBottom(){
+    Future.delayed(Duration(milliseconds: 100), () {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
 }
 
+class Message {
+  final String text;
+  final String sender;
+
+  Message({required this.text, required this.sender});
+}
 
 
 

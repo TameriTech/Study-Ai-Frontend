@@ -1,31 +1,85 @@
-import 'dart:io';
-import 'dart:math';
-import 'package:image/image.dart' as Im;
-import 'dart:math' as Math;
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../../../../common/ui.dart';
 import '../../../models/user_model.dart';
 import '../../../repositories/user_repository.dart';
 import '../../../services/auth_service.dart';
-import '../../../services/global_services.dart';
-import '../../auth/controllers/auth_controller.dart';
-
-
 
 class ProfileController extends GetxController {
   Rx<UserModel> currentUser = Get.find<AuthService>().user;
 
-  final List<String> subjects = [
-    'Maths', 'Droit', 'Info', 'Chimie',
-    'Physique', 'Comptabilité', 'Électronique', 'Physique',
-    'Maths', 'Histoire', 'SVT', 'Maths',
-    'Physique', 'Géographie', 'Economie', 'Physique',
+  var selected = "".obs;
+  var hasSelected = false.obs;
+  var edit = false.obs;
+  TextEditingController fullName = TextEditingController();
+  TextEditingController email = TextEditingController();
+
+  var selectedHomeIndex = 0.obs;
+  var hidePassword = false.obs;
+  var newPassword = "".obs;
+  var confirmPassword = "".obs;
+
+  var newName = '';
+  var newEmail = '';
+  var newClassLevel = '';
+  var newAcademicLevel = '';
+  var newSelected = '';
+  var newObjSelected = '';
+
+  late UserRepository userRepository;
+
+  ProfileController(){
+    userRepository = UserRepository();
+
+  }
+  var schoolLevel = [
+    "etudiant",
+    "lyceen",
+    "collegien",
+    "candidat Libre"
+
   ];
+  var selectedSchoolLevel = ''.obs;
+
+  var classDegree = [
+  "BEPC",
+  "BAC",
+  "BTS/DUT",
+  "License"
+  ];
+
+  var selectedClassLevel = ''.obs;
+
+  final List<String> subjects = [
+    'Sciences',
+    'Lettres et Langues',
+    'Économie et Gestion',
+    'Sciences Sociales',
+    'Sciences Politiques',
+    'Sciences de la Santé',
+    'Ingénierie',
+    'Informatique',
+    'Droit',
+    'Médecine',
+    'Architecture',
+    'Philosophie',
+    'Communication',
+    'Éducation',
+    'Agronomie',
+    'Beaux-Arts',
+    'Tourisme et Hôtellerie',
+    'Électronique',
+    'Comptabilité et Finance',
+    'Marketing',
+    'Ressources Humaines',
+    'Journalisme',
+  ];
+
+  var selectedObj = "".obs;
+  var hasSelectedObj = false.obs;
+
+  var isLoading = false.obs;
 
   final List<String> learningObjectives = [
     'Améliorer mes notes',
@@ -36,14 +90,36 @@ class ProfileController extends GetxController {
 
   RxBool isBestSubjectsForm = true.obs;
 
-  ProfileController() {
+  Future updateProfile()async{
 
+    try{
+      isLoading.value = true;
+      currentUser.value = await userRepository.updateUser(currentUser.value);
+      Get.find<AuthService>().user.value = currentUser.value;
+      print(currentUser.value);
+
+      Get.showSnackbar(Ui.SuccessSnackBar(message: 'Inscription complété avec succès!'));
+
+      isLoading.value = false;
+
+    } catch(e){
+      isLoading.value = false;
+      Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
+
+    }
+    finally {
+      isLoading.value = false;
+    }
   }
 
   @override
   void onInit() async {
 
     super.onInit();
+  }
+
+  Future updatePassword() async{
+
   }
 
 }

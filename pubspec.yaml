@@ -75,6 +75,7 @@ dependencies:
   google_sign_in: ^6.2.2
 
 
+  chat_bubbles: ^1.2.0
 
 
 flutter_native_splash:
