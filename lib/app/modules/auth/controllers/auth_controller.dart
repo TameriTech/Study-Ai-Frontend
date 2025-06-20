@@ -14,8 +14,6 @@ import 'package:studyai/common/ui.dart';
 
 
 
-
-
 class AuthController extends GetxController {
 
   GoogleSignInAccount? _currentUser;

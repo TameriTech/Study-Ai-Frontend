@@ -74,7 +74,6 @@ dependencies:
   flutter_facebook_auth: ^7.1.2
   google_sign_in: ^6.2.2
 
-
   chat_bubbles: ^1.2.0
 
 
