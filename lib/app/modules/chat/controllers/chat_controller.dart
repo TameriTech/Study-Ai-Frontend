@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:studyai/app/models/historic_model.dart';
 import '../../../models/user_model.dart';
 import '../../../services/auth_service.dart';
@@ -23,6 +24,9 @@ class ChatController extends GetxController{
   var isLoading = false.obs;
 
   var messages = [];
+
+  var fileName = "".obs;
+  String filePath = "";
 
   final RxList<Message> _messagesSent = <Message>[].obs;
 
@@ -63,7 +67,6 @@ class ChatController extends GetxController{
       final resBody = await res.stream.bytesToString();
 
       if (res.statusCode >= 200 && res.statusCode < 300) {
-        isLoading.value = false;
         var data = jsonDecode(resBody)["answer"];
         print("AI response: $data");
 
@@ -76,46 +79,63 @@ class ChatController extends GetxController{
         }
         // ✅ Add each chunk as a separate message with a delay
         for (var chunk in chunks) {
-          isLoading.value = true;
           await Future.delayed(Duration(seconds: 1), (){
-            messagesSent.add(Message(text: chunk, sender: 'bot'));
+            messagesSent.add(Message(text: chunk, sender: 'bot', document: ''));
           });
           isLoading.value = false;
-          await Future.delayed(Duration(seconds: 1));
         }
-      }
-      else {
+      }else{
+        isLoading.value = false;
+        messagesSent.add(
+            Message(
+                text: "Un problème de réseau ???",
+                sender: 'bot',
+                document: ''
+            )
+        );
         print(res.reasonPhrase);
       }
-    } catch (e) {
 
+    } catch (e) {
+      isLoading.value = false;
+      print(e);
     }
   }
 
   Future getFileId(String path)async{
 
+    Future.delayed(Duration(seconds: 2), (){
+      messagesSent.add(
+          Message(
+              text: "Analyse du document en cours... Cette opération peut prendre plusieurs minutes!",
+              sender: 'bot',
+              document: ''
+          )
+      );
+    });
+
     try {
-      var headersList = {
-        'Content-Type': 'application/json'
+      var headers = {
+        'Accept': 'application/json'
       };
-      var url = Uri.parse('${GlobalService().baseUrl}/documents?user_id=${currentUser.value.userId}');
+      var request = http.MultipartRequest('POST', Uri.parse('${GlobalService().baseUrl}/documents/?user_id=${currentUser.value.userId}'));
+      request.files.add(await http.MultipartFile.fromPath('file',
+        path,
+          contentType: MediaType('application', 'pdf')
+      ));
+      request.headers.addAll(headers);
 
-      var req = http.MultipartRequest('POST', url);
-      req.headers.addAll(headersList);
+      http.StreamedResponse response = await request.send();
 
-      req.files.add(await http.MultipartFile.fromPath('file', path));
-
-      var res = await req.send();
-      final resBody = await res.stream.bytesToString();
-
-      if (res.statusCode >= 200 && res.statusCode < 300) {
-        isLoading.value = false;
-        var data = jsonDecode(resBody);
-        print(data);
-        //await sendPrompt(msgController.text, 0);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        var resBody = await response.stream.bytesToString();
+        int fileId = jsonDecode(resBody)['id_document'];
+        print("file id is: $fileId");
+        await sendPrompt(msgController.text, fileId);
       }
       else {
-        print(res.reasonPhrase);
+        final resBody = await response.stream.bytesToString();
+        print("Failed! $resBody");
       }
     } catch (e) {
       print(e);
@@ -138,8 +158,9 @@ class ChatController extends GetxController{
 class Message {
   final String text;
   final String sender;
+  final String document;
 
-  Message({required this.text, required this.sender});
+  Message({required this.text, required this.sender, required this.document});
 }
 
 

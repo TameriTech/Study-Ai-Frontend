@@ -313,7 +313,7 @@ class RegisterViews extends GetView<AuthController> {
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
-          color: Colors.black,
+          color: primaryColor,
           haveBorder: false,
           text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
@@ -326,7 +326,7 @@ class RegisterViews extends GetView<AuthController> {
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
-          color: Colors.black,
+          color: primaryColor,
           haveBorder: false,
           text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
@@ -337,7 +337,7 @@ class RegisterViews extends GetView<AuthController> {
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
-          color: Colors.black,
+          color: primaryColor,
           haveBorder: false,
           text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){

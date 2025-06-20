@@ -252,15 +252,12 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
       var result = await filesRepository.extractTextFromPDFFile(id: userId, pdfFile: pdfFile);
       return result;
 
-
     } catch(e){
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
-
     }
     finally {
       //loading.value = false;
     }
-
   }
 
   Future getCourseById({required int courseId}) async {
@@ -278,7 +275,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     finally {
       //loading.value = false;
     }
-
   }
 
   Future createVocabulary({required int courseId}) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studyai/app/modules/chat/views/text_animation.dart';
 import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
 import '../../../../color_constants.dart';
 import '../../../routes/app_routes.dart';
@@ -23,22 +24,27 @@ class ChatView extends GetView<ChatController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 1. Welcome message
-              Text(
-                'Bienvenue 👋',
+              TypewriterText(
+                text: 'Bienvenue 👋',
+                speed: Duration(milliseconds: 50),
+                startDelay: Duration(seconds: 1), // speed between each character
                 style: TextStyle(
                   fontSize: screenWidth * 0.07,
                   fontWeight: FontWeight.bold,
-                ),
+                )
               ),
               SizedBox(height: 8),
 
               // 2. Intro description
-              Text(
-                'Ton assistant d’étude intelligent est là pour t’aider à comprendre, réviser, et progresser.',
-                style: TextStyle(
-                  fontSize: screenWidth * 0.04,
-                  color: Colors.grey[700],
-                ),
+
+              TypewriterText(
+                  text: 'Ton assistant d’étude intelligent est là pour t’aider à comprendre, réviser, et progresser.',
+                  speed: Duration(milliseconds: 50),
+                  startDelay: Duration(seconds: 1), // speed between each character
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.04,
+                    color: Colors.grey[700],
+                  ),
               ),
               SizedBox(height: 16),
 
@@ -49,8 +55,10 @@ class ChatView extends GetView<ChatController> {
                   Icon(Icons.smart_toy, color: Colors.black, size: 24),
                   SizedBox(width: 12),
                   Expanded(
-                    child: Text(
-                      'Pose des questions ou envoie un fichier PDF : on bosse ensemble.',
+                    child: TypewriterText(
+                      text: 'Pose des questions ou envoie un fichier PDF : on bosse ensemble.',
+                      speed: Duration(milliseconds: 50),
+                      startDelay: Duration(seconds: 1), // speed between each character
                       style: TextStyle(fontSize: screenWidth * 0.035),
                     ),
                   ),

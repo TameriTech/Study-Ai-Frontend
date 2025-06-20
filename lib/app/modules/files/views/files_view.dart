@@ -30,17 +30,19 @@ class FilesView extends GetView<FilesController> {
           leading: Icon(null),
           title: Text("Mes Fichiers", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),),
           actions: [
-            Image.asset(
-              'assets/images/settings.png',
-              fit: BoxFit.cover,
-            ).marginOnly(right: 16)
+            IconButton(
+                onPressed: (){
+
+                },
+                icon: Icon(Icons.language, size: 30,color: appColor)
+            )
           ],
         ),
         floatingActionButton: SizedBox(
           height: 53,
           width: 53,
           child: FloatingActionButton(
-              backgroundColor: Colors.black,
+              backgroundColor: appColor,
               shape: CircleBorder(),
               child: Obx(() => controller.selectedHomeIndex.value == 2?
               Icon(Icons.electric_bolt_outlined, color: Colors.white, )

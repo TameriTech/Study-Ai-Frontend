@@ -5,6 +5,7 @@ import '../../../../common/helper.dart';
 import '../../../routes/app_routes.dart';
 import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
+import '../../global_widgets/warning_pupop.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -19,7 +20,7 @@ class ProfileView extends GetView<ProfileController> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           leadingWidth: 0,
-          backgroundColor: Color(0xFF14213D),
+          backgroundColor: appColor,
           leading: Icon(null),
           title: Text('Mon profile', style: TextStyle(fontSize: 24, color: Colors.white)),
           actions: [
@@ -140,7 +141,7 @@ class ProfileView extends GetView<ProfileController> {
                                                 Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.black,
+                                                backgroundColor: primaryColor,
                                                 shape: StadiumBorder(),
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal: 40,
@@ -195,7 +196,17 @@ class ProfileView extends GetView<ProfileController> {
                                     ListTile(
                                       title: Text("Supprimer mon compte", style: TextStyle(fontSize: 16, color: Colors.red)),
                                       trailing: Icon(Icons.delete_forever, color: Colors.red),
-                                      onTap: (){},
+                                      onTap: () {
+                                        WarningDialog.show(
+                                          context: context,
+                                          title: 'Attention',
+                                          message: 'Veuillez compléter tous les champs avant de continuer.',
+                                          confirmText: 'D\'accord',
+                                          onConfirm: () {
+                                            controller.deleteAccount();
+                                          }
+                                        );
+                                      },
                                     ),
                                   ],
                                 )
@@ -380,6 +391,7 @@ class ProfileView extends GetView<ProfileController> {
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
             onChanged: (value) => {
+              controller.oldPassword.value = value,
               controller.currentUser.value.password = value
             },
             validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
@@ -403,6 +415,7 @@ class ProfileView extends GetView<ProfileController> {
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
             onChanged: (value) => {
+              controller.newPassword.value = value,
               controller.currentUser.value.password = value
             },
             validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
@@ -426,6 +439,7 @@ class ProfileView extends GetView<ProfileController> {
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
             onChanged: (value) => {
+              controller.confirmPassword.value = value,
               controller.currentUser.value.password = value
             },
             validator: (input) => input != controller.newPassword.value ? 'confirm password and new password must be the same' : null,

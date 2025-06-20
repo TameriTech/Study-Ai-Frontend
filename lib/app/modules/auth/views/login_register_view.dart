@@ -115,7 +115,8 @@ class LoginRegisterView extends GetView<AuthController> {
                   ).marginOnly(top: 10, bottom: 40),
 
 
-                  BlockButtonWidget(color: Colors.white,
+                  BlockButtonWidget(
+                      color: primaryColor,
                       haveBorder: true,
                       text: Text('Connexion', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.black, fontWeight: FontWeight.w600, ), ),),
                       onPressed: (){
@@ -196,18 +197,18 @@ class LoginRegisterView extends GetView<AuthController> {
                     width: Get.width,
                     child: Obx(() => !controller.loginLoading.value?
                     BlockButtonWidget(
-                        color: Colors.black,
+                        color: primaryColor,
                         haveBorder: false,
                         text: Text('Connexion', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
                         onPressed: (){
                           controller.login();
                         }):
                     BlockButtonWidget(
+                      color: primaryColor,
                       haveBorder: false,
                       onPressed: () async {
 
                       },
-                      color: primaryColor,
                       text: const SizedBox(height: 30,
                           child: SpinKitThreeBounce(color: Colors.white, size: 20)),
                     ),),
