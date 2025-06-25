@@ -109,7 +109,7 @@ class ProfileView extends GetView<ProfileController> {
                             Container(
                                 padding: EdgeInsets.all(10),
                                 width: double.infinity,
-                                height: controller.edit.value ? 700 : 350,
+                                height: controller.edit.value ? 700 : 200,
                                 margin: const EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -219,7 +219,7 @@ class ProfileView extends GetView<ProfileController> {
                                       WarningDialog.show(
                                           context: context,
                                           title: 'Attention',
-                                          message: 'Veuillez compléter tous les champs avant de continuer.',
+                                          message: 'Voulez vous vraiment supprimer votre compte?.',
                                           confirmText: 'D\'accord',
                                           onConfirm: () {
                                             controller.deleteAccount();
@@ -504,7 +504,7 @@ class ProfileView extends GetView<ProfileController> {
           ),
           SizedBox(height: 20),
           Obx(() {
-            return controller.onResetPassword.value ?
+            return !controller.onResetPassword.value ?
             BlockButtonWidget(
                 color: Colors.black,
                 haveBorder: false,

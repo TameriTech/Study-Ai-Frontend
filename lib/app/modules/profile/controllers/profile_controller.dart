@@ -126,11 +126,8 @@ class ProfileController extends GetxController {
       var headersList = {
         'Accept': 'application/json'
       };
-      var url = Uri.parse('${GlobalService().baseUrl}/update-password/?'
-          'user_id=${currentUser.value.userId}&'
-          'old_password=${oldPassword.value}%40&'
-          'new_password=${newPassword.value}&'
-          'confirm_password=${confirmPassword.value}');
+
+      var url = Uri.parse('${GlobalService().baseUrl}/update-password/?user_id=${currentUser.value.userId}&old_password=${oldPassword.value}&new_password=${newPassword.value}%40&confirm_password=${confirmPassword.value}%40');
 
       var req = http.Request('POST', url);
       req.headers.addAll(headersList);

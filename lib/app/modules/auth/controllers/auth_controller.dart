@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studyai/app/models/user_model.dart';
 import 'package:studyai/app/modules/auth/controllers/google_api.dart';
@@ -102,7 +103,8 @@ class AuthController extends GetxController {
         await getUser(id);
         //Get.showSnackbar(Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
         loginLoading.value = false;
-
+        var box = GetStorage();
+        box.write("exists", true);
         Get.toNamed(Routes.ROOT);
       } catch(e){
         loginLoading.value = false;
