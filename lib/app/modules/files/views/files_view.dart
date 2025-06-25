@@ -107,14 +107,11 @@ class FilesView extends GetView<FilesController> {
           child: Scaffold(
             backgroundColor: bgColor,
             appBar: AppBar(
-
                 leadingWidth: 0,
                 centerTitle: true,
                 backgroundColor: backgroundColor,
                 leading: Icon(null),
                 toolbarHeight: 30,
-
-
                 title: TabBar(
                   dividerColor: Colors.transparent,
                   labelPadding: EdgeInsets.zero,

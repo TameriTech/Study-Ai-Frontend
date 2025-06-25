@@ -27,6 +27,7 @@ class ChatController extends GetxController{
 
   var fileName = "".obs;
   String filePath = "";
+  final RxBool isExpanded = false.obs;
 
   final RxList<Message> _messagesSent = <Message>[].obs;
 
@@ -70,20 +71,8 @@ class ChatController extends GetxController{
         var data = jsonDecode(resBody)["answer"];
         print("AI response: $data");
 
-        const int chunkSize = 500;
-        final List<String> chunks = [];
-        for (int i = 0; i < data.length; i += chunkSize) {
-          chunks.add(
-            data.substring(i, i + chunkSize > data.length ? data.length : i + chunkSize),
-          );
-        }
-        // ✅ Add each chunk as a separate message with a delay
-        for (var chunk in chunks) {
-          await Future.delayed(Duration(seconds: 1), (){
-            messagesSent.add(Message(text: chunk, sender: 'bot', document: ''));
-          });
-          isLoading.value = false;
-        }
+        messagesSent.add(Message(text: data, sender: 'bot', document: ''));
+        isLoading.value = false;
       }else{
         isLoading.value = false;
         messagesSent.add(

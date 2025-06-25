@@ -16,15 +16,16 @@ class LoginRegisterView extends GetView<AuthController> {
     controller.loginFormKey = GlobalKey<FormState>();
     return WillPopScope(
       onWillPop: Helper().onWillPop,
-      child: SafeArea(
-        child: Scaffold(
-            body: Form(
-                key: controller.loginFormKey,
-                child: Obx(() => controller.isLoginScreen.value?
-                loginScreen(context):
-                registerScreen(context),)
-            )
-
+      child: Material(
+        type: MaterialType.transparency,
+        child: SizedBox(
+          height: Get.height,
+          child: Form(
+              key: controller.loginFormKey,
+              child: Obx(() => controller.isLoginScreen.value?
+              loginScreen(context):
+              registerScreen(context),)
+          )
         ),
       ),
     );
@@ -38,12 +39,11 @@ class LoginRegisterView extends GetView<AuthController> {
           'assets/images/new_account.png',
           width: Get.width,
           fit: BoxFit.fitWidth,
-          height: 231,
-
+          height: 250,
         ),
         Positioned(
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                   color: bgColor,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
@@ -57,7 +57,7 @@ class LoginRegisterView extends GetView<AuthController> {
                     isFirst: true,
                     labelText: 'Votre addresse Gmail',
                     hintText: "johndoe@gmail.com",
-                  ).marginOnly(top: 80),
+                  ).marginOnly(top: 20),
 
                   SizedBox(
                     width: Get.width,
@@ -118,7 +118,8 @@ class LoginRegisterView extends GetView<AuthController> {
                   BlockButtonWidget(
                       color: primaryColor,
                       haveBorder: true,
-                      text: Text('Connexion', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.black, fontWeight: FontWeight.w600, ), ),),
+                      text: Text('Connexion', style: Get.textTheme.labelSmall!.
+                      merge(TextStyle(color: Colors.black, fontWeight: FontWeight.w600, ), ),),
                       onPressed: (){
 
 
@@ -144,12 +145,12 @@ class LoginRegisterView extends GetView<AuthController> {
           'assets/images/login_image.png',
           width: Get.width,
           fit: BoxFit.cover,
-          height: 231,
+          height: 280,
 
         ),
         Positioned(
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                   color: bgColor,
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
@@ -192,6 +193,16 @@ class LoginRegisterView extends GetView<AuthController> {
 
                   ),
                   ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.FORGOT_PASSWORD);
+                      },
+                      child: Text("Mot de pass oublé?",style:
+                      TextStyle(fontFamily: "poppins",fontSize: 16, color: buttonColor)),
+                    ).marginOnly(bottom: 10),
+                  ),
 
                   SizedBox(
                     width: Get.width,
@@ -199,7 +210,9 @@ class LoginRegisterView extends GetView<AuthController> {
                     BlockButtonWidget(
                         color: primaryColor,
                         haveBorder: false,
-                        text: Text('Connexion', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                        text: Text('Connexion', style: Get.textTheme.labelSmall!.
+                        merge(TextStyle(color: Colors.white,
+                            fontWeight: FontWeight.w600))),
                         onPressed: (){
                           controller.login();
                         }):
@@ -216,7 +229,8 @@ class LoginRegisterView extends GetView<AuthController> {
 
                   Align(
                       alignment: Alignment.center,
-                      child: Text('Se connecter avec', style: Get.textTheme.displaySmall,)).marginOnly(top: 40, bottom: 30),
+                      child: Text('Se connecter avec', style: Get.textTheme.displaySmall,))
+                      .marginOnly(top: 40, bottom: 30),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -268,22 +282,30 @@ class LoginRegisterView extends GetView<AuthController> {
                     ),
                   ).marginOnly(top: 10),
 
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                        onTap: (){
-                          controller.minimumInformationStep1.value = false;
-                          controller.minimumInformationStep2.value = false;
-                          controller.minimumInformationStep3.value = false;
-                          controller.registerInfoComplete.value = false;
-                          controller.registerInfoHalfSaved.value = false;
-                          Get.toNamed(Routes.REGISTER);
-                        },
-                        child: Text("Ajouter un nouveau compte", style: TextStyle(color: Color(0xff474646), fontSize: 16, fontWeight: FontWeight.w400),)),
-                  ).marginOnly(top: Get.height/12)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Pas encore de compte ? ",
+                        style: TextStyle(color: Color(0xff474646), fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      TextButton(
+                          onPressed: (){
+                            controller.minimumInformationStep1.value = false;
+                            controller.minimumInformationStep2.value = false;
+                            controller.minimumInformationStep3.value = false;
+                            controller.registerInfoComplete.value = false;
+                            controller.registerInfoHalfSaved.value = false;
+                            Get.toNamed(Routes.REGISTER);
+                          },
+                          child: Text("Inscription", style: Get.textTheme.bodyMedium!
+                              .merge(TextStyle(color: primaryColor, decoration: TextDecoration.underline))
+                          )
+                      )
+                    ],
+                  ).marginOnly(top: 15)
                 ],
               ),
-            ).marginOnly(top: 180)
+            ).marginOnly(top: 220)
         )
       ],
     );

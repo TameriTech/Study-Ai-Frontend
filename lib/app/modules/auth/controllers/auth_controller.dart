@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,9 @@ import 'package:studyai/app/repositories/user_repository.dart';
 import 'package:studyai/app/routes/app_routes.dart';
 import 'package:studyai/app/services/auth_service.dart';
 import 'package:studyai/common/ui.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../services/global_services.dart';
 
 
 class AuthController extends GetxController {
@@ -31,7 +35,9 @@ class AuthController extends GetxController {
   RxBool registerInfoHalfSaved = false.obs;
   RxBool hidePassword = false.obs;
   RxBool loginLoading = false.obs;
+  RxBool recoverLoading = false.obs;
   late UserRepository userRepository;
+  var email = "".obs;
   var schoolLevel = [
   "etudiant",
   "lyceen",
@@ -94,8 +100,7 @@ class AuthController extends GetxController {
         loginLoading.value = true;
         var id = await userRepository.login(currentUser.value);
         await getUser(id);
-        Get.showSnackbar(Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
-
+        //Get.showSnackbar(Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
         loginLoading.value = false;
 
         Get.toNamed(Routes.ROOT);
@@ -107,9 +112,6 @@ class AuthController extends GetxController {
       finally {
         loginLoading.value = false;
       }
-
-
-
       }else{
 
       }
@@ -149,15 +151,9 @@ class AuthController extends GetxController {
               else{
                 _timer?.cancel();
               }
-
-
-
             }
           },
         );
-
-
-
       }
       catch(e){
         _timer?.cancel();
@@ -167,9 +163,6 @@ class AuthController extends GetxController {
       finally {
         //loading.value = false;
       }
-
-
-
     }else{
 
     }
@@ -217,5 +210,36 @@ class AuthController extends GetxController {
     }
   }
 
+  Future resetPassword(String value) async{
+    try {
+      var headersList = {
+        'Content-Type': 'application/json'
+      };
+      var url = Uri.parse('${GlobalService().baseUrl}/forgot-password');
 
+      var body = {
+        "email": value
+      };
+
+      var req = http.Request('POST', url);
+      req.headers.addAll(headersList);
+      req.body = json.encode(body);
+
+      var res = await req.send();
+      final resBody = await res.stream.bytesToString();
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        print(resBody);
+        Ui.SuccessSnackBar(message: jsonDecode(resBody)["message"]);
+        recoverLoading.value = false;
+      }
+      else {
+        Ui.ErrorSnackBar(message: res.reasonPhrase.toString());
+        recoverLoading.value = false;
+      }
+    }catch (e){
+      Ui.ErrorSnackBar(message: e.toString());
+      recoverLoading.value = false;
+    }
+  }
 }

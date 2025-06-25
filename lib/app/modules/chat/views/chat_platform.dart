@@ -5,12 +5,14 @@ import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/modules/chat/views/text_animation.dart';
 import '../../../../color_constants.dart';
 import '../controllers/chat_controller.dart';
+import 'expandable_markdown.dart';
 
 class ChatPlatform extends GetView<ChatController> {
   ChatPlatform({super.key});
@@ -75,7 +77,10 @@ class ChatPlatform extends GetView<ChatController> {
                               SizedBox(height: 5),
                             ],
                             if(controller.messagesSent[index].sender == "bot")
-                              BubbleSpecialOne(
+                              ExpandableMarkdown(
+                                markdown: controller.messagesSent[index].text,
+                              )
+                              /*BubbleSpecialOne(
                                   text: controller.messagesSent[index].text,
                                   isSender: false,
                                   color: Color(0xFFFFFFFF),
@@ -83,14 +88,13 @@ class ChatPlatform extends GetView<ChatController> {
                                     fontSize: 16,
                                     color: Colors.black,
                                   )
-                              )
+                              )*/
                           ]
                         ]
                     );
                   }
               );
             }
-
       },
     );
   }
@@ -153,7 +157,7 @@ class ChatPlatform extends GetView<ChatController> {
                           child: Text(controller.fileName.value, overflow: TextOverflow.ellipsis)
                         )
                       ]
-                    ),
+                    )
                   );
                 }
 

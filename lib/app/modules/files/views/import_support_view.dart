@@ -248,21 +248,18 @@ class ImportSupportView extends GetView<FilesController> {
                         alignment: Alignment.centerLeft,
                         child: Text(item["topic"],
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
-                      ).marginOnly(bottom: Get.height*0.025),
+                      )
                     ),
                     SliverToBoxAdapter(
                       child:  Align(
                         alignment: Alignment.centerLeft,
                         child: Text(item["body"],
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
+                          style: TextStyle(fontSize: 14), textAlign: TextAlign.justify,),
                       ).marginOnly(bottom: Get.height*0.025),
-                    ),
+                    )
                   ]
-
-                ],
-
+                ]
               )
-
           ),
         )
       ],
@@ -290,15 +287,15 @@ class ImportSupportView extends GetView<FilesController> {
                           alignment: Alignment.centerLeft,
                           child: Text(item["term"],
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
-                        ).marginOnly(bottom: Get.height*0.025),
+                        )
                       ),
                       SliverToBoxAdapter(
                         child:  Align(
                           alignment: Alignment.centerLeft,
                           child: Text(item["definition"],
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
+                            style: TextStyle(fontSize: 14, ), textAlign: TextAlign.justify,),
                         ).marginOnly(bottom: Get.height*0.025),
-                      ),
+                      )
                     ]
                   ]else...[
                     SliverToBoxAdapter(
@@ -306,7 +303,7 @@ class ImportSupportView extends GetView<FilesController> {
                         alignment: Alignment.centerLeft,
                         child: Text('Term',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
-                      ).marginOnly(bottom: Get.height*0.025),
+                      )
                     ),
                     SliverToBoxAdapter(
                       child:  Align(
@@ -314,16 +311,10 @@ class ImportSupportView extends GetView<FilesController> {
                         child: Text("definition",
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
                       ).marginOnly(bottom: Get.height*0.025),
-                    ),
-
+                    )
                   ]
-
-
-
-                ],
-
+                ]
               )
-
           ),
         )
       ],

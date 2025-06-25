@@ -33,6 +33,8 @@ class ProfileController extends GetxController {
   var newSelected = '';
   var newObjSelected = '';
 
+  var onResetPassword = false.obs;
+
   late UserRepository userRepository;
 
   ProfileController(){
@@ -119,6 +121,7 @@ class ProfileController extends GetxController {
   }
 
   Future updatePassword()async{
+    onResetPassword.value = true;
     try{
       var headersList = {
         'Accept': 'application/json'
@@ -138,13 +141,16 @@ class ProfileController extends GetxController {
       if (res.statusCode >= 200 && res.statusCode < 300) {
         var msg = jsonDecode(resBody)['message'];
         Ui.SuccessSnackBar(message: msg);
+        onResetPassword.value = false;
         print(msg);
       }else{
         Ui.ErrorSnackBar(message: res.reasonPhrase.toString());
+        onResetPassword.value = false;
       }
 
     }catch (e){
       print(e);
+      onResetPassword.value = false;
     }
   }
 
