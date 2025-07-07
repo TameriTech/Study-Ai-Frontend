@@ -1,11 +1,8 @@
 
-import 'dart:io';
-
 import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

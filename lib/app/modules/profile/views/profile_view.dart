@@ -88,7 +88,7 @@ class ProfileView extends GetView<ProfileController> {
                             Image.asset("assets/images/logo.png", width: 200, height: 100),
                             Text("Hey ${controller.currentUser.value.fullName}",
                               style: TextStyle(fontSize: 24, color: Colors.white),),
-                            Text("Etudiant en ${controller.currentUser.value.classLevel}",
+                            Text("Niveau d'études : ${controller.currentUser.value.classLevel}",
                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
                             ),
                           ],
@@ -109,7 +109,7 @@ class ProfileView extends GetView<ProfileController> {
                             Container(
                                 padding: EdgeInsets.all(10),
                                 width: double.infinity,
-                                height: controller.edit.value ? 700 : 200,
+                                height: controller.edit.value ? 700 : null,
                                 margin: const EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -192,6 +192,34 @@ class ProfileView extends GetView<ProfileController> {
                                 )
                             ),
                             Container(
+                              padding: EdgeInsets.all(20),
+                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Ma progression",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  progressionIndicator(context),
+                                ],
+                              ),
+                            ),
+                            Container(
                               padding: EdgeInsets.all(10),
                               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                               decoration: BoxDecoration(
@@ -230,16 +258,6 @@ class ProfileView extends GetView<ProfileController> {
                                 ],
                               ),
                             ),
-                            Text(
-                              "Ma progression",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            progressionIndicator(context),
-                            SizedBox(height: 15)
                           ],
                         ),
                       )
@@ -541,8 +559,8 @@ class ProfileView extends GetView<ProfileController> {
           width: 100,
           child: CircularProgressIndicator(
             value: val,
-            strokeWidth: 8,
-            backgroundColor: Colors.white,
+            strokeWidth: 10,
+            backgroundColor: bgColor,
             color: (){
               if (val <= 0.30) return Colors.red;
               if (val > 0.31 && val < 0.50) return Colors.orange;
