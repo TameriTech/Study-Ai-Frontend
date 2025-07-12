@@ -21,12 +21,32 @@ class UserRepository {
 
    Future login(UserModel user) {
       try{
-
+         _laravelApiClient = Get.find<LaravelApiClient>();
+         return _laravelApiClient.login(user);
       }catch(e){
          rethrow;
       }
-      _laravelApiClient = Get.find<LaravelApiClient>();
-      return _laravelApiClient.login(user);
+
+   }
+
+   Future loginGoogle(String  idToken) {
+      try{
+         _laravelApiClient = Get.find<LaravelApiClient>();
+         return _laravelApiClient.loginGoogle(idToken);
+      }catch(e){
+         rethrow;
+      }
+
+   }
+
+   Future loginFacebook(String  accessToken) {
+      try{
+         _laravelApiClient = Get.find<LaravelApiClient>();
+         return _laravelApiClient.loginFacebook(accessToken);
+      }catch(e){
+         rethrow;
+      }
+
    }
 
    Future getUser(int userId) async {

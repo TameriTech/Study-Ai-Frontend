@@ -158,6 +158,88 @@ class LaravelApiClient extends GetxService {
     }//
   }
 
+  loginGoogle(String idToken)async{
+    try{
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      var response = await httpClient.request(
+        '$baseUrl/login/google',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+        data: {"id_token": idToken},
+      );
+
+
+      if (response.statusCode == 200) {
+        print('date: ${response.data['user']['id']}');
+        return (response.data['user']['id']);
+      }
+      else {
+        print(response.statusMessage);
+      }
+    }on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on FormatException catch (_) {
+      throw const FormatException("Unable to process the data");
+    }on DioException catch (e) {
+      print(e.response?.statusCode);
+      if (e.response?.statusCode == 401) {
+        throw "Invalid credentials";
+      } else {
+        throw NetworkExceptions.getDioException(e);
+      }
+    }
+    catch (e) {
+      throw NetworkExceptions.getDioException(e);
+    }//
+  }
+
+  loginFacebook(String accessToken)async{
+    try{
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      var response = await httpClient.request(
+        '$baseUrl/login/facebook',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+        data: {"access_token": accessToken},
+      );
+
+
+      if (response.statusCode == 200) {
+        print('date: ${response.data['user']['id']}');
+        return (response.data['user']['id']);
+      }
+      else {
+        print(response.statusMessage);
+      }
+    }on SocketException catch (e) {
+      throw SocketException(e.toString());
+    } on FormatException catch (_) {
+      throw const FormatException("Unable to process the data");
+    }on DioException catch (e) {
+      print(e.response?.statusCode);
+      if (e.response?.statusCode == 401) {
+        throw "Invalid credentials";
+      } else {
+        throw NetworkExceptions.getDioException(e);
+      }
+    }
+    catch (e) {
+      throw NetworkExceptions.getDioException(e);
+    }//
+  }
+
 
   getUser(int userId)async{
     try{

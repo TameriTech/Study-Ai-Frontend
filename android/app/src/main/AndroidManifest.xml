@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+<!--    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>-->
+
     <application
         android:label="studyai"
         android:name="${applicationName}"
@@ -20,6 +24,12 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+<!--            <meta-data-->
+<!--                android:name="com.facebook.sdk.ApplicationId"-->
+<!--                android:value="@string/facebook_app_id"/>-->
+<!--            <meta-data-->
+<!--                android:name="com.facebook.sdk.ClientToken"-->
+<!--                android:value="@string/facebook_client_token"/>-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -42,4 +52,7 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+<!--    <queries>-->
+<!--        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />-->
+<!--    </queries>-->
 </manifest>

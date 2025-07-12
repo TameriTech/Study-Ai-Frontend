@@ -237,7 +237,7 @@ class LoginRegisterView extends GetView<AuthController> {
                           fit: BoxFit.cover,
                         ),
                         onTap: (){
-                          controller.handleSignIn();
+                          controller.handleGoogleSignIn();
                         },
                       ),
 
