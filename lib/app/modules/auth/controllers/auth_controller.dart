@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studyai/app/models/user_model.dart';
-import 'package:studyai/app/modules/auth/controllers/facebook_api.dart';
 import 'package:studyai/app/modules/auth/controllers/google_api.dart';
 import 'package:studyai/app/modules/root/controllers/root_controller.dart';
 import 'package:studyai/app/providers/laravel_provider.dart';
@@ -12,7 +11,6 @@ import 'package:studyai/app/repositories/user_repository.dart';
 import 'package:studyai/app/routes/app_routes.dart';
 import 'package:studyai/app/services/auth_service.dart';
 import 'package:studyai/common/ui.dart';
-
 
 
 class AuthController extends GetxController {
@@ -117,8 +115,6 @@ class AuthController extends GetxController {
       }
     }
 
-
-
   Future<void> register() async {
     Get.focusScope?.unfocus();
 
@@ -200,64 +196,22 @@ class AuthController extends GetxController {
 
     }
 
-  Future<void> handleGoogleSignIn() async {
+  Future<void> handleSignIn() async {
     try {
       await GoogleApi.signIn();
       debugPrint(GoogleApi.userinfo().toString());
-      if(GoogleApi.userinfo() != null){
-        GoogleApi.userinfo()?.authentication.then((value) async {
-          print('Id token: ${value.idToken}');
-          print("Access token: ${value.accessToken}");
-          if(value.idToken != null){
-            var id = await userRepository.loginGoogle(value.idToken!);
-            await getUser(id);
-            Get.showSnackbar(Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
-
-            loginLoading.value = false;
-
-            Get.toNamed(Routes.ROOT);
-          }
-
-
-        } ,);
-
-      }
-
 
     } catch (error) {
       debugPrint(error.toString());
     }
   }
 
-  Future<void> handleGoogleSignOut(BuildContext context) async {
+  Future<void> handleSignOut(BuildContext context) async {
     try {
       await GoogleApi.signOut();
       debugPrint(GoogleApi.userinfo().toString());
       Get.offAllNamed(Routes.LOGIN);
 
-    } catch (error) {
-      debugPrint(error.toString());
-    }
-  }
-
-
-  Future<void> handleFacebookSignIn() async {
-    try {
-      await FacebookApi.facebookSignIn();
-      debugPrint(FacebookApi.userinfo.toString());
-      if (FacebookApi.userinfo != null) {
-        if(FacebookApi.accessToken != null){
-          var id = await userRepository.loginFacebook(FacebookApi.accessToken!);
-          await getUser(id);
-          Get.showSnackbar(
-              Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
-
-          loginLoading.value = false;
-
-          Get.toNamed(Routes.ROOT);
-        }
-
-      }
     } catch (error) {
       debugPrint(error.toString());
     }

@@ -61,8 +61,6 @@ class ImportSupportView extends GetView<FilesController> {
                       suffixIcon: Image.asset('assets/images/edit.png'),
                       hintText: 'Ajouter des instructions',
                       maxLines: 16,
-
-
                     ),
 
                     SizedBox(
@@ -74,7 +72,8 @@ class ImportSupportView extends GetView<FilesController> {
                           onPressed: () async {
                             controller.startProgress();
 
-                            showDialog(context: context,
+                            showDialog(
+                                context: context,
                                 builder: (context) => Obx(() => Dialog(
                                   backgroundColor: controller.courseGenerationState[1] == controller.generationState.value?Colors.transparent:bgColor,
                                   alignment: Alignment.center,
@@ -154,7 +153,7 @@ class ImportSupportView extends GetView<FilesController> {
 
   Widget TabViewCourse(BuildContext context, FileCardModel fileCardModel) {
     return DefaultTabController(
-      length: 3, // Number of tabs
+      length: 2, // Number of tabs
       child: Expanded(
 
         child: Scaffold(
@@ -175,7 +174,7 @@ class ImportSupportView extends GetView<FilesController> {
                 labelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white),
                 indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  color: Color(0xff1A3C7D),
+                  color: appColor,
 
                 ),
                 onTap: (value) {
@@ -188,11 +187,6 @@ class ImportSupportView extends GetView<FilesController> {
                     controller.introductionSelected.value = true;
                     controller.notationVocabularySelected.value = false;
                     controller.otherSelected.value = true;
-                  }
-                  if(value == 2){
-                    controller.introductionSelected.value = true;
-                    controller.notationVocabularySelected.value = true;
-                    controller.otherSelected.value = false;
                   }
 
                 },
@@ -215,25 +209,17 @@ class ImportSupportView extends GetView<FilesController> {
                     ):null,
                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12),
                     child: Text('Notations et Vocabulaires',),),),),
-                  Tab( child: Obx(() => Container(
-                    decoration: controller.otherSelected.value?BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: Color(0xffD9D9D9),
 
-                    ):null,
-                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12),
-                    child: Text('Autres',),),),),
                   // Tab( child: Container(
                   //   padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
                   //   child: Text('Revisions'),),),
-                ],
+                ]
               )
           ),
           body: TabBarView(
             children: [
               IntroductionPage(context, fileCardModel),
-              NotationVocabularyPage(context,fileCardModel),
-              OtherPage(context, fileCardModel),
+              NotationVocabularyPage(context,fileCardModel)
             ],
           ),
         ),
@@ -262,21 +248,18 @@ class ImportSupportView extends GetView<FilesController> {
                         alignment: Alignment.centerLeft,
                         child: Text(item["topic"],
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
-                      ).marginOnly(bottom: Get.height*0.025),
+                      )
                     ),
                     SliverToBoxAdapter(
                       child:  Align(
                         alignment: Alignment.centerLeft,
                         child: Text(item["body"],
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
+                          style: TextStyle(fontSize: 14), textAlign: TextAlign.justify,),
                       ).marginOnly(bottom: Get.height*0.025),
-                    ),
+                    )
                   ]
-
-                ],
-
+                ]
               )
-
           ),
         )
       ],
@@ -304,15 +287,15 @@ class ImportSupportView extends GetView<FilesController> {
                           alignment: Alignment.centerLeft,
                           child: Text(item["term"],
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
-                        ).marginOnly(bottom: Get.height*0.025),
+                        )
                       ),
                       SliverToBoxAdapter(
                         child:  Align(
                           alignment: Alignment.centerLeft,
                           child: Text(item["definition"],
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
+                            style: TextStyle(fontSize: 14, ), textAlign: TextAlign.justify,),
                         ).marginOnly(bottom: Get.height*0.025),
-                      ),
+                      )
                     ]
                   ]else...[
                     SliverToBoxAdapter(
@@ -320,7 +303,7 @@ class ImportSupportView extends GetView<FilesController> {
                         alignment: Alignment.centerLeft,
                         child: Text('Term',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
-                      ).marginOnly(bottom: Get.height*0.025),
+                      )
                     ),
                     SliverToBoxAdapter(
                       child:  Align(
@@ -328,57 +311,14 @@ class ImportSupportView extends GetView<FilesController> {
                         child: Text("definition",
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
                       ).marginOnly(bottom: Get.height*0.025),
-                    ),
-
+                    )
                   ]
-
-
-
-                ],
-
+                ]
               )
-
           ),
         )
       ],
     );
   }
-
-  Widget OtherPage(BuildContext context, FileCardModel fileCardModel) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-              padding: EdgeInsets.all(16),
-              margin: EdgeInsets.only(top: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-                  color: bgColorFileScreen
-              ),
-              height: Get.height,
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child:  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Une fonction est une relation qui associe à chaque élément d’un ensemble de départ un unique '
-                          'élément d’un ensemble d’arrivée'
-                          '',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                    ).marginOnly(bottom: Get.height*0.025),
-                  ),
-
-
-                ],
-
-              )
-
-          ),
-        )
-      ],
-    );
-  }
-
-
 
 }

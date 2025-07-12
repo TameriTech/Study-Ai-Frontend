@@ -10,10 +10,28 @@ class QuizzPostGenerationView extends GetView<FilesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: quizzColor,
+      appBar: AppBar(
+        backgroundColor: quizzColor,
+        leading: IconButton(
+            onPressed: () async {
+              Navigator.of(context).pop();
+            }, icon: Icon(Icons.arrow_back_ios)
+        ),
+        title: Text(controller.questions[0].title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: primaryColor)
+        ),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: Obx(() => Text(
+                '${controller.currentQuestionIndex.value + 1}/${controller.questions.length}',
+                style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+              ),)
+          ),
+        ],
+      ),
       body:Obx(() {
         return  _buildQuizInterface(context);
-
       }),
 
     );
@@ -22,131 +40,102 @@ class QuizzPostGenerationView extends GetView<FilesController> {
   Widget _buildQuizInterface( BuildContext context) {
     return Container(
       //padding: const EdgeInsets.only(top: 100, bottom: 50),
-      decoration: const BoxDecoration(color: quizzColor),
-      child: ListView(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  onPressed: () async {
-                Navigator.of(context).pop();
-              }, icon: Icon(Icons.arrow_back_ios)),
-              SizedBox(
-                  width: Get.width*0.75,
-                  child: Text(controller.questions[0].title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xff1A3C7D)),)),
-
-            ],
-          ),
-
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Obx(() => Text(
-                '${controller.currentQuestionIndex.value + 1}/${controller.questions.length}',
-                style: TextStyle(color: Colors.black),
-              ),)
-          ),
-          Obx(() => _buildQuestionAndAnswerCard(context)),
-
-
-        ],
-      ),
+        height: Get.height,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            color: backgroundColor,
+            border: Border.all(color: backgroundColor)),
+      child: SingleChildScrollView(
+        child: Obx(() => _buildQuestionAndAnswerCard(context)),
+      )
     );
   }
 
   Widget _buildQuestionAndAnswerCard(BuildContext context) {
-    return Container(
-      height: Get.height,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-          color: backgroundColor,
-          border: Border.all(color: backgroundColor)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Question ${controller.currentQuestionIndex.value+1}: ${controller.questions[controller.currentQuestionIndex.value].title}",
-            style: const TextStyle(
-                color: Color(0xff174523),
-                fontWeight: FontWeight.w900,
-                fontSize: 16),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            controller.questions[controller.currentQuestionIndex.value].text,
-            style: const TextStyle(
-                color: Color(0xff174523),
-                fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 30),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for(int index = 0; index<controller.questions[controller.currentQuestionIndex.value].options.length; index++)...[
-                Obx(() => Container(
-                  width: Get.width,
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: controller.selectedAnswers.isEmpty?null:
-                    controller.selectedAnswers[controller.currentQuestionIndex.value] == controller.questions[controller.currentQuestionIndex.value].options[index]?controller.selectedAnswers[controller.currentQuestionIndex.value]==controller.correctAnswers[controller.currentQuestionIndex.value]?null:Border.all(color: Colors.red):null,
-                    color: controller.correctAnswers.isEmpty?Colors.white
-                        :controller.correctAnswers[controller.currentQuestionIndex.value] == controller.questions[controller.currentQuestionIndex.value].options[index]?
-                    quizzColor:Colors.white,
-                  ),
-                  child: Text(
-                    controller.questions[controller.currentQuestionIndex.value].options[index],
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                ))
-              ]
-            ],
-          ),
-          const SizedBox(height: 30),
-          Row(
-            children: [
-              Expanded(
-                child: BlockButtonWidget(
-                  color: controller.currentQuestionIndex.value > 0
-                      ? primaryColor
-                      : Colors.grey,
-                  haveBorder: false,
-                  text: const Text('Précédent', style: TextStyle(color: Colors.white, fontSize: 14)),
-                  onPressed: controller.currentQuestionIndex.value > 0
-                      ? controller.previousQuizzQuestion
-                      : null,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Question ${controller.currentQuestionIndex.value+1}: ${controller.questions[controller.currentQuestionIndex.value].title}",
+          style: const TextStyle(
+              color: Color(0xff174523),
+              fontWeight: FontWeight.w900,
+              fontSize: 16),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          controller.questions[controller.currentQuestionIndex.value].text,
+          style: const TextStyle(
+              color: Color(0xff174523),
+              fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(height: 30),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for(int index = 0; index<controller.questions[controller.currentQuestionIndex.value].options.length; index++)...[
+              Obx(() => Container(
+                width: Get.width,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: controller.selectedAnswers.isEmpty?null:
+                  controller.selectedAnswers[controller.currentQuestionIndex.value] == controller.questions[controller.currentQuestionIndex.value].options[index]?controller.selectedAnswers[controller.currentQuestionIndex.value]==controller.correctAnswers[controller.currentQuestionIndex.value]
+                      ? null : Border.all(color: Colors.red) : null,
+                  color: controller.correctAnswers.isEmpty?Colors.white
+                      :controller.correctAnswers[controller.currentQuestionIndex.value] == controller.questions[controller.currentQuestionIndex.value].options[index]?
+                  quizzColor:Colors.white,
                 ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: BlockButtonWidget(
-                  color: primaryColor,
-                  haveBorder: false,
-                  text: Text(
-                      controller.currentQuestionIndex.value < controller.questions.length - 1
-                          ? 'Suivant'
-                          : 'Terminer',
-                      style: const TextStyle(color: Colors.white, fontSize: 14)),
-                  onPressed: () {
-                    if (controller.currentQuestionIndex.value < controller.questions.length - 1) {
-                      controller.nextQuizzQuestion();
-                    } else {
-                      Navigator.of(context).pop();
-                    }
-                  },
+                child: Text(
+                  controller.questions[controller.currentQuestionIndex.value].options[index],
+                  style: const TextStyle(color: Colors.black),
                 ),
+              ))
+            ]
+          ],
+        ),
+        const SizedBox(height: 30),
+        Row(
+          children: [
+            Expanded(
+              child: BlockButtonWidget(
+                color: controller.currentQuestionIndex.value > 0
+                    ? primaryColor
+                    : Colors.grey,
+                haveBorder: false,
+                text: const Text('Précédent', style: TextStyle(color: Colors.white, fontSize: 14)),
+                onPressed: controller.currentQuestionIndex.value > 0
+                    ? controller.previousQuizzQuestion
+                    : null,
               ),
-            ],
-          )
-        ],
-      ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: BlockButtonWidget(
+                color: primaryColor,
+                haveBorder: false,
+                text: Text(
+                    controller.currentQuestionIndex.value < controller.questions.length - 1
+                        ? 'Suivant'
+                        : 'Terminer',
+                    style: const TextStyle(color: Colors.white, fontSize: 14)),
+                onPressed: () {
+                  if (controller.currentQuestionIndex.value < controller.questions.length - 1) {
+                    controller.nextQuizzQuestion();
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
-
-
 }
 
 

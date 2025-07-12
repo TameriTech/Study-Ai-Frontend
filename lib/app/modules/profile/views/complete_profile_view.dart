@@ -5,6 +5,7 @@ import 'package:studyai/app/modules/profile/controllers/profile_controller.dart'
 import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
 import '../../global_widgets/block_button_widget.dart';
+import '../../global_widgets/text_field_widget.dart';
 
 class CompleteProfileView extends GetView<ProfileController> {
   @override
@@ -74,9 +75,9 @@ class CompleteProfileView extends GetView<ProfileController> {
                     shape: StadiumBorder(),
                     backgroundColor: controller.edit.value ?
                     controller.selected.value == controller.subjects[index]  && controller.currentUser.value.bestSubjects.toString() == controller.selected.value ?
-                    tertiaryColor : Colors.transparent :
+                    primaryColor : Colors.transparent :
                     controller.selected.value == controller.subjects[index] && controller.hasSelected.value ?
-                    tertiaryColor : Colors.transparent,
+                    primaryColor : Colors.transparent,
                     side: BorderSide(
                         color: Colors.black
                     ),
@@ -108,34 +109,28 @@ class CompleteProfileView extends GetView<ProfileController> {
             },
           ),
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 10),
         // Bouton "Autres"
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              shape: StadiumBorder(),
-              side: BorderSide(color: Colors.black, width: 1.5),
-              padding: EdgeInsets.symmetric(vertical: 20),
-            ),
-            onPressed: () {
-              // action Autres
-            },
-            child: Text(
-              'Autres',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+        TextFieldWidget(
+          suffixIcon: Icon(null),
+          suffix: Icon(null),
+          readOnly: false,
+          labelText: 'Autre',
+          hintText: 'Entre une autre matiere',
+          isFirst: true,
+          onChanged: (value) => {
+          controller.hasSelected.value =  true,
+          controller.newSelected = controller.selected.value,
+          controller.selected.value = value,
+          },
+          //validator: (input) => !input!.contains('@') ? 'Input an email' : null,
+
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 10),
         SizedBox(
           width: Get.width,
           child: BlockButtonWidget(
-              color: controller.hasSelected.value ? Colors.black : Colors.black.withOpacity(0.5),
+              color: controller.hasSelected.value ? primaryColor : primaryColor.withOpacity(0.5),
               haveBorder: false,
               text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
               onPressed: (){
@@ -167,12 +162,12 @@ class CompleteProfileView extends GetView<ProfileController> {
               decoration: controller.edit.value ?
               BoxDecoration(
                 color: controller.selectedObj.value == level && controller.hasSelectedObj.value ?
-                tertiaryColor : Colors.white,
+                primaryColor : Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ) : BoxDecoration(
                 color: controller.selectedObj.value == level &&
-                    controller.currentUser.value.learningObjectives.toString() == level  ?
-                tertiaryColor : Colors.white,
+                    controller.hasSelectedObj.value  ?
+                primaryColor : Colors.white,
               ),
               child: Text(level, style: Get.textTheme.labelSmall!
                   .merge(TextStyle(fontWeight: FontWeight.w400, color: controller.selectedObj.value == level && controller.hasSelectedObj.value ?
@@ -184,12 +179,10 @@ class CompleteProfileView extends GetView<ProfileController> {
 
         SizedBox(
           width: Get.width,
-          child: controller.selected.value != controller.newSelected &&
-          controller.selectedObj.value != controller.newObjSelected ?
-
+          child: controller.selectedObj.value == controller.newObjSelected ?
           BlockButtonWidget(
               color: controller.hasSelectedObj.value ?
-              Colors.black : Colors.black.withOpacity(0.5),
+              primaryColor : primaryColor.withOpacity(0.5),
               haveBorder: false,
               text: controller.isLoading.value ?
               SpinKitThreeBounce(color: Colors.white, size: 20) :
@@ -197,13 +190,12 @@ class CompleteProfileView extends GetView<ProfileController> {
                   .merge(TextStyle(color: Colors.white,
                   fontWeight: FontWeight.w600))),
               onPressed: ()async{
-                if(controller.hasSelectedObj.value){
-                  controller.newSelected = controller.selectedObj.value;
-                  controller.newObjSelected = controller.selected.value;
-                  await controller.updateProfile();
 
-                  Navigator.pop(context);
-                }
+                controller.newSelected = controller.selected.value;
+                controller.newObjSelected = controller.selectedObj.value;
+                await controller.updateProfile();
+                Navigator.pop(context);
+
               }) :
           BlockButtonWidget(
               color: Colors.black.withOpacity(0.5),
@@ -213,9 +205,8 @@ class CompleteProfileView extends GetView<ProfileController> {
               Text('Soumetre', style: Get.textTheme.labelSmall!
                   .merge(TextStyle(color: Colors.white,
                   fontWeight: FontWeight.w600))),
-              onPressed: ()async{
-
-              }),
+              onPressed: (){ }
+          )
         )
       ],
     );

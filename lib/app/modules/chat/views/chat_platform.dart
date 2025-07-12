@@ -1,3 +1,4 @@
+
 import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:studyai/app/modules/chat/views/text_animation.dart';
 import '../../../../color_constants.dart';
 import '../controllers/chat_controller.dart';
+import 'expandable_markdown.dart';
 
 class ChatPlatform extends GetView<ChatController> {
   ChatPlatform({super.key});
@@ -56,6 +58,10 @@ class ChatPlatform extends GetView<ChatController> {
                               )
                           ]else...[
                             if(controller.messagesSent[index].sender == "user")...[
+                              if(controller.messagesSent[index].document != "")...[
+                                PdfView(controller.messagesSent[index].document)
+                              ],
+                              SizedBox(height: 5),
                               BubbleSpecialOne(
                                 text: controller.messagesSent[index].text,
                                 isSender: true,
@@ -65,9 +71,13 @@ class ChatPlatform extends GetView<ChatController> {
                                   color: Colors.black,
                                 ),
                               ),
+                              SizedBox(height: 5),
                             ],
                             if(controller.messagesSent[index].sender == "bot")
-                              BubbleSpecialOne(
+                              ExpandableMarkdown(
+                                markdown: controller.messagesSent[index].text,
+                              )
+                              /*BubbleSpecialOne(
                                   text: controller.messagesSent[index].text,
                                   isSender: false,
                                   color: Color(0xFFFFFFFF),
@@ -75,65 +85,16 @@ class ChatPlatform extends GetView<ChatController> {
                                     fontSize: 16,
                                     color: Colors.black,
                                   )
-                              )
+                              )*/
                           ]
                         ]
                     );
                   }
               );
             }
-
       },
     );
   }
-  // Widget imageContainer() {
-  //   return Obx(
-  //         () {
-  //       return ListView.separated(
-  //           scrollDirection: Axis.horizontal,
-  //           padding: EdgeInsets.all(12),
-  //           itemBuilder: (context, index){
-  //             return Stack(
-  //               //mainAxisAlignment: MainAxisAlignment.end,
-  //               children: [
-  //                 Padding(
-  //                     padding: EdgeInsets.symmetric(vertical: 10),
-  //                     child: ClipRRect(
-  //                       borderRadius: BorderRadius.all(Radius.circular(10)),
-  //                       child: Image.file(
-  //                         controller.ticketFiles[index],
-  //                         fit: BoxFit.cover,
-  //                         width: Get.width,
-  //                         height:Get.height/1.4,
-  //                       ),
-  //                     )
-  //                 ),
-  //                 Positioned(
-  //                   top:0,
-  //                   right:0,
-  //                   child: Align
-  //                     (
-  //                     //alignment: Alignment.centerRight,
-  //                     child: IconButton(
-  //                         onPressed: (){
-  //                           controller.ticketFiles.removeAt(index);
-  //                           controller.enableImageSend.value = false;
-  //                         },
-  //                         icon: Icon(Icons.delete, color: inactive, size: 25, )
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             );
-  //           },
-  //           separatorBuilder: (context, index){
-  //             return SizedBox(width: 8);
-  //           },
-  //           itemCount: controller.ticketFiles.length);
-  //
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -172,13 +133,49 @@ class ChatPlatform extends GetView<ChatController> {
             children: <Widget>[
              Expanded(child: chatList()),
 
+              Obx((){
+                if(controller.fileName.value == ""){
+                  return SizedBox.shrink();
+                }else{
+                  return Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(15))
+                    ),
+                    height: 80,
+                    width: Get.width - 10,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset("assets/images/file_pdf.svg", width: 30, height: 50,),
+                        SizedBox(width: 10),
+                        SizedBox(
+                          width: Get.width/1.8,
+                          child: Text(controller.fileName.value, overflow: TextOverflow.ellipsis)
+                        )
+                      ]
+                    )
+                  );
+                }
+
+              }),
               MessageBar(
                 messageBarHintText: "Ask any question",
                 onSend: (_) async{
-
-                  controller.messagesSent.add(Message(text: controller.msgController.text, sender: 'user'));
-                  await controller.sendPrompt(controller.msgController.text, 0);
-
+                  if(controller.filePath.isEmpty){
+                    controller.messagesSent.add(Message(text: controller.msgController.text, sender: 'user', document: ''));
+                    await controller.sendPrompt(controller.msgController.text, 0);
+                  }else{
+                    controller.messagesSent.add(
+                        Message(
+                            text: controller.msgController.text,
+                            sender: 'user',
+                            document: controller.fileName.value
+                        )
+                    );
+                    controller.fileName.value = "";
+                    await controller.getFileId(controller.filePath);
+                  }
                 },
                 onTextChanged: (value) {
                   controller.msgController.text = value;
@@ -197,17 +194,10 @@ class ChatPlatform extends GetView<ChatController> {
                       );
 
                       if (result != null) {
-                        var file = result.files.first.xFile;
-                        showDialog(
-                            context: context,
-                            builder: (_){
-                              return showPickedFile(file);
-                            }
-                        );
-                      } else {
-                        // User canceled the picker
+                        controller.fileName.value = result.files.first.xFile.name;
+                        controller.filePath = result.files.last.xFile.path;
                       }
-                    },
+                    }
                   ),
                   /*Padding(
                     padding: EdgeInsets.only(left: 8, right: 8),
@@ -228,48 +218,32 @@ class ChatPlatform extends GetView<ChatController> {
     );
   }
 
-  Widget showPickedFile(var file){
-    return Material(
-      color: Colors.transparent,
-      child: Container(
-        width: Get.width,
-        margin: EdgeInsets.all(10),
-        height: Get.height,
-        decoration: BoxDecoration(
-          color: bgColor.withOpacity(0.9),        // background color
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 250),
-                    SvgPicture.asset("assets/images/file_pdf.svg", width: 80, height: 150,),
-                    SizedBox(height: 10),
-                    Text(file.name)
-                  ],
-                ),
+  Widget PdfView(String fileName){
+    return Container(
+      padding: const EdgeInsets.all(10),
+      margin: EdgeInsets.only(left: 100, top: 10),
+      alignment: Alignment.bottomRight,
+      decoration: BoxDecoration(
+        color: courseColor,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          SvgPicture.asset("assets/images/file_pdf.svg", width: 35, height: 35),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              fileName,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+                decoration: TextDecoration.underline,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
-
-            MessageBar(
-              onSend: (_) async{
-
-                await controller.getFileId(file.path);
-                controller.messagesSent.add(Message(text: controller.msgController.text, sender: 'user'));
-                await controller.sendPrompt(controller.msgController.text, 0);
-
-              },
-              onTextChanged: (value) {
-                controller.msgController.text = value;
-              },
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-
 }

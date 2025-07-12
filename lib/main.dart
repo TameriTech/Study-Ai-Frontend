@@ -1,26 +1,17 @@
 import 'dart:io';
-import 'dart:ui';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:studyai/app/modules/auth/views/login_register_view.dart';
 import 'package:studyai/app/modules/onboardingScreens/onboardingScreen.dart';
 import 'app/modules/auth/bindings/auth_binding.dart';
-import 'app/modules/auth/views/login_register_view.dart';
 import 'app/modules/root/bindings/root_binding.dart';
-import 'app/modules/root/views/root_view.dart';
-import 'app/providers/laravel_provider.dart';
 import 'app/routes/theme_app_pages.dart';
 import 'app/services/auth_service.dart';
-import 'app/services/firebase_messaging_service.dart';
 import 'app/services/global_services.dart';
 import 'app/services/settings_services.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-
-
 
 
   initServices() async {
@@ -33,31 +24,23 @@ import 'app/services/settings_services.dart';
   //Get.lazyPut(()=>RootBinding());
   //await Get.putAsync(() => TranslationService().init());
   Get.log('All services started...');
-  var box = GetStorage();
 
   await GlobalService().getAppVersion();
-
-
-
 
 }
 
 void main() async{
 
-
-
    WidgetsFlutterBinding.ensureInitialized();
 
    await initServices();
-
-
 
    runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
    MyApp({super.key});
-  var languageBox = GetStorage();
+  var box = GetStorage();
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -87,22 +70,22 @@ class MyApp extends StatelessWidget {
         page: () => Scaffold(
           appBar: AppBar(title: Text('Page Not Found')),
           body: Center(child: Text('404 - Page Not Found')),
-        ),
+        )
       ),
-      initialBinding: GlobalService.isAuthTokenValid?RootBinding():AuthBinding(),
+      initialBinding: GlobalService.isAuthTokenValid ? RootBinding() : AuthBinding(),
       getPages: Theme1AppPages.routes,
       defaultTransition: Transition.cupertino,
       themeMode: Get.find<SettingsService>().getThemeMode(),
       theme: Get.find<SettingsService>().getLightTheme(),
       darkTheme: Get.find<SettingsService>().getDarkTheme(),
-      home:  OnboardingScreen(),
+      home: box.read("exists") == null ? OnboardingScreen() : LoginRegisterView(),
       localizationsDelegates: [
         //AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      locale: Locale.fromSubtags(languageCode: languageBox.read('language')==null? Platform.localeName:languageBox.read('language')),
+      locale: Locale.fromSubtags(languageCode: box.read('language')==null? Platform.localeName:box.read('language')),
 
       supportedLocales: [
         Locale('en'), // English

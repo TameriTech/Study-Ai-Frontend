@@ -1,12 +1,6 @@
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studyai/app/models/file_card_model.dart';
-import 'package:studyai/app/modules/global_widgets/add_instruction_widget.dart';
-import '../../../../color_constants.dart';
-import '../../global_widgets/block_button_widget.dart';
+import 'package:studyai/color_constants.dart';
 import '../controllers/files_controller.dart';
 
 
@@ -21,33 +15,32 @@ class RevisionView extends GetView<FilesController> {
       fileInfo = Get.arguments;
     }
     return  Scaffold(
-        backgroundColor: Color(0xffFEFCE5FE),
+        appBar: AppBar(
+          backgroundColor: revisionColor,
+          leading: IconButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back_ios)
+          ),
+          title: Text(fileInfo.title, style: TextStyle(fontSize: 18,
+              fontWeight: FontWeight.w600, color: Color(0xff1A3C7D)),
+          ),
+          actions: [
+            Obx(() => Text(
+              '${controller.currentRevisionIndex.value + 1}/${controller.revisions.length}',
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            )),
+            SizedBox(width: 15)
+          ],
+        ),
         body: Container(
           decoration: BoxDecoration(
-            color: Color(0xffFEFCE5FE),
+            color: revisionColor,
           ),
           child: Column(
             children: [
-              SizedBox(height: 50,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(onPressed: () async {
-                    Navigator.of(context).pop();
-                  }, icon: Icon(Icons.arrow_back_ios)),
-                  SizedBox(
-                    width: Get.width*0.74,
-                      child: Text(fileInfo.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xff1A3C7D)),)),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Obx(() => Text(
-                      '${controller.currentRevisionIndex.value + 1}/${controller.revisions.length}',
-                      style: TextStyle(color: Colors.black),
-                    ),)
-                  )
-                ],
-              ),
-              SizedBox(height: 40,),
+              SizedBox(height: 40),
               Expanded(
                 child: PageView.builder(
                   controller: controller.pageController,
@@ -130,7 +123,7 @@ class RevisionView extends GetView<FilesController> {
                                         ElevatedButton(
                                           onPressed: controller.previousRevisionCard,
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.black,
+                                            backgroundColor: primaryColor,
                                             shape: StadiumBorder(),
                                             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                           ),
@@ -139,7 +132,7 @@ class RevisionView extends GetView<FilesController> {
                                         ElevatedButton(
                                           onPressed: controller.nextRevisionCard,
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.black,
+                                            backgroundColor: primaryColor,
                                             shape: StadiumBorder(),
                                             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                           ),

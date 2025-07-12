@@ -1,10 +1,15 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../../common/ui.dart';
 import '../../../models/user_model.dart';
 import '../../../repositories/user_repository.dart';
 import '../../../services/auth_service.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../services/global_services.dart';
 
 class ProfileController extends GetxController {
   Rx<UserModel> currentUser = Get.find<AuthService>().user;
@@ -17,6 +22,7 @@ class ProfileController extends GetxController {
 
   var selectedHomeIndex = 0.obs;
   var hidePassword = false.obs;
+  var oldPassword = "".obs;
   var newPassword = "".obs;
   var confirmPassword = "".obs;
 
@@ -26,6 +32,8 @@ class ProfileController extends GetxController {
   var newAcademicLevel = '';
   var newSelected = '';
   var newObjSelected = '';
+
+  var onResetPassword = false.obs;
 
   late UserRepository userRepository;
 
@@ -112,14 +120,65 @@ class ProfileController extends GetxController {
     }
   }
 
+  Future updatePassword()async{
+    onResetPassword.value = true;
+    try{
+      var headersList = {
+        'Accept': 'application/json'
+      };
+
+      var url = Uri.parse('${GlobalService().baseUrl}/update-password/?user_id=${currentUser.value.userId}&old_password=${oldPassword.value}&new_password=${newPassword.value}%40&confirm_password=${confirmPassword.value}%40');
+
+      var req = http.Request('POST', url);
+      req.headers.addAll(headersList);
+
+      var res = await req.send();
+      final resBody = await res.stream.bytesToString();
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        var msg = jsonDecode(resBody)['message'];
+        Ui.SuccessSnackBar(message: msg);
+        onResetPassword.value = false;
+        print(msg);
+      }else{
+        Ui.ErrorSnackBar(message: res.reasonPhrase.toString());
+        onResetPassword.value = false;
+      }
+
+    }catch (e){
+      print(e);
+      onResetPassword.value = false;
+    }
+  }
+
   @override
   void onInit() async {
 
     super.onInit();
   }
 
-  Future updatePassword() async{
+  Future deleteAccount()async {
+    try {
+      var headers = {
+        'Accept': 'application/json'
+      };
+      var request = http.MultipartRequest('DELETE', Uri.parse('${GlobalService().baseUrl}/delete/user/${currentUser.value.userId}'));
 
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        await response.stream.bytesToString();
+        Ui.SuccessSnackBar(message: "Compte supprimé avec succès!");
+      }
+      else {
+        final resBody = await response.stream.bytesToString();
+        print("Failed! $resBody");
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
 }

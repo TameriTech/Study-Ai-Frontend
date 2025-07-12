@@ -15,152 +15,154 @@ class RegisterViews extends GetView<AuthController> {
     return WillPopScope(
       onWillPop: Helper().onWillPop,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
           backgroundColor: bgColor,
+          appBar: AppBar(
+            backgroundColor: bgColor,
+            title: Text("Inscription", style: Get.textTheme.labelMedium),
+            centerTitle: true,
+            leading: Obx(() => !controller.registerInfoComplete.value ?
+            InkWell(
+              onTap: (){
+                if(controller.minimumInformationStep1.value && controller.minimumInformationStep2.value )
+                {
+                  controller.minimumInformationStep2.value = false;
+                } else if(controller.minimumInformationStep1.value && !controller.minimumInformationStep2.value){
+                  controller.minimumInformationStep1.value = false;
+                }
+                else{
+                  Navigator.of(context).pop();
+                  controller.minimumInformationStep2.value = false;
+                }
+              },
+              child: Image.asset(
+                  'assets/images/arrow-left-circle 2.png'
+              )
+            ) : SizedBox.shrink()
+            )
+          ),
           bottomSheet: Container(
             color: bgColor,
-              child: actionBottomSheet(context),),
+              child: actionBottomSheet(context)
+          ),
           body: SafeArea(
             child: Form(
               key: controller.registerFormKey,
-              child: ListView(
-                padding: EdgeInsets.symmetric(vertical: 80, horizontal: 20),
-                children: [
-                  Obx(() => !controller.registerInfoComplete.value?
-                  GestureDetector(
-                    onTap: (){
-                      if(controller.minimumInformationStep1.value && controller.minimumInformationStep2.value )
-                      {
-                        controller.minimumInformationStep2.value = false;
-                      } else if(controller.minimumInformationStep1.value && !controller.minimumInformationStep2.value){
-                        controller.minimumInformationStep1.value = false;
-                      }
-                      else{
-                        Navigator.of(context).pop();
-                        controller.minimumInformationStep2.value = false;
-                      }
-
-                    },
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Image.asset(
-                          'assets/images/arrow-left-circle 2.png',
-                          fit: BoxFit.cover,
-
-
-                        )).marginOnly(top: 10, bottom: 20),
-                  ):
-                  SizedBox()),
-
-                  Obx(() =>  !controller.registerInfoComplete.value?
-                  !controller.minimumInformationStep1.value?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+              child: SingleChildScrollView(
+                child: Column(
                     children: [
-                      Container(
-                        width: Get.width/6,
-                        height: 10,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
-                      const SizedBox(width: 20,),
-                      Container(
-                        width: Get.width/6,
-                        height: 10,
-                        decoration:  BoxDecoration(
-                            color: Color(0xffADAAAA),
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
-                      const SizedBox(width: 20,),
-                      Container(
-                        width: Get.width/6,
-                        height: 10.0,
-                        decoration:BoxDecoration(
-                            color: Color(0xffADAAAA),
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
 
-                    ],): !controller.minimumInformationStep2.value?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: Get.width/6,
-                        height: 10.0,
-                        decoration:  BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
-                      const SizedBox(width: 20,),
-                      Container(
-                        width: Get.width/6,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
-                      const SizedBox(width: 20,),
-                      Container(
-                        width: Get.width/6,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                            color: Color(0xffADAAAA),
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
+                      Obx(() =>  !controller.registerInfoComplete.value?
+                      !controller.minimumInformationStep1.value?
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: Get.width/6,
+                            height: 10,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
+                          const SizedBox(width: 20,),
+                          Container(
+                            width: Get.width/6,
+                            height: 10,
+                            decoration:  BoxDecoration(
+                                color: Color(0xffADAAAA),
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
+                          const SizedBox(width: 20,),
+                          Container(
+                            width: Get.width/6,
+                            height: 10.0,
+                            decoration:BoxDecoration(
+                                color: Color(0xffADAAAA),
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
 
-                    ],) :
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: Get.width/6,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
-                      const SizedBox(width: 20,),
-                      Container(
-                        width: Get.width/6,
-                        height: 10.0,
-                        decoration:BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
-                      const SizedBox(width: 20,),
-                      Container(
-                        width: Get.width/6,
-                        height: 10.0,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                      ),
-                      const SizedBox(width: 20,),
+                        ],): !controller.minimumInformationStep2.value?
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: Get.width/6,
+                            height: 10.0,
+                            decoration:  BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
+                          const SizedBox(width: 20,),
+                          Container(
+                            width: Get.width/6,
+                            height: 10.0,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
+                          const SizedBox(width: 20,),
+                          Container(
+                            width: Get.width/6,
+                            height: 10.0,
+                            decoration: BoxDecoration(
+                                color: Color(0xffADAAAA),
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
 
-                    ],):
-                  SizedBox()).marginOnly(bottom: 20),
+                        ],) :
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: Get.width/6,
+                            height: 10.0,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
+                          const SizedBox(width: 20,),
+                          Container(
+                            width: Get.width/6,
+                            height: 10.0,
+                            decoration:BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
+                          const SizedBox(width: 20,),
+                          Container(
+                            width: Get.width/6,
+                            height: 10.0,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8)
+                            ),
+                          ),
+                          const SizedBox(width: 20,),
 
-                  Obx(() =>  !controller.minimumInformationStep1.value?
-                  buildMinimumInformationStep1(context):!controller.minimumInformationStep2.value?
-                  buildMinimumInformationStep2(context):!controller.minimumInformationStep3.value?
-                  buildMinimumInformationStep3(context):buildMinimumInformationStep4(context),),
+                        ],):
+                      SizedBox()).marginOnly(bottom: 20),
 
-                ],
-              ),
-            ),
-          )
+                      Obx(() =>  !controller.minimumInformationStep1.value?
+                      buildMinimumInformationStep1(context):!controller.minimumInformationStep2.value?
+                      buildMinimumInformationStep2(context):!controller.minimumInformationStep3.value?
+                      buildMinimumInformationStep3(context):buildMinimumInformationStep4(context),),
+
+                    ]
+                )
+              )
+            )
+          ).paddingOnly(left: 10, right: 10)
       ),
     );
   }
@@ -169,15 +171,12 @@ class RegisterViews extends GetView<AuthController> {
     return Column(
       children: [
         SizedBox(height: 40,),
-        Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Ton nom !', style: Get.textTheme.labelLarge,).marginOnly(bottom: 20)),
         TextFieldWidget(
           suffixIcon: Icon(null),
           suffix: Icon(null),
           readOnly: false,
           isFirst: true,
-          labelText: '',
+          labelText: 'Nom',
           hintText: "John",
           onChanged: (value) => controller.currentUser.value.fullName = value,
           validator: (input) => input!.length < 3 ? 'input at least 3 characters' : null,
@@ -225,8 +224,8 @@ class RegisterViews extends GetView<AuthController> {
   buildMinimumInformationStep2(BuildContext context){
     return Column(
       children: [
-        SizedBox(height: 40,),
-        Text('C’est quoi ton niveau scolaire ?', style: Get.textTheme.labelLarge,).marginOnly(bottom: 20),
+        SizedBox(height: 40),
+        Text('Quel est ton niveau scolaire ?', style: Get.textTheme.labelMedium).marginOnly(bottom: 20),
         for(var level in controller.schoolLevel)...[
           InkWell(
             onTap: (){
@@ -238,11 +237,13 @@ class RegisterViews extends GetView<AuthController> {
               height: 73,
               width: Get.width,
               decoration: BoxDecoration(
-                color: controller.selectedSchoolLevel.value == level?tertiaryColor.withOpacity(0.8):Colors.white,
+                color: controller.selectedSchoolLevel.value == level ? primaryColor : Colors.white,
                 borderRadius: BorderRadius.circular(20),
 
               ),
-              child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400)),),
+              child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400,
+                color: controller.selectedSchoolLevel.value == level ? Colors.white : Colors.black)
+              ),),
             ),).marginOnly(bottom: 20),
           ),
         ],
@@ -254,7 +255,7 @@ class RegisterViews extends GetView<AuthController> {
     return Column(
       children: [
         SizedBox(height: 40,),
-        Text('Quelle classe précisément?', style: Get.textTheme.labelLarge,).marginOnly(bottom: 20),
+        Text('Quelle classe précisément?', style: Get.textTheme.labelMedium,).marginOnly(bottom: 20),
         for(var level in controller.classDegree)...[
           InkWell(
             onTap: (){
@@ -266,11 +267,13 @@ class RegisterViews extends GetView<AuthController> {
               height: 73,
               width: Get.width,
               decoration: BoxDecoration(
-                color: controller.selectedClassLevel.value == level?tertiaryColor.withOpacity(0.8):Colors.white,
+                color: controller.selectedClassLevel.value == level ? primaryColor : Colors.white,
                 borderRadius: BorderRadius.circular(20),
 
               ),
-              child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400)),),
+              child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400,
+                color: controller.selectedClassLevel.value == level ? Colors.white : Colors.black)
+              ),),
             ),).marginOnly(bottom: 20),
           )
         ],
@@ -280,16 +283,12 @@ class RegisterViews extends GetView<AuthController> {
 
   buildMinimumInformationStep4(BuildContext context){
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 40,),
         Obx(() => !controller.registerInfoHalfSaved.value?
-        SizedBox(
-          height: 223,
-            child: Text("Les informations que nous demandons nous permettent de mieux personnalisé votre expérience sur l’app" , style: Get.textTheme.labelLarge,).marginOnly(bottom: 20)):
-        SizedBox(
-          height: 223,
-            child: Text("C’est presque termine " , style: Get.textTheme.labelLarge,).marginOnly(bottom: 20)),
-        ),
+        Text("Les informations que nous demandons nous permettent de mieux personnalisé votre expérience sur l’app"
+          , style: Get.textTheme.labelMedium,).marginOnly(bottom: 20) :
+        Text("C’est presque termine " , style: Get.textTheme.labelMedium,).marginOnly(bottom: 20)),
         SizedBox(
           width: 167,
           height: 7,
@@ -313,7 +312,7 @@ class RegisterViews extends GetView<AuthController> {
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
-          color: Colors.black,
+          color: primaryColor,
           haveBorder: false,
           text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
@@ -326,7 +325,7 @@ class RegisterViews extends GetView<AuthController> {
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
-          color: Colors.black,
+          color: primaryColor,
           haveBorder: false,
           text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
@@ -337,7 +336,7 @@ class RegisterViews extends GetView<AuthController> {
     SizedBox(
       width: Get.width,
       child: BlockButtonWidget(
-          color: Colors.black,
+          color: primaryColor,
           haveBorder: false,
           text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){

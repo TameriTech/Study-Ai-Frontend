@@ -121,7 +121,7 @@ class QuizView extends GetView<QuizController> {
                   ),
                 )
 
-                ).marginOnly(bottom: 20),
+                ).marginOnly(bottom: 10),
               ),
 
 
@@ -130,7 +130,7 @@ class QuizView extends GetView<QuizController> {
                 suffixIcon: Image.asset('assets/images/edit.png'),
                 hintText: 'Ajouter des instructions',
                 maxLines: 16,
-              ).marginOnly(bottom: 20),
+              ).marginOnly(bottom: 10),
 
               Obx(() =>  QuizSettingItemWidget(
                 value: controller.numberOfQuestions.value.toString(),
@@ -177,50 +177,53 @@ class QuizView extends GetView<QuizController> {
                     haveBorder: false,
                     text: Text('Générer le quiz', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
                     onPressed: (){
+
                       if(Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList().isNotEmpty){
+
                         controller.startGenerationProgress(
                             idCourse: controller.selectedCourse.value.id!,
                             instruction: controller.instructionText.text,
                             levelOfDifficulty: controller.getLevelOfDifficulty(controller.difficultyIndex.value) ,
                             questionsNumber: controller.numberOfQuestions.value,
-                            quizzType: controller.getQuizzType(controller.questionTypeIndex.value));
-                        showDialog(context: context,
+                            quizzType: controller.getQuizzType(controller.questionTypeIndex.value)
+                        );
 
+                        showDialog(
+                            context: context,
                             builder: (context) => Obx(() => Dialog(
                               backgroundColor: QuizGenerationState.ongoing == controller.generationState.value?Colors.transparent:bgColor,
                               alignment: Alignment.center,
                               shape: Border.symmetric(horizontal: BorderSide.none, vertical: BorderSide.none),
                               insetPadding: EdgeInsets.zero,
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: Get.height/3,),
-                                    SizedBox(
-                                      child: CircularProgressIndicator(
-                                        color:Color(0xff1B7B38),
-                                        strokeWidth: 8,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: Get.height/3,),
+                                  SizedBox(
+                                    child: CircularProgressIndicator(
+                                      color: primaryColor,
+                                      strokeWidth: 8,
 
+                                    ),
+                                    height: Get.height/6,
+                                    width: Get.height/6,
+                                  ).marginOnly(bottom: 40),
+                                  Text('Generation du quizz en cours...'),
+                                  Spacer(),
+                                  Obx(() => QuizGenerationState.failed == controller.generationState.value?
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))
+                                    ),
+                                    height: Get.height*0.2,
+                                    padding: EdgeInsets.all(Get.width/6),
+                                    child: Center(
+                                      child: Text('Cette opération peut prendre un certain temps en fonction de votre connexion' ,
+                                        textAlign: TextAlign.center,
                                       ),
-                                      height: Get.height/6,
-                                      width: Get.height/6,
-                                    ).marginOnly(bottom: 40),
-                                    Text('Generation du quizz en cours...'),
-                                    Spacer(),
-                                    Obx(() => QuizGenerationState.failed == controller.generationState.value?
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))
-                                      ),
-                                      height: Get.height*0.2,
-                                      padding: EdgeInsets.all(Get.width/6),
-                                      child: Center(
-                                        child: Text('Cette opération peut prendre un certain temps en fonction de votre connexion' ,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),):SizedBox(),)
-                                  ],
-                                ),
+                                    ),):SizedBox(),)
+                                ],
                               ),
                             ),));
                       }
@@ -229,6 +232,7 @@ class QuizView extends GetView<QuizController> {
                       }
                     }),
               ).marginOnly(top: 20),
+              SizedBox(height: Get.height/3)
             ],
           ),
         ),
@@ -238,21 +242,24 @@ class QuizView extends GetView<QuizController> {
 
   Widget _buildQuizInterface() {
     return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 100, bottom: 50),
+      height: Get.height,
       decoration: const BoxDecoration(color: lightQuizzBackgroundColor),
-      child: ListView(
-        children: [
-          LinearProgressIndicator(
-              value: controller.questionProgress.value,
-              backgroundColor: Colors.grey[300],
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff1B7B38))),
-          const SizedBox(height: 20),
-          _buildQuestionCard(),
-          const SizedBox(height: 40),
-          _buildOptionsList(),
-          const SizedBox(height: 20),
-          _buildNavigationButtons(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            LinearProgressIndicator(
+                value: controller.questionProgress.value,
+                backgroundColor: Colors.grey[300],
+                valueColor: const AlwaysStoppedAnimation<Color>(primaryColor)),
+            const SizedBox(height: 20),
+            _buildQuestionCard(),
+            const SizedBox(height: 40),
+            _buildOptionsList(),
+            const SizedBox(height: 20),
+            _buildNavigationButtons(),
+            SizedBox(height: Get.height/3),
+          ],
+        )
       ),
     );
   }

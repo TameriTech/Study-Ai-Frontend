@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-const primaryColor = Color(0xff000000);
+const primaryColor = Color(0xFF14213D);
 const secondaryColor = Color(0xff000000);
 const tertiaryColor = Color(0xff7D5E02);
 Color hinTextColor = Colors.grey.shade700;
@@ -17,7 +17,7 @@ const darkgreenColor = Color(0xFF2c614f);
 const labelColor = Color(0xff000000);
 const greenColor = Color(0xFF6bab58);
 const validateColor = Color.fromRGBO(0,151,136,1);
-const appColor = Color(0xFF032252);
+const appColor = Color(0xFF14213D);
 const pink = Color.fromRGBO(215, 31, 77, 1.0);
 const specialColor = Color(0xFFFC1111);
 const colorOnSelected = Colors.cyanAccent;

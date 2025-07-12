@@ -356,9 +356,8 @@ class QuizController extends GetxController {
     try{
 
       var result = await quizzRepository.updateUserAnswer(quizzId: quizzId, userAnswer: userAnswer);
-      await Get.showSnackbar(Ui.SuccessSnackBar(message: "Reponse enregistree avec succes"));
+      //await Get.showSnackbar(Ui.SuccessSnackBar(message: "Reponse enregistree avec succes"));
       return result;
-
 
     } catch(e){
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));

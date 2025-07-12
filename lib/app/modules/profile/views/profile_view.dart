@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
 import '../../../routes/app_routes.dart';
 import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
+import '../../global_widgets/warning_pupop.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -19,7 +21,7 @@ class ProfileView extends GetView<ProfileController> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           leadingWidth: 0,
-          backgroundColor: Color(0xFF14213D),
+          backgroundColor: appColor,
           leading: Icon(null),
           title: Text('Mon profile', style: TextStyle(fontSize: 24, color: Colors.white)),
           actions: [
@@ -86,7 +88,7 @@ class ProfileView extends GetView<ProfileController> {
                             Image.asset("assets/images/logo.png", width: 200, height: 100),
                             Text("Hey ${controller.currentUser.value.fullName}",
                               style: TextStyle(fontSize: 24, color: Colors.white),),
-                            Text("Etudiant en ${controller.currentUser.value.classLevel}",
+                            Text("Niveau d'études : ${controller.currentUser.value.classLevel}",
                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
                             ),
                           ],
@@ -105,10 +107,10 @@ class ProfileView extends GetView<ProfileController> {
                           children: [
                             const SizedBox(height: 30),
                             Container(
-                                padding: EdgeInsets.all(20),
+                                padding: EdgeInsets.all(10),
                                 width: double.infinity,
-                                height: controller.edit.value ? 650 : 350,
-                                margin: const EdgeInsets.symmetric(horizontal: 20),
+                                height: controller.edit.value ? 700 : null,
+                                margin: const EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
@@ -140,7 +142,7 @@ class ProfileView extends GetView<ProfileController> {
                                                 Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.black,
+                                                backgroundColor: primaryColor,
                                                 shape: StadiumBorder(),
                                                 padding: EdgeInsets.symmetric(
                                                   horizontal: 40,
@@ -186,31 +188,76 @@ class ProfileView extends GetView<ProfileController> {
                                         );
                                       }
                                     }),
-                                    SizedBox(height: 30),
-                                    ListTile(
-                                      title: Text("Se déconnecter", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
-                                      trailing: Icon(Icons.logout, color: Colors.grey),
-                                      onTap: () => Get.toNamed(Routes.LOGIN),
-                                    ),
-                                    ListTile(
-                                      title: Text("Supprimer mon compte", style: TextStyle(fontSize: 16, color: Colors.red)),
-                                      trailing: Icon(Icons.delete_forever, color: Colors.red),
-                                      onTap: (){},
-                                    ),
                                   ],
                                 )
                             ),
-                            const SizedBox(height: 40),
-                            Text(
-                              "Ma progression",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Ma progression",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  progressionIndicator(context),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 10),
-                            progressionIndicator(context),
-                            SizedBox(height: 15)
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Text("Se déconnecter", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                    trailing: Icon(Icons.logout, color: Colors.grey),
+                                    onTap: () => Get.toNamed(Routes.LOGIN),
+                                  ),
+                                  ListTile(
+                                    title: Text("Supprimer mon compte", style: TextStyle(fontSize: 16, color: Colors.red)),
+                                    trailing: Icon(Icons.delete_forever, color: Colors.red),
+                                    onTap: () {
+                                      WarningDialog.show(
+                                          context: context,
+                                          title: 'Attention',
+                                          message: 'Voulez vous vraiment supprimer votre compte?.',
+                                          confirmText: 'D\'accord',
+                                          onConfirm: () {
+                                            controller.deleteAccount();
+                                          }
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       )
@@ -221,6 +268,45 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ),
         ),
+    );
+  }
+
+  TabViewWidget(BuildContext context) {
+    return SizedBox(
+      height: 600,
+      child: DefaultTabController(
+        length: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              color: Colors.white,
+              child: TabBar(
+                labelColor: Colors.black,
+                dividerColor: Colors.transparent,
+                unselectedLabelColor: Colors.grey,
+                indicatorColor: Colors.black,
+                onTap: (value) {
+                  controller.selectedHomeIndex.value = value;
+                },
+                tabs: [
+                  Tab(text: 'Info'),
+                  Tab(text: 'Mot de passe'),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Expanded( // This is crucial!
+              child: TabBarView(
+                children: [
+                  Info(context),
+                  Password(context)
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -282,7 +368,7 @@ class ProfileView extends GetView<ProfileController> {
                               decoration: BoxDecoration(
                                 color: controller.selectedClassLevel.value == controller.currentUser.value.classLevel.toString()
                                     && controller.selectedClassLevel.value == level
-                                    ? tertiaryColor.withOpacity(0.8):Colors.white,
+                                    ? primaryColor.withOpacity(0.8):Colors.white,
                                 borderRadius: BorderRadius.circular(20),
 
                               ),
@@ -315,7 +401,7 @@ class ProfileView extends GetView<ProfileController> {
                             decoration: BoxDecoration(
                               color: controller.selectedSchoolLevel.value == controller.currentUser.value.academicLevel.toString()
                                   && controller.selectedSchoolLevel.value == level
-                                  ? tertiaryColor.withOpacity(0.8):Colors.white,
+                                  ? primaryColor.withOpacity(0.8) : Colors.white,
                               borderRadius: BorderRadius.circular(20),
 
                             ),
@@ -335,7 +421,7 @@ class ProfileView extends GetView<ProfileController> {
                 Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
               },
               child: Text('Autres...', style: Get.textTheme.labelSmall!.
-              merge(TextStyle(color: tertiaryColor, fontWeight: FontWeight.w600))),
+              merge(TextStyle(color: primaryColor, fontWeight: FontWeight.w600))),
           ),
           SizedBox(height: 10),
           BlockButtonWidget(
@@ -379,9 +465,7 @@ class ProfileView extends GetView<ProfileController> {
             hintText: "••••••••••••••••",
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
-            onChanged: (value) => {
-              controller.currentUser.value.password = value
-            },
+            onChanged: (value) => controller.oldPassword.value = value,
             validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
             keyboardType: TextInputType.visiblePassword,
             suffixIcon: IconButton(
@@ -402,9 +486,7 @@ class ProfileView extends GetView<ProfileController> {
             hintText: "••••••••••••••••",
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
-            onChanged: (value) => {
-              controller.currentUser.value.password = value
-            },
+            onChanged: (value) => controller.newPassword.value = value,
             validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
             keyboardType: TextInputType.visiblePassword,
             suffixIcon: IconButton(
@@ -425,9 +507,7 @@ class ProfileView extends GetView<ProfileController> {
             hintText: "••••••••••••••••",
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
-            onChanged: (value) => {
-              controller.currentUser.value.password = value
-            },
+            onChanged: (value) => controller.confirmPassword.value = value,
             validator: (input) => input != controller.newPassword.value ? 'confirm password and new password must be the same' : null,
             keyboardType: TextInputType.visiblePassword,
             suffixIcon: IconButton(
@@ -441,24 +521,36 @@ class ProfileView extends GetView<ProfileController> {
           ),
           ),
           SizedBox(height: 20),
-          BlockButtonWidget(
-              color: Colors.black,
-              haveBorder: false,
-              text: Center(
-                child: Text('Soumettre', style: Get.textTheme.labelSmall!.
-                merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
-              ),
-              onPressed: (){
-                if(_formKey.currentState!.validate()){
-                  controller.updatePassword();
-                }
-              })
+          Obx(() {
+            return !controller.onResetPassword.value ?
+            BlockButtonWidget(
+                color: Colors.black,
+                haveBorder: false,
+                text: Center(
+                  child: Text('Soumettre', style: Get.textTheme.labelSmall!.
+                  merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                ),
+                onPressed: (){
+                  if(_formKey.currentState!.validate()){
+                    controller.updatePassword();
+                  }
+                }) :
+            BlockButtonWidget(
+                color: Colors.black,
+                haveBorder: false,
+                text: Center(
+                  child: SpinKitThreeBounce(color: Colors.white, size: 20)
+                ),
+                onPressed: (){
+                });
+          }),
         ],
       ),
     );
   }
 
   Widget progressionIndicator(BuildContext context){
+    var val = double.parse(controller.currentUser.value.statistic.toString()) / 100;
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -466,11 +558,15 @@ class ProfileView extends GetView<ProfileController> {
           height: 100,
           width: 100,
           child: CircularProgressIndicator(
-            value: double.parse(controller.currentUser.value.statistic.toString()),
-            strokeWidth: 8,
-            backgroundColor: Colors.grey.shade300,
-            color: Colors.orange,
-          ),
+            value: val,
+            strokeWidth: 10,
+            backgroundColor: bgColor,
+            color: (){
+              if (val <= 0.30) return Colors.red;
+              if (val > 0.31 && val < 0.50) return Colors.orange;
+              return Colors.green;
+            }()
+          )
         ),
         Text( controller.currentUser.value.statistic.toString(),
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -479,41 +575,6 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 
-  TabViewWidget(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            color: Colors.white,
-            child: TabBar(
-              labelColor: Colors.black,
-              dividerColor: Colors.transparent,
-              unselectedLabelColor: Colors.grey,
-              indicatorColor: Colors.black,
-              onTap: (value) {
-                controller.selectedHomeIndex.value = value;
-              },
-              tabs: [
-                Tab(text: 'Info'),
-                Tab(text: 'Mot de passe'),
-              ],
-            ),
-          ),
-          SizedBox(height: 20),
-          Expanded( // This is crucial!
-            child: TabBarView(
-              children: [
-                Info(context),
-                Password(context)
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 

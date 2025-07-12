@@ -81,10 +81,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
   super.dispose();
   }
 
-
-
-
-
   FilesController() {
 
   }
@@ -101,11 +97,8 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
 
     await getCompleteFileList();
 
-
     tabCourseController = TabController(length: 3, vsync: this);
     tabViewController = TabController(length: 4, vsync: this);
-
-
 
   }
 
@@ -132,14 +125,12 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     quizList.value = filesList.where((element) => element.type == "Quizz",).toList();
     revisionList.value = filesList.where((element) => element.type == "Revision",).toList();
 
-    safeFilesList = filesList.value;
-    safeCourseList = courseList.value;
-    safeQuizList = quizList.value;
-    safeRevisionList = revisionList.value;
+    safeFilesList = filesList;
+    safeCourseList = courseList;
+    safeQuizList = quizList;
+    safeRevisionList = revisionList;
 
     filesLoading.value = false;
-
-
   }
 
   getFileCardColor(String type) {
@@ -252,15 +243,12 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
       var result = await filesRepository.extractTextFromPDFFile(id: userId, pdfFile: pdfFile);
       return result;
 
-
     } catch(e){
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
-
     }
     finally {
       //loading.value = false;
     }
-
   }
 
   Future getCourseById({required int courseId}) async {
@@ -278,7 +266,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     finally {
       //loading.value = false;
     }
-
   }
 
   Future createVocabulary({required int courseId}) async {
@@ -379,8 +366,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
             subtitle:  revision['level_of_difficulty'],
           createdAt: revision['created_at']??'',
             revisionData: revision['summary_modules'],
-
-
         );
         print("revisions: ${fileCardModel.revisionData}");
         revisionList.add(fileCardModel);
@@ -476,8 +461,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
 
       var extractedUserAnswerIndex = Get.find<QuizController>().extractCorrectIndex(extractedChoices, data["user_answer"]);
 
-
-      print("data is is is : $data");
+      //print("data is is is : $data");
       questions.add(
           Question(
             questionId: data['id_quiz'],
@@ -486,7 +470,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
             userAnswerIndex: extractedUserAnswerIndex,
             options: extractedChoices,
             correctIndex: extractedCorrectIndex,));
-      print('lrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is ${extractedCorrectIndex}');
+      //print('lrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is ${extractedCorrectIndex}');
       if(extractedCorrectIndex == 0){
         correctAnswers.add(extractedChoices[0]);
       } if(extractedCorrectIndex == 1){
@@ -508,8 +492,8 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
       }
 
     }
-    print('lrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is ${correctAnswers.toString()}');
-    print('Selected answer is  is ${selectedAnswers.toString()}');
+    //print('lrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is ${correctAnswers.toString()}');
+    //print('Selected answer is  is ${selectedAnswers.toString()}');
   }
 
   searchBasedOnName(String name){
@@ -526,12 +510,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
       revisionList.value = safeRevisionList;
     }
   }
-
-
-
-
-
-
 
 }
 
