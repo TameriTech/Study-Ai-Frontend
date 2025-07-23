@@ -4,6 +4,7 @@ import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
 import '../../../../color_constants.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/chat_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class HistoryView extends GetView<ChatController> {
@@ -25,7 +26,7 @@ class HistoryView extends GetView<ChatController> {
             child: const Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "Historique des discussions",
+            AppLocalizations.of(context).discussion_history,
             style: TextStyle(
               fontSize: screenWidth * 0.055, // responsive font size
               fontWeight: FontWeight.w600,

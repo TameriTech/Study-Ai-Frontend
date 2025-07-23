@@ -11,7 +11,7 @@ import 'app/routes/theme_app_pages.dart';
 import 'app/services/auth_service.dart';
 import 'app/services/global_services.dart';
 import 'app/services/settings_services.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
   initServices() async {
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
       darkTheme: Get.find<SettingsService>().getDarkTheme(),
       home: box.read("exists") == null ? OnboardingScreen() : LoginRegisterView(),
       localizationsDelegates: [
-        //AppLocalizations.delegate,
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -88,8 +88,9 @@ class MyApp extends StatelessWidget {
       locale: Locale.fromSubtags(languageCode: box.read('language')==null? Platform.localeName:box.read('language')),
 
       supportedLocales: [
-        Locale('en'), // English
-        Locale('fr'), // French
+        Locale('en', ''), // English
+        Locale('fr', ''), // French
+        // Add other supported locales
       ],
     );
   }

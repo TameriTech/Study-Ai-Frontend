@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studyai/app/models/user_model.dart';
 import 'package:studyai/app/modules/auth/controllers/google_api.dart';
@@ -11,6 +13,11 @@ import 'package:studyai/app/repositories/user_repository.dart';
 import 'package:studyai/app/routes/app_routes.dart';
 import 'package:studyai/app/services/auth_service.dart';
 import 'package:studyai/common/ui.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../services/global_services.dart';
+import 'facebook_api.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class AuthController extends GetxController {
@@ -31,22 +38,23 @@ class AuthController extends GetxController {
   RxBool registerInfoHalfSaved = false.obs;
   RxBool hidePassword = false.obs;
   RxBool loginLoading = false.obs;
+  RxBool recoverLoading = false.obs;
   late UserRepository userRepository;
+  var email = "".obs;
   var schoolLevel = [
-  "etudiant",
-  "lyceen",
-  "collegien",
-  "candidat Libre"
+  AppLocalizations.of(Get.context!).university_student,
+  AppLocalizations.of(Get.context!).high_school_student,
+  AppLocalizations.of(Get.context!).middle_school_student,
+  AppLocalizations.of(Get.context!).independent_candidate
 
-];
+  ];
   var selectedSchoolLevel = ''.obs;
 
   var classDegree = [
-    "BEPC",
-    "BAC",
-    "BTS/DUT",
-    "License"
-
+  AppLocalizations.of(Get.context!).bepc,
+  AppLocalizations.of(Get.context!).bac,
+  AppLocalizations.of(Get.context!).hnd,
+  AppLocalizations.of(Get.context!).bachelor
   ];
   var selectedClassLevel = ''.obs;
 
@@ -94,10 +102,10 @@ class AuthController extends GetxController {
         loginLoading.value = true;
         var id = await userRepository.login(currentUser.value);
         await getUser(id);
-        Get.showSnackbar(Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
-
+        //Get.showSnackbar(Ui.SuccessSnackBar(message: 'Utilisateur connecte avec succes'));
         loginLoading.value = false;
-
+        var box = GetStorage();
+        box.write("exists", true);
         Get.toNamed(Routes.ROOT);
       } catch(e){
         loginLoading.value = false;
@@ -107,13 +115,10 @@ class AuthController extends GetxController {
       finally {
         loginLoading.value = false;
       }
+    }else{
 
-
-
-      }else{
-
-      }
     }
+  }
 
   Future<void> register() async {
     Get.focusScope?.unfocus();
@@ -149,15 +154,9 @@ class AuthController extends GetxController {
               else{
                 _timer?.cancel();
               }
-
-
-
             }
           },
         );
-
-
-
       }
       catch(e){
         _timer?.cancel();
@@ -167,9 +166,6 @@ class AuthController extends GetxController {
       finally {
         //loading.value = false;
       }
-
-
-
     }else{
 
     }
@@ -179,34 +175,53 @@ class AuthController extends GetxController {
   Future<void> getUser(int id) async {
     Get.focusScope?.unfocus();
 
-      try{
+    try{
 
-          Get.find<AuthService>().user.value = await userRepository.getUser(id);
-          currentUser.value= Get.find<AuthService>().user.value;
-          print('name is ${Get.find<AuthService>().user.value}');
+      Get.find<AuthService>().user.value = await userRepository.getUser(id);
+      currentUser.value= Get.find<AuthService>().user.value;
+      print('name is ${Get.find<AuthService>().user.value}');
 
 
-      } catch(e){
-        Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
-
-      }
-      finally {
-        //loading.value = false;
-      }
+    } catch(e){
+      Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
 
     }
+    finally {
+      //loading.value = false;
+    }
 
-  Future<void> handleSignIn() async {
+  }
+
+  Future<void> handleGoogleSignIn() async {
     try {
       await GoogleApi.signIn();
       debugPrint(GoogleApi.userinfo().toString());
+      if(GoogleApi.userinfo() != null){
+        GoogleApi.userinfo()?.authentication.then((value) async {
+          print('Id token: ${value.idToken}');
+          print("Access token: ${value.accessToken}");
+          if(value.idToken != null){
+            var id = await userRepository.loginGoogle(value.idToken!);
+            await getUser(id);
+            Get.showSnackbar(Ui.SuccessSnackBar(message: AppLocalizations.of(Get.context!).login_successful));
+
+            loginLoading.value = false;
+
+            Get.toNamed(Routes.ROOT);
+          }
+
+
+        } ,);
+
+      }
+
 
     } catch (error) {
       debugPrint(error.toString());
     }
   }
 
-  Future<void> handleSignOut(BuildContext context) async {
+  Future<void> handleGoogleSignOut(BuildContext context) async {
     try {
       await GoogleApi.signOut();
       debugPrint(GoogleApi.userinfo().toString());
@@ -218,4 +233,58 @@ class AuthController extends GetxController {
   }
 
 
+  Future<void> handleFacebookSignIn() async {
+    try {
+      await FacebookApi.facebookSignIn();
+      debugPrint(FacebookApi.userinfo.toString());
+      if (FacebookApi.userinfo != null) {
+        if(FacebookApi.accessToken != null){
+          var id = await userRepository.loginFacebook(FacebookApi.accessToken!);
+          await getUser(id);
+          Get.showSnackbar(
+              Ui.SuccessSnackBar(message: AppLocalizations.of(Get.context!).login_successful));
+
+          loginLoading.value = false;
+
+          Get.toNamed(Routes.ROOT);
+        }
+
+      }
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+  Future resetPassword(String value) async{
+    try {
+      var headersList = {
+        'Content-Type': 'application/json'
+      };
+      var url = Uri.parse('${GlobalService().baseUrl}/forgot-password');
+
+      var body = {
+        "email": value
+      };
+
+      var req = http.Request('POST', url);
+      req.headers.addAll(headersList);
+      req.body = json.encode(body);
+
+      var res = await req.send();
+      final resBody = await res.stream.bytesToString();
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        print(resBody);
+        Ui.SuccessSnackBar(message: jsonDecode(resBody)["message"]);
+        recoverLoading.value = false;
+      }
+      else {
+        Ui.ErrorSnackBar(message: res.reasonPhrase.toString());
+        recoverLoading.value = false;
+      }
+    }catch (e){
+      Ui.ErrorSnackBar(message: e.toString());
+      recoverLoading.value = false;
+    }
+  }
 }

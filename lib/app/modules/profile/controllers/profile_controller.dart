@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../../common/ui.dart';
 import '../../../models/user_model.dart';
 import '../../../repositories/user_repository.dart';
@@ -10,6 +11,7 @@ import '../../../services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../services/global_services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileController extends GetxController {
   Rx<UserModel> currentUser = Get.find<AuthService>().user;
@@ -42,58 +44,60 @@ class ProfileController extends GetxController {
 
   }
   var schoolLevel = [
-    "etudiant",
-    "lyceen",
-    "collegien",
-    "candidat Libre"
+    AppLocalizations.of(Get.context!).university_student,
+    AppLocalizations.of(Get.context!).high_school_student,
+    AppLocalizations.of(Get.context!).middle_school_student,
+    AppLocalizations.of(Get.context!).independent_candidate
 
   ];
   var selectedSchoolLevel = ''.obs;
 
   var classDegree = [
-  "BEPC",
-  "BAC",
-  "BTS/DUT",
-  "License"
+    AppLocalizations.of(Get.context!).bepc,
+    AppLocalizations.of(Get.context!).bac,
+    AppLocalizations.of(Get.context!).hnd,
+    AppLocalizations.of(Get.context!).bachelor
   ];
 
   var selectedClassLevel = ''.obs;
 
   final List<String> subjects = [
-    'Sciences',
-    'Lettres et Langues',
-    'Économie et Gestion',
-    'Sciences Sociales',
-    'Sciences Politiques',
-    'Sciences de la Santé',
-    'Ingénierie',
-    'Informatique',
-    'Droit',
-    'Médecine',
-    'Architecture',
-    'Philosophie',
-    'Communication',
-    'Éducation',
-    'Agronomie',
-    'Beaux-Arts',
-    'Tourisme et Hôtellerie',
-    'Électronique',
-    'Comptabilité et Finance',
-    'Marketing',
-    'Ressources Humaines',
-    'Journalisme',
+  AppLocalizations.of(Get.context!).sciences,
+  AppLocalizations.of(Get.context!).literature_and_languages,
+  AppLocalizations.of(Get.context!).economics_and_management,
+  AppLocalizations.of(Get.context!).social_sciences,
+  AppLocalizations.of(Get.context!).political_sciences,
+  AppLocalizations.of(Get.context!).health_sciences,
+  AppLocalizations.of(Get.context!).engineering,
+  AppLocalizations.of(Get.context!).computer_science,
+  AppLocalizations.of(Get.context!).law,
+  AppLocalizations.of(Get.context!).medicine,
+  AppLocalizations.of(Get.context!).architecture,
+  AppLocalizations.of(Get.context!).philosophy,
+  AppLocalizations.of(Get.context!).communication,
+  AppLocalizations.of(Get.context!).education,
+  AppLocalizations.of(Get.context!).agronomy,
+  AppLocalizations.of(Get.context!).fine_arts,
+  AppLocalizations.of(Get.context!).tourism_and_hospitality,
+  AppLocalizations.of(Get.context!).electronics,
+  AppLocalizations.of(Get.context!).accounting_and_finance,
+  AppLocalizations.of(Get.context!).marketing,
+  AppLocalizations.of(Get.context!).human_resources,
+  AppLocalizations.of(Get.context!).journalism,
   ];
 
   var selectedObj = "".obs;
   var hasSelectedObj = false.obs;
 
   var isLoading = false.obs;
+  var languageBox =  GetStorage();
+
 
   final List<String> learningObjectives = [
-    'Améliorer mes notes',
-    'Préparer un examen spécifique',
-    'Comprendre un sujet précis',
-    'Apprendre avec l\'IA',
+    AppLocalizations.of(Get.context!).improve_my_grades,
+    AppLocalizations.of(Get.context!).prepare_for_specific_exam,
+    AppLocalizations.of(Get.context!).understand_specific_topic,
+    AppLocalizations.of(Get.context!).learn_with_ai,
   ];
 
   RxBool isBestSubjectsForm = true.obs;
@@ -106,7 +110,7 @@ class ProfileController extends GetxController {
       Get.find<AuthService>().user.value = currentUser.value;
       print(currentUser.value);
 
-      Get.showSnackbar(Ui.SuccessSnackBar(message: 'Inscription complété avec succès!'));
+      Get.showSnackbar(Ui.SuccessSnackBar(message: AppLocalizations.of(Get.context!).profile_info_updated_successful));
 
       isLoading.value = false;
 
@@ -170,7 +174,7 @@ class ProfileController extends GetxController {
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         await response.stream.bytesToString();
-        Ui.SuccessSnackBar(message: "Compte supprimé avec succès!");
+        Ui.SuccessSnackBar(message: AppLocalizations.of(Get.context!).delete_account_successful);
       }
       else {
         final resBody = await response.stream.bytesToString();

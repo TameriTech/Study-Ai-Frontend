@@ -45,7 +45,6 @@ class RootController extends GetxController {
       }
       if(_index == 0){
         //Get.find<FilesController>().getCompleteFileList();
-        print('Nathaaaaaaaaaaaaaaaaaaaaaaaaalie');
       }
 
       currentIndex.value = _index;

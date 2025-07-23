@@ -6,6 +6,7 @@ import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
 import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CompleteProfileView extends GetView<ProfileController> {
   @override
@@ -31,13 +32,13 @@ class CompleteProfileView extends GetView<ProfileController> {
           ),
           title: Obx(() => controller.isBestSubjectsForm.value
               ? Text(
-            'Matières préférées',
+            AppLocalizations.of(context).favorite_courses,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ) : Text(
-            "Objectifs d’Apprentissage ",
+              AppLocalizations.of(context).learning_objectives,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -115,8 +116,8 @@ class CompleteProfileView extends GetView<ProfileController> {
           suffixIcon: Icon(null),
           suffix: Icon(null),
           readOnly: false,
-          labelText: 'Autre',
-          hintText: 'Entre une autre matiere',
+          labelText: AppLocalizations.of(context).other,
+          hintText: AppLocalizations.of(context).enter_other_subject,
           isFirst: true,
           onChanged: (value) => {
           controller.hasSelected.value =  true,
@@ -132,7 +133,7 @@ class CompleteProfileView extends GetView<ProfileController> {
           child: BlockButtonWidget(
               color: controller.hasSelected.value ? primaryColor : primaryColor.withOpacity(0.5),
               haveBorder: false,
-              text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+              text: Text(AppLocalizations.of(context).next, style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
               onPressed: (){
                 if(controller.hasSelected.value){
                   controller.isBestSubjectsForm.value = !controller.isBestSubjectsForm.value;
@@ -186,7 +187,7 @@ class CompleteProfileView extends GetView<ProfileController> {
               haveBorder: false,
               text: controller.isLoading.value ?
               SpinKitThreeBounce(color: Colors.white, size: 20) :
-              Text('Soumetre', style: Get.textTheme.labelSmall!
+              Text(AppLocalizations.of(context).submit, style: Get.textTheme.labelSmall!
                   .merge(TextStyle(color: Colors.white,
                   fontWeight: FontWeight.w600))),
               onPressed: ()async{
@@ -202,7 +203,7 @@ class CompleteProfileView extends GetView<ProfileController> {
               haveBorder: false,
               text: controller.isLoading.value ?
               SpinKitThreeBounce(color: Colors.white, size: 20) :
-              Text('Soumetre', style: Get.textTheme.labelSmall!
+              Text(AppLocalizations.of(context).submit, style: Get.textTheme.labelSmall!
                   .merge(TextStyle(color: Colors.white,
                   fontWeight: FontWeight.w600))),
               onPressed: (){ }

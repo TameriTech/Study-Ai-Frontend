@@ -5,6 +5,7 @@ import '../../../../common/helper.dart';
 import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
 import '../controllers/auth_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterViews extends GetView<AuthController> {
 
@@ -15,153 +16,153 @@ class RegisterViews extends GetView<AuthController> {
     return WillPopScope(
       onWillPop: Helper().onWillPop,
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
+          resizeToAvoidBottomInset: true,
           backgroundColor: bgColor,
           appBar: AppBar(
-            backgroundColor: bgColor,
-            title: Text("Inscription", style: Get.textTheme.labelMedium),
-            centerTitle: true,
-            leading: Obx(() => !controller.registerInfoComplete.value ?
-            InkWell(
-              onTap: (){
-                if(controller.minimumInformationStep1.value && controller.minimumInformationStep2.value )
-                {
-                  controller.minimumInformationStep2.value = false;
-                } else if(controller.minimumInformationStep1.value && !controller.minimumInformationStep2.value){
-                  controller.minimumInformationStep1.value = false;
-                }
-                else{
-                  Navigator.of(context).pop();
-                  controller.minimumInformationStep2.value = false;
-                }
-              },
-              child: Image.asset(
-                  'assets/images/arrow-left-circle 2.png'
+              backgroundColor: bgColor,
+              title: Text(AppLocalizations.of(context).inscription, style: Get.textTheme.labelMedium),
+              centerTitle: true,
+              leading: Obx(() => !controller.registerInfoComplete.value ?
+              InkWell(
+                  onTap: (){
+                    if(controller.minimumInformationStep1.value && controller.minimumInformationStep2.value )
+                    {
+                      controller.minimumInformationStep2.value = false;
+                    } else if(controller.minimumInformationStep1.value && !controller.minimumInformationStep2.value){
+                      controller.minimumInformationStep1.value = false;
+                    }
+                    else{
+                      Navigator.of(context).pop();
+                      controller.minimumInformationStep2.value = false;
+                    }
+                  },
+                  child: Image.asset(
+                      'assets/images/arrow-left-circle 2.png'
+                  )
+              ) : SizedBox.shrink()
               )
-            ) : SizedBox.shrink()
-            )
           ),
           bottomSheet: Container(
-            color: bgColor,
+              color: bgColor,
               child: actionBottomSheet(context)
           ),
           body: SafeArea(
-            child: Form(
-              key: controller.registerFormKey,
-              child: SingleChildScrollView(
-                child: Column(
-                    children: [
+              child: Form(
+                  key: controller.registerFormKey,
+                  child: SingleChildScrollView(
+                      child: Column(
+                          children: [
 
-                      Obx(() =>  !controller.registerInfoComplete.value?
-                      !controller.minimumInformationStep1.value?
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: Get.width/6,
-                            height: 10,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
-                          Container(
-                            width: Get.width/6,
-                            height: 10,
-                            decoration:  BoxDecoration(
-                                color: Color(0xffADAAAA),
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
-                          Container(
-                            width: Get.width/6,
-                            height: 10.0,
-                            decoration:BoxDecoration(
-                                color: Color(0xffADAAAA),
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
+                            Obx(() =>  !controller.registerInfoComplete.value?
+                            !controller.minimumInformationStep1.value?
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
+                                const SizedBox(width: 20,),
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10,
+                                  decoration:  BoxDecoration(
+                                      color: Color(0xffADAAAA),
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
+                                const SizedBox(width: 20,),
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10.0,
+                                  decoration:BoxDecoration(
+                                      color: Color(0xffADAAAA),
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
 
-                        ],): !controller.minimumInformationStep2.value?
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: Get.width/6,
-                            height: 10.0,
-                            decoration:  BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
-                          Container(
-                            width: Get.width/6,
-                            height: 10.0,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
-                          Container(
-                            width: Get.width/6,
-                            height: 10.0,
-                            decoration: BoxDecoration(
-                                color: Color(0xffADAAAA),
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
+                              ],): !controller.minimumInformationStep2.value?
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10.0,
+                                  decoration:  BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
+                                const SizedBox(width: 20,),
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
+                                const SizedBox(width: 20,),
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffADAAAA),
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
 
-                        ],) :
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: Get.width/6,
-                            height: 10.0,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
-                          Container(
-                            width: Get.width/6,
-                            height: 10.0,
-                            decoration:BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
-                          Container(
-                            width: Get.width/6,
-                            height: 10.0,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(8)
-                            ),
-                          ),
-                          const SizedBox(width: 20,),
+                              ],) :
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
+                                const SizedBox(width: 20,),
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10.0,
+                                  decoration:BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
+                                const SizedBox(width: 20,),
+                                Container(
+                                  width: Get.width/6,
+                                  height: 10.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8)
+                                  ),
+                                ),
+                                const SizedBox(width: 20,),
 
-                        ],):
-                      SizedBox()).marginOnly(bottom: 20),
+                              ],):
+                            SizedBox()).marginOnly(bottom: 20),
 
-                      Obx(() =>  !controller.minimumInformationStep1.value?
-                      buildMinimumInformationStep1(context):!controller.minimumInformationStep2.value?
-                      buildMinimumInformationStep2(context):!controller.minimumInformationStep3.value?
-                      buildMinimumInformationStep3(context):buildMinimumInformationStep4(context),),
+                            Obx(() =>  !controller.minimumInformationStep1.value?
+                            buildMinimumInformationStep1(context):!controller.minimumInformationStep2.value?
+                            buildMinimumInformationStep2(context):!controller.minimumInformationStep3.value?
+                            buildMinimumInformationStep3(context):buildMinimumInformationStep4(context),),
 
-                    ]
-                )
+                          ]
+                      )
+                  )
               )
-            )
           ).paddingOnly(left: 10, right: 10)
       ),
     );
@@ -176,22 +177,22 @@ class RegisterViews extends GetView<AuthController> {
           suffix: Icon(null),
           readOnly: false,
           isFirst: true,
-          labelText: 'Nom',
+          labelText: AppLocalizations.of(context).name,
           hintText: "John",
           onChanged: (value) => controller.currentUser.value.fullName = value,
-          validator: (input) => input!.length < 3 ? 'input at least 3 characters' : null,
+          validator: (input) => input!.length < 3 ? AppLocalizations.of(context).enter_three_characters : null,
         ),
         TextFieldWidget(
           suffixIcon: Icon(null),
           suffix: Icon(null),
           readOnly: false,
-          labelText: 'Gmail',
+          labelText: AppLocalizations.of(context).email,
           hintText: 'user@gmail.com',
           isFirst: true,
           onChanged: (value) => {
             controller.currentUser.value.email = value,
           },
-          validator: (input) => !input!.contains('@') ? 'Input an email' : null,
+          validator: (input) => !input!.contains('@') ? AppLocalizations.of(context).input_email : null,
 
         ),
         Obx(() =>
@@ -199,14 +200,14 @@ class RegisterViews extends GetView<AuthController> {
               suffix: Icon(null),
               readOnly: false,
               isFirst: true,
-              labelText: 'Mot de passe',
+              labelText: AppLocalizations.of(context).password,
               hintText: "••••••••••••••••",
               textController: TextEditingController(text: controller.currentUser.value.password),
               obscureText: !controller.hidePassword.value,
               onChanged: (value) => {
                 controller.currentUser.value.password = value
               },
-              validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
+              validator: (input) => input!.length < 6 ? AppLocalizations.of(context).enter_six_characters : null,
               keyboardType: TextInputType.visiblePassword,
               suffixIcon: IconButton(
                 onPressed: () {
@@ -225,7 +226,7 @@ class RegisterViews extends GetView<AuthController> {
     return Column(
       children: [
         SizedBox(height: 40),
-        Text('Quel est ton niveau scolaire ?', style: Get.textTheme.labelMedium).marginOnly(bottom: 20),
+        Text(AppLocalizations.of(context).school_level_question, style: Get.textTheme.labelMedium).marginOnly(bottom: 20),
         for(var level in controller.schoolLevel)...[
           InkWell(
             onTap: (){
@@ -242,7 +243,7 @@ class RegisterViews extends GetView<AuthController> {
 
               ),
               child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400,
-                color: controller.selectedSchoolLevel.value == level ? Colors.white : Colors.black)
+                  color: controller.selectedSchoolLevel.value == level ? Colors.white : Colors.black)
               ),),
             ),).marginOnly(bottom: 20),
           ),
@@ -255,7 +256,7 @@ class RegisterViews extends GetView<AuthController> {
     return Column(
       children: [
         SizedBox(height: 40,),
-        Text('Quelle classe précisément?', style: Get.textTheme.labelMedium,).marginOnly(bottom: 20),
+        Text(AppLocalizations.of(context).class_level_question, style: Get.textTheme.labelMedium,).marginOnly(bottom: 20),
         for(var level in controller.classDegree)...[
           InkWell(
             onTap: (){
@@ -272,7 +273,7 @@ class RegisterViews extends GetView<AuthController> {
 
               ),
               child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400,
-                color: controller.selectedClassLevel.value == level ? Colors.white : Colors.black)
+                  color: controller.selectedClassLevel.value == level ? Colors.white : Colors.black)
               ),),
             ),).marginOnly(bottom: 20),
           )
@@ -299,7 +300,7 @@ class RegisterViews extends GetView<AuthController> {
           ),
         ),
         Visibility(
-          visible: !controller.registerInfoHalfSaved.value,
+            visible: !controller.registerInfoHalfSaved.value,
             child: Text('Creation du profil scolaire ')
         ).marginOnly(top: Get.height/20)
       ],
@@ -314,7 +315,7 @@ class RegisterViews extends GetView<AuthController> {
       child: BlockButtonWidget(
           color: primaryColor,
           haveBorder: false,
-          text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+          text: Text(AppLocalizations.of(context).next, style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
             if (controller.registerFormKey.currentState!.validate()) {
               controller.minimumInformationStep1.value = !controller.minimumInformationStep1.value;
@@ -327,7 +328,7 @@ class RegisterViews extends GetView<AuthController> {
       child: BlockButtonWidget(
           color: primaryColor,
           haveBorder: false,
-          text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+          text: Text(AppLocalizations.of(context).next, style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
             controller.minimumInformationStep2.value = !controller.minimumInformationStep2.value;
 
@@ -338,7 +339,7 @@ class RegisterViews extends GetView<AuthController> {
       child: BlockButtonWidget(
           color: primaryColor,
           haveBorder: false,
-          text: Text('Suivant', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+          text: Text(AppLocalizations.of(context).next, style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
           onPressed: (){
             controller.minimumInformationStep3.value = !controller.minimumInformationStep3.value;
             controller.registerInfoComplete.value = true;

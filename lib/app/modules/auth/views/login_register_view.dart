@@ -7,6 +7,8 @@ import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/auth_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class LoginRegisterView extends GetView<AuthController> {
 
@@ -161,7 +163,7 @@ class LoginRegisterView extends GetView<AuthController> {
                     suffixIcon: Icon(null),
                     suffix: Icon(null),
                     readOnly: false,
-                    labelText: 'Gmail',
+                    labelText: AppLocalizations.of(context).email,
                     hintText: 'user@gmail.com',
                     isFirst: true,
                     onChanged: (value) => {
@@ -174,14 +176,14 @@ class LoginRegisterView extends GetView<AuthController> {
                     suffix: Icon(null),
                     readOnly: false,
                     isFirst: true,
-                    labelText: 'Mot de passe',
+                    labelText: AppLocalizations.of(context).password,
                     hintText: "••••••••••••••••",
                     textController: TextEditingController(text: controller.currentUser.value.password),
                     obscureText: !controller.hidePassword.value,
                     onChanged: (value) => {
                       controller.currentUser.value.password = value
                     },
-                    validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
+                    validator: (input) => input!.length < 6 ? AppLocalizations.of(context).enter_six_characters : null,
                     keyboardType: TextInputType.visiblePassword,
                     suffixIcon: IconButton(
                       onPressed: () {
@@ -199,7 +201,7 @@ class LoginRegisterView extends GetView<AuthController> {
                       onPressed: () {
                         Get.toNamed(Routes.FORGOT_PASSWORD);
                       },
-                      child: Text("Mot de pass oublé?",style:
+                      child: Text(AppLocalizations.of(context).forgot_password,style:
                       TextStyle(fontFamily: "poppins",fontSize: 16, color: buttonColor)),
                     ).marginOnly(bottom: 10),
                   ),
@@ -210,7 +212,7 @@ class LoginRegisterView extends GetView<AuthController> {
                     BlockButtonWidget(
                         color: primaryColor,
                         haveBorder: false,
-                        text: Text('Connexion', style: Get.textTheme.labelSmall!.
+                        text: Text(AppLocalizations.of(context).login, style: Get.textTheme.labelSmall!.
                         merge(TextStyle(color: Colors.white,
                             fontWeight: FontWeight.w600))),
                         onPressed: (){
@@ -229,7 +231,7 @@ class LoginRegisterView extends GetView<AuthController> {
 
                   Align(
                       alignment: Alignment.center,
-                      child: Text('Se connecter avec', style: Get.textTheme.displaySmall,))
+                      child: Text(AppLocalizations.of(context).connect_with, style: Get.textTheme.displaySmall,))
                       .marginOnly(top: 40, bottom: 30),
 
                   Row(
@@ -285,7 +287,7 @@ class LoginRegisterView extends GetView<AuthController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Pas encore de compte ? ",
+                      Text(AppLocalizations.of(context).no_account_yet,
                         style: TextStyle(color: Color(0xff474646), fontSize: 16, fontWeight: FontWeight.w400),
                       ),
                       TextButton(
@@ -297,7 +299,7 @@ class LoginRegisterView extends GetView<AuthController> {
                             controller.registerInfoHalfSaved.value = false;
                             Get.toNamed(Routes.REGISTER);
                           },
-                          child: Text("Inscription", style: Get.textTheme.bodyMedium!
+                          child: Text(AppLocalizations.of(context).inscription, style: Get.textTheme.bodyMedium!
                               .merge(TextStyle(color: primaryColor, decoration: TextDecoration.underline))
                           )
                       )

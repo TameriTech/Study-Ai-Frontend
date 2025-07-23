@@ -4,6 +4,7 @@ import 'package:studyai/color_constants.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/files_controller.dart';
 import '../widgets/file_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllPages extends GetView<FilesController> {
   const AllPages({super.key});
@@ -26,7 +27,7 @@ class AllPages extends GetView<FilesController> {
                   SliverToBoxAdapter(
                     child:  Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Recents', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                      child: Text(AppLocalizations.of(context).recents, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
                     ).marginOnly(bottom: Get.height*0.025),
                   ),
                   Obx(() => controller.filesLoading.value?
@@ -38,7 +39,7 @@ class AllPages extends GetView<FilesController> {
                       child: Center(child: Column(
 
                         children: [
-                          Text('No files')
+                          Text(AppLocalizations.of(context).no_files)
                         ],)
                       )):
                   Obx(() => SliverGrid.builder(

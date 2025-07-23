@@ -5,6 +5,7 @@ import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
 import '../../../../color_constants.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/chat_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatView extends GetView<ChatController> {
   const ChatView({super.key});
@@ -25,7 +26,7 @@ class ChatView extends GetView<ChatController> {
             children: [
               // 1. Welcome message
               TypewriterText(
-                text: 'Bienvenue 👋',
+                text: '${AppLocalizations.of(context).welcome} 👋',
                 speed: Duration(milliseconds: 50),
                 startDelay: Duration(seconds: 1), // speed between each character
                 style: TextStyle(
@@ -38,7 +39,7 @@ class ChatView extends GetView<ChatController> {
               // 2. Intro description
 
               TypewriterText(
-                  text: 'Ton assistant d’étude intelligent est là pour t’aider à comprendre, réviser, et progresser.',
+                  text: AppLocalizations.of(context).smart_study_assistant_message,
                   speed: Duration(milliseconds: 50),
                   startDelay: Duration(seconds: 1), // speed between each character
                   style: TextStyle(
@@ -56,7 +57,7 @@ class ChatView extends GetView<ChatController> {
                   SizedBox(width: 12),
                   Expanded(
                     child: TypewriterText(
-                      text: 'Pose des questions ou envoie un fichier PDF : on bosse ensemble.',
+                      text: AppLocalizations.of(context).ask_question_upload_file,
                       speed: Duration(milliseconds: 50),
                       startDelay: Duration(seconds: 1), // speed between each character
                       style: TextStyle(fontSize: screenWidth * 0.035),
@@ -97,7 +98,7 @@ class ChatView extends GetView<ChatController> {
                     Get.toNamed(Routes.CHAT_PLATFORM),
                   },
                   child: Text(
-                    "Continuer",
+                    AppLocalizations.of(context).continu,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: screenWidth * 0.045,

@@ -7,6 +7,7 @@ import '../../../routes/app_routes.dart';
 import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
 import '../controllers/auth_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordView extends GetView<AuthController> {
 
@@ -41,14 +42,14 @@ class ForgotPasswordView extends GetView<AuthController> {
                             suffixIcon: Icon(null),
                             suffix: Icon(null),
                             readOnly: false,
-                            labelText: 'Votre addresse Gmail',
+                            labelText: AppLocalizations.of(context).email,
                             hintText: "johndoe@gmail.com",
                             isFirst: true,
                             onChanged: (value) => {
                               controller.currentUser.value.email = value,
                               controller.email.value = value
                             },
-                            validator: (input) => !GetUtils.isEmail(input!) ? "Should be a valid email".tr : null,
+                            validator: (input) => !GetUtils.isEmail(input!) ? AppLocalizations.of(context).enter_valid_email_address.tr : null,
 
                           ),
                           Obx(() => BlockButtonWidget(
@@ -60,7 +61,7 @@ class ForgotPasswordView extends GetView<AuthController> {
 
                             },
                             text: !controller.recoverLoading.value? Text(
-                                "Soumetre", style: Get.textTheme.labelSmall!.
+                                AppLocalizations.of(context).submit, style: Get.textTheme.labelSmall!.
                             merge(TextStyle(color: Colors.white,
                                 fontWeight: FontWeight.w600)
                             )
@@ -75,12 +76,12 @@ class ForgotPasswordView extends GetView<AuthController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("You don't have an account?".tr, style: TextStyle(color: Colors.black)),
+                              Text(AppLocalizations.of(context).no_account_yet.tr, style: TextStyle(color: Colors.black)),
                               TextButton(
                                 onPressed: () {
                                   Get.offAllNamed(Routes.REGISTER);
                                 },
-                                child: Text("Register".tr,
+                                child: Text(AppLocalizations.of(context).register.tr,
                                     style: Get.textTheme.bodyMedium!
                                         .merge(TextStyle(color: primaryColor, decoration: TextDecoration.underline))
                                 ),
@@ -90,12 +91,12 @@ class ForgotPasswordView extends GetView<AuthController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("You remember your password!".tr, style: TextStyle(color: Colors.black)),
+                              Text(AppLocalizations.of(context).remember_password.tr, style: TextStyle(color: Colors.black)),
                               TextButton(
                                 onPressed: () {
                                   Get.offAllNamed(Routes.LOGIN);
                                 },
-                                child: Text("Login".tr,
+                                child: Text(AppLocalizations.of(context).login.tr,
                                     style: Get.textTheme.bodyMedium!
                                         .merge(TextStyle(color: primaryColor, decoration: TextDecoration.underline))
                                 ),

@@ -7,6 +7,7 @@ import 'package:studyai/app/modules/files/controllers/files_controller.dart';
 import 'package:studyai/app/modules/global_widgets/add_instruction_widget.dart';
 import '../../../../color_constants.dart';
 import '../../global_widgets/block_button_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 
@@ -29,7 +30,7 @@ class ImportSupportView extends GetView<FilesController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Importation du support', style: TextStyle( fontSize: 24),).marginOnly(left: 20),
+            Text(AppLocalizations.of(context).import_support, style: TextStyle( fontSize: 24),).marginOnly(left: 20),
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -59,7 +60,7 @@ class ImportSupportView extends GetView<FilesController> {
                     AddInstructionWidget(
                       textController: controller.instructionsController,
                       suffixIcon: Image.asset('assets/images/edit.png'),
-                      hintText: 'Ajouter des instructions',
+                      hintText: AppLocalizations.of(context).add_instructions,
                       maxLines: 16,
                     ),
 
@@ -68,7 +69,7 @@ class ImportSupportView extends GetView<FilesController> {
                       child: BlockButtonWidget(
                           color: primaryColor,
                           haveBorder: false,
-                          text: Text('Generer', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                          text: Text(AppLocalizations.of(context).generate, style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
                           onPressed: () async {
                             controller.startProgress();
 
@@ -92,7 +93,7 @@ class ImportSupportView extends GetView<FilesController> {
                                           height: Get.height/6,
                                           width: Get.height/6,
                                         ).marginOnly(bottom: 40),
-                                        Text('Generation en cours...'),
+                                        Text(AppLocalizations.of(context).ongoing_generation),
                                         Spacer(),
                                         Obx(() => controller.courseGenerationState[1] == controller.generationState.value?
                                         Container(
@@ -103,7 +104,7 @@ class ImportSupportView extends GetView<FilesController> {
                                             height: Get.height*0.2,
                                             padding: EdgeInsets.all(Get.width/6),
                                             child: Center(
-                                              child: Text('Cette opération peut prendre un certain temps en fonction de votre connexion' ,
+                                              child: Text(AppLocalizations.of(context).ongoing_generation_message ,
                                                 textAlign: TextAlign.center,
                                               ),)):SizedBox(),)
                                       ],
@@ -200,7 +201,7 @@ class ImportSupportView extends GetView<FilesController> {
 
                     ):null,
                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12),
-                    child: Text('Introduction',),),),),
+                    child: Text(AppLocalizations.of(context).introduction,),),),),
                   Tab( child: Obx(() => Container(
                     decoration: controller.notationVocabularySelected.value?BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
@@ -208,7 +209,7 @@ class ImportSupportView extends GetView<FilesController> {
 
                     ):null,
                     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12),
-                    child: Text('Notations et Vocabulaires',),),),),
+                    child: Text(AppLocalizations.of(context).notations_and_vocabularies,),),),),
 
                   // Tab( child: Container(
                   //   padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
@@ -301,14 +302,14 @@ class ImportSupportView extends GetView<FilesController> {
                     SliverToBoxAdapter(
                       child:  Align(
                         alignment: Alignment.centerLeft,
-                        child: Text('Term',
+                        child: Text(AppLocalizations.of(context).term,
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
                       )
                     ),
                     SliverToBoxAdapter(
                       child:  Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("definition",
+                        child: Text(AppLocalizations.of(context).definition,
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, ), textAlign: TextAlign.justify,),
                       ).marginOnly(bottom: Get.height*0.025),
                     )

@@ -5,7 +5,7 @@ import '../../../../common/helper.dart';
 import '../../global_widgets/custom_bottom_nav_bar.dart';
 
 import '../controllers/root_controller.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RootView extends GetView<RootController> {
   const RootView({super.key});
@@ -32,7 +32,7 @@ class RootView extends GetView<RootController> {
               ):Image.asset(
                 'assets/images/Fichiers.png',
               ),
-              label: 'Fichier',
+              label: AppLocalizations.of(context).file,
             ),
             CustomBottomNavigationItem(
               icon: controller.currentIndex.value == 1?Image.asset(
@@ -40,7 +40,7 @@ class RootView extends GetView<RootController> {
               ):Image.asset(
                 'assets/images/quizz.png',
               ),
-              label: 'Quiz',
+              label: AppLocalizations.of(context).quiz,
             ),
 
             CustomBottomNavigationItem(
@@ -49,7 +49,7 @@ class RootView extends GetView<RootController> {
               ):Image.asset(
                 'assets/images/chat.png',
               ),
-              label: 'AI',
+              label: AppLocalizations.of(context).ai,
             ),
             CustomBottomNavigationItem(
               icon: controller.currentIndex.value == 3?Image.asset(
@@ -57,7 +57,7 @@ class RootView extends GetView<RootController> {
               ):Image.asset(
                 'assets/images/profil.png',
               ),
-              label: 'Profil',
+              label: AppLocalizations.of(context).profile,
 
             ),
           ],

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../files/controllers/files_controller.dart';
 import 'package:studyai/app/modules/global_widgets/block_button_widget.dart';
 import 'package:studyai/color_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuizzPostGenerationView extends GetView<FilesController> {
   const QuizzPostGenerationView({super.key});
@@ -30,9 +31,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
           ),
         ],
       ),
-      body:Obx(() {
-        return  _buildQuizInterface(context);
-      }),
+      body:  _buildQuizInterface(context)
 
     );
   }
@@ -57,7 +56,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Question ${controller.currentQuestionIndex.value+1}: ${controller.questions[controller.currentQuestionIndex.value].title}",
+          "${AppLocalizations.of(context).question} ${controller.currentQuestionIndex.value+1}: ${controller.questions[controller.currentQuestionIndex.value].title}",
           style: const TextStyle(
               color: Color(0xff174523),
               fontWeight: FontWeight.w900,
@@ -106,7 +105,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
                     ? primaryColor
                     : Colors.grey,
                 haveBorder: false,
-                text: const Text('Précédent', style: TextStyle(color: Colors.white, fontSize: 14)),
+                text: Text(AppLocalizations.of(context).previous, style: TextStyle(color: Colors.white, fontSize: 14)),
                 onPressed: controller.currentQuestionIndex.value > 0
                     ? controller.previousQuizzQuestion
                     : null,
@@ -119,8 +118,8 @@ class QuizzPostGenerationView extends GetView<FilesController> {
                 haveBorder: false,
                 text: Text(
                     controller.currentQuestionIndex.value < controller.questions.length - 1
-                        ? 'Suivant'
-                        : 'Terminer',
+                        ? AppLocalizations.of(context).next
+                        : AppLocalizations.of(context).end,
                     style: const TextStyle(color: Colors.white, fontSize: 14)),
                 onPressed: () {
                   if (controller.currentQuestionIndex.value < controller.questions.length - 1) {

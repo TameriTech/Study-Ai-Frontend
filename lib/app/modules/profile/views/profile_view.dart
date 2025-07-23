@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
 import '../../../routes/app_routes.dart';
@@ -8,6 +9,7 @@ import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
 import '../../global_widgets/warning_pupop.dart';
 import '../controllers/profile_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
@@ -23,7 +25,7 @@ class ProfileView extends GetView<ProfileController> {
           leadingWidth: 0,
           backgroundColor: appColor,
           leading: Icon(null),
-          title: Text('Mon profile', style: TextStyle(fontSize: 24, color: Colors.white)),
+          title: Text(AppLocalizations.of(context).my_profile, style: TextStyle(fontSize: 24, color: Colors.white)),
           actions: [
             Obx((){
               return controller.currentUser.value.bestSubjects != "" ?
@@ -86,9 +88,9 @@ class ProfileView extends GetView<ProfileController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset("assets/images/logo.png", width: 200, height: 100),
-                            Text("Hey ${controller.currentUser.value.fullName}",
+                            Text("${AppLocalizations.of(context).hey} ${controller.currentUser.value.fullName}",
                               style: TextStyle(fontSize: 24, color: Colors.white),),
-                            Text("Niveau d'études : ${controller.currentUser.value.classLevel}",
+                            Text("${AppLocalizations.of(context).school_level} : ${controller.currentUser.value.classLevel}",
                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
                             ),
                           ],
@@ -129,7 +131,7 @@ class ProfileView extends GetView<ProfileController> {
                                         return Column(
                                           children: [
                                             Text(
-                                              "Pense à finaliser ton\ninscription",
+                                              "${AppLocalizations.of(context).remember_to_finalize_your}\n${AppLocalizations.of(context).inscription}",
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -150,13 +152,13 @@ class ProfileView extends GetView<ProfileController> {
                                                 ),
                                               ),
                                               child: Text(
-                                                "Inscription",
+                                                AppLocalizations.of(context).inscription,
                                                 style: TextStyle(color: Colors.white, fontSize: 18),
                                               ),
                                             ),
                                             SizedBox(height: 12),
                                             Text(
-                                              "Plus d’option et plus de\npersonnalisation",
+                                              "${AppLocalizations.of(context).more_option_and_more}\n${AppLocalizations.of(context).personalization}",
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.grey[600],
@@ -172,14 +174,14 @@ class ProfileView extends GetView<ProfileController> {
                                           children: [
                                             ListTile(
                                               trailing: Icon(Icons.question_mark, color: Colors.grey),
-                                              title: Text("Objectifs", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                              title: Text(AppLocalizations.of(context).objectives, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
                                               subtitle: Text(controller.currentUser.value.bestSubjects.toString(),
                                                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
                                               ),
                                             ),
                                             ListTile(
                                               trailing: Icon(Icons.check_box_sharp, color: Colors.grey),
-                                              title: Text("Cours préféré", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                              title: Text(AppLocalizations.of(context).favorite_courses, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
                                               subtitle: Text(controller.currentUser.value.learningObjectives.toString(),
                                                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
                                               ),
@@ -208,7 +210,7 @@ class ProfileView extends GetView<ProfileController> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "Ma progression",
+                                    AppLocalizations.of(context).my_progress,
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -219,6 +221,29 @@ class ProfileView extends GetView<ProfileController> {
                                 ],
                               ),
                             ),
+
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                title: Text(AppLocalizations.of(context).language, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                trailing: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey),
+                                onTap: () => Get.toNamed(Routes.SETTINGS_LANGUAGE),
+                                subtitle: Text(controller.languageBox.read('language') =='fr'?"Français":"English", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey.shade900)),
+                              ),
+                            ),
+
                             Container(
                               padding: EdgeInsets.all(10),
                               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -236,19 +261,19 @@ class ProfileView extends GetView<ProfileController> {
                               child: Column(
                                 children: [
                                   ListTile(
-                                    title: Text("Se déconnecter", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
+                                    title: Text(AppLocalizations.of(context).logout, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
                                     trailing: Icon(Icons.logout, color: Colors.grey),
                                     onTap: () => Get.toNamed(Routes.LOGIN),
                                   ),
                                   ListTile(
-                                    title: Text("Supprimer mon compte", style: TextStyle(fontSize: 16, color: Colors.red)),
+                                    title: Text(AppLocalizations.of(context).delete_account, style: TextStyle(fontSize: 16, color: Colors.red)),
                                     trailing: Icon(Icons.delete_forever, color: Colors.red),
                                     onTap: () {
                                       WarningDialog.show(
                                           context: context,
-                                          title: 'Attention',
-                                          message: 'Voulez vous vraiment supprimer votre compte?.',
-                                          confirmText: 'D\'accord',
+                                          title: AppLocalizations.of(context).attention,
+                                          message: AppLocalizations.of(context).delete_account_warning,
+                                          confirmText: AppLocalizations.of(context).ok,
                                           onConfirm: () {
                                             controller.deleteAccount();
                                           }
@@ -258,6 +283,7 @@ class ProfileView extends GetView<ProfileController> {
                                 ],
                               ),
                             ),
+
                           ],
                         ),
                       )
@@ -290,8 +316,8 @@ class ProfileView extends GetView<ProfileController> {
                   controller.selectedHomeIndex.value = value;
                 },
                 tabs: [
-                  Tab(text: 'Info'),
-                  Tab(text: 'Mot de passe'),
+                  Tab(text: AppLocalizations.of(context).info),
+                  Tab(text: AppLocalizations.of(context).password),
                 ],
               ),
             ),
@@ -323,27 +349,27 @@ class ProfileView extends GetView<ProfileController> {
             textController: controller.fullName,
             readOnly: false,
             isFirst: true,
-            labelText: 'Nom',
+            labelText: AppLocalizations.of(context).name,
             hintText: "John",
             onChanged: (value) {
               controller.currentUser.value.fullName = value;
               controller.newName = value;
             },
-            validator: (input) => input!.length < 3 ? 'input at least 3 characters' : null,
+            validator: (input) => input!.length < 3 ? AppLocalizations.of(context).enter_three_characters : null,
           ),
           TextFieldWidget(
             suffixIcon: Icon(null),
             textController: controller.email,
             suffix: Icon(null),
             readOnly: false,
-            labelText: 'Gmail',
+            labelText: AppLocalizations.of(context).email,
             hintText: 'user@gmail.com',
             isFirst: true,
             onChanged: (value) => {
               controller.currentUser.value.email = value,
               controller.newEmail = value
             },
-            validator: (input) => !input!.contains('@') ? 'Input an email' : null,
+            validator: (input) => !input!.contains('@') ? AppLocalizations.of(context).input_email : null,
 
           ),
           Container(
@@ -420,7 +446,7 @@ class ProfileView extends GetView<ProfileController> {
               onPressed: (){
                 Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
               },
-              child: Text('Autres...', style: Get.textTheme.labelSmall!.
+              child: Text(AppLocalizations.of(context).others, style: Get.textTheme.labelSmall!.
               merge(TextStyle(color: primaryColor, fontWeight: FontWeight.w600))),
           ),
           SizedBox(height: 10),
@@ -432,7 +458,7 @@ class ProfileView extends GetView<ProfileController> {
               Colors.black : Colors.black.withOpacity(0.5),
               haveBorder: false,
               text: Center(
-                child: Text('Soumettre', style: Get.textTheme.labelSmall!.
+                child: Text(AppLocalizations.of(context).submit, style: Get.textTheme.labelSmall!.
                 merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
               ),
               onPressed: (){
@@ -461,12 +487,12 @@ class ProfileView extends GetView<ProfileController> {
             suffix: Icon(null),
             readOnly: false,
             isFirst: true,
-            labelText: 'Ancien mot de passe',
+            labelText: AppLocalizations.of(context).old_password,
             hintText: "••••••••••••••••",
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
             onChanged: (value) => controller.oldPassword.value = value,
-            validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
+            validator: (input) => input!.length < 6 ? AppLocalizations.of(context).enter_six_characters : null,
             keyboardType: TextInputType.visiblePassword,
             suffixIcon: IconButton(
               onPressed: () {
@@ -482,12 +508,12 @@ class ProfileView extends GetView<ProfileController> {
             suffix: Icon(null),
             readOnly: false,
             isFirst: true,
-            labelText: 'Nouveau mot de passe',
+            labelText: AppLocalizations.of(context).enter_new_password,
             hintText: "••••••••••••••••",
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
             onChanged: (value) => controller.newPassword.value = value,
-            validator: (input) => input!.length < 6 ? 'input at least 6 characters' : null,
+            validator: (input) => input!.length < 6 ? AppLocalizations.of(context).enter_six_characters : null,
             keyboardType: TextInputType.visiblePassword,
             suffixIcon: IconButton(
               onPressed: () {
@@ -503,12 +529,12 @@ class ProfileView extends GetView<ProfileController> {
             suffix: Icon(null),
             readOnly: false,
             isFirst: true,
-            labelText: 'Confirmer le mot de passe',
+            labelText: AppLocalizations.of(context).confirm_password,
             hintText: "••••••••••••••••",
             textController: TextEditingController(text: controller.currentUser.value.password),
             obscureText: !controller.hidePassword.value,
             onChanged: (value) => controller.confirmPassword.value = value,
-            validator: (input) => input != controller.newPassword.value ? 'confirm password and new password must be the same' : null,
+            validator: (input) => input != controller.newPassword.value ? AppLocalizations.of(context).confirm_enter_new_password : null,
             keyboardType: TextInputType.visiblePassword,
             suffixIcon: IconButton(
               onPressed: () {
@@ -527,7 +553,7 @@ class ProfileView extends GetView<ProfileController> {
                 color: Colors.black,
                 haveBorder: false,
                 text: Center(
-                  child: Text('Soumettre', style: Get.textTheme.labelSmall!.
+                  child: Text(AppLocalizations.of(context).submit, style: Get.textTheme.labelSmall!.
                   merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
                 ),
                 onPressed: (){

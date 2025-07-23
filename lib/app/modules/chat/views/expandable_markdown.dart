@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExpandableMarkdown extends StatefulWidget {
   final String markdown;
@@ -54,7 +55,7 @@ class _ExpandableMarkdownState extends State<ExpandableMarkdown> {
                 GestureDetector(
                   onTap: () => setState(() => isExpanded = !isExpanded),
                   child: Text(
-                    isExpanded ? "...Show less" : "...Read more",
+                    isExpanded ? "...${AppLocalizations.of(context).read_less}" : "...${AppLocalizations.of(context).read_more}",
                     style: const TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,

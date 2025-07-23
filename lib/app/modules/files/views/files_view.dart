@@ -13,6 +13,7 @@ import '../../../services/image_picker_service.dart';
 import '../controllers/files_controller.dart';
 import '../tabs/courses_tab.dart';
 import '../tabs/revision_tab.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class FilesView extends GetView<FilesController> {
@@ -28,7 +29,7 @@ class FilesView extends GetView<FilesController> {
           leadingWidth: 0,
           backgroundColor: bgColor,
           leading: Icon(null),
-          title: Text("Mes Fichiers", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),),
+          title: Text(AppLocalizations.of(context).my_files, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),),
           actions: [
             IconButton(
                 onPressed: (){
@@ -75,7 +76,7 @@ class FilesView extends GetView<FilesController> {
                 children: [
                   SearchTextFieldWidget(
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400, color: Color(0xffADAAAA)),
-                    hintText: "Rechercher un cour, quiz...",
+                    hintText: AppLocalizations.of(context).search_course_quizz,
                     errorText: '',
                       suffixIcon: Icon(null),
                       suffix: Icon(null),
@@ -134,16 +135,16 @@ class FilesView extends GetView<FilesController> {
                   tabs: [
                     Tab( child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
-                      child: Text('Tous',),),),
+                      child: Text(AppLocalizations.of(context).all,),),),
                     Tab( child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
-                      child: Text('Cours'),),),
+                      child: Text(AppLocalizations.of(context).courses),),),
                     Tab( child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
-                      child: Text('Quizz'),),),
+                      child: Text(AppLocalizations.of(context).quiz),),),
                     Tab( child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 0),
-                      child: Text('Revisions'),),),
+                      child: Text(AppLocalizations.of(context).revisions),),),
                   ],
                 )
             ),
@@ -194,7 +195,7 @@ class FilesView extends GetView<FilesController> {
                     'assets/images/camera_plus.png',
                   ),
                   SizedBox(height: 10,),
-                  Text('Prenez votre cour en photo...')
+                  Text(AppLocalizations.of(context).capture_courses)
                 ],
               ),
             ),
@@ -232,7 +233,7 @@ class FilesView extends GetView<FilesController> {
                     'assets/images/file_plus .png',
                   ),
                   SizedBox(height: 10,),
-                  Text('Importez votre document...')
+                  Text(AppLocalizations.of(context).import_document)
                 ],
               ),
             ),

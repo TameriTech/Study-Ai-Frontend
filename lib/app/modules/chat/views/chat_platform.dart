@@ -1,4 +1,3 @@
-
 import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:file_picker/file_picker.dart';
@@ -10,6 +9,7 @@ import 'package:studyai/app/modules/chat/views/text_animation.dart';
 import '../../../../color_constants.dart';
 import '../controllers/chat_controller.dart';
 import 'expandable_markdown.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChatPlatform extends GetView<ChatController> {
   ChatPlatform({super.key});
@@ -160,7 +160,7 @@ class ChatPlatform extends GetView<ChatController> {
 
               }),
               MessageBar(
-                messageBarHintText: "Ask any question",
+                messageBarHintText: AppLocalizations.of(context).ask_any_question,
                 onSend: (_) async{
                   if(controller.filePath.isEmpty){
                     controller.messagesSent.add(Message(text: controller.msgController.text, sender: 'user', document: ''));

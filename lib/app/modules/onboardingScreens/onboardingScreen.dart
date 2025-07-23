@@ -5,6 +5,7 @@ import '../../../../common/helper.dart';
 import '../../../color_constants.dart';
 import '../../routes/app_routes.dart';
 import '../auth/controllers/auth_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingScreen extends GetView<AuthController> {
 
@@ -48,14 +49,14 @@ class OnboardingScreen extends GetView<AuthController> {
                           height: 32,
 
                         ).marginOnly(bottom: 20),
-                        Text("Apprenez, Revisez, Progressez avec l' IA", style: Get.textTheme.labelMedium, textAlign: TextAlign.center,).marginSymmetric(horizontal: 20, vertical: 20),
-                        Text("boostez votre apprentissage grâce à une plateforme intuitive et assistée par l’IA.", style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400), textAlign: TextAlign.center,).marginOnly(bottom: 20, left: 50, right: 50),
+                        Text(AppLocalizations.of(context).learn_revise_progress, style: Get.textTheme.labelMedium, textAlign: TextAlign.center,).marginSymmetric(horizontal: 20, vertical: 20),
+                        Text(AppLocalizations.of(context).power_learning_message, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400), textAlign: TextAlign.center,).marginOnly(bottom: 20, left: 50, right: 50),
                         SizedBox(
                           width: Get.width,
                           child: BlockButtonWidget(
                               color: primaryColor,
                               haveBorder: false,
-                              text: Text('Commencer', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),),
+                              text: Text(AppLocalizations.of(context).start, style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),),
                               onPressed: (){
                                 Get.toNamed(Routes.REGISTER);
 
@@ -63,13 +64,13 @@ class OnboardingScreen extends GetView<AuthController> {
                         ).marginOnly(top: Get.height/20),
 
                        Wrap(children: [
-                          Text( "J' ai deja un compte: ", style: TextStyle(color: Color(0xff474646), fontWeight: FontWeight.w400, fontSize: 16)),
+                          Text( AppLocalizations.of(context).already_account, style: TextStyle(color: Color(0xff474646), fontWeight: FontWeight.w400, fontSize: 16)),
 
                           GestureDetector(
                             onTap: (){
                               Get.toNamed(Routes.LOGIN);
                             },
-                              child: Text("Je me connecte", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 16) )),
+                              child: Text(AppLocalizations.of(context).i_login, style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 16) )),
 
                         ]).marginOnly(top: Get.height/40)
 

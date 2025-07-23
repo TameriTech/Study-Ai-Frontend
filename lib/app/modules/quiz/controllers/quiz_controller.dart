@@ -8,7 +8,7 @@ import 'package:studyai/app/repositories/quizz_repository.dart';
 import '../../../../common/ui.dart';
 import '../../../models/user_model.dart';
 import '../../../services/auth_service.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 enum QuizGenerationState { start, ongoing, failed, generated }
 
 
@@ -22,8 +22,8 @@ class QuizController extends GetxController {
 
   // Quiz configuration
   final RxInt numberOfQuestions = 1.obs;
-  final RxList<String> difficultyLevels = ['Basique', 'Intermédiaire', 'Avancé'].obs;
-  final RxList<String> questionTypes = ['QCM', 'Vrai/Faux', 'Texte'].obs;
+  final RxList<String> difficultyLevels = [AppLocalizations.of(Get.context!).basic, AppLocalizations.of(Get.context!).medium, AppLocalizations.of(Get.context!).expert].obs;
+  final RxList<String> questionTypes = [AppLocalizations.of(Get.context!).mcq, AppLocalizations.of(Get.context!).true_false, AppLocalizations.of(Get.context!).text].obs;
   final RxInt difficultyIndex = 0.obs;
   final RxInt questionTypeIndex = 0.obs;
   var userAnswer = '';
@@ -117,7 +117,7 @@ class QuizController extends GetxController {
         quizzData = await getCourseQuizzes(courseId: courseId);
 
         for(var quizz in quizzData){
-          print("Kkkop: quizz: ${quizz.toString()}");
+          print("Quizz data: quizz: ${quizz.toString()}");
            extractedChoices = extractChoices(quizz["choices"]);
 
           print('Extaracted choices are: ${extractedChoices.toString()}');
@@ -389,7 +389,7 @@ class QuizController extends GetxController {
 
     } catch(e){
       quizzResultLoading.value = false;
-      await Get.showSnackbar(Ui.ErrorSnackBar(message: "Echec d' enregisstrement de la reponse\n Svp reselectionnez votre reponse"));
+      await Get.showSnackbar(Ui.ErrorSnackBar(message: "${AppLocalizations.of(Get.context!).user_answer_sending_failure}\n ${AppLocalizations.of(Get.context!).try_again_call}"));
       return false;
 
     }

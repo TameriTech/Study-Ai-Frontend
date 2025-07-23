@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studyai/color_constants.dart';
 import '../controllers/files_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class RevisionView extends GetView<FilesController> {
@@ -127,7 +128,7 @@ class RevisionView extends GetView<FilesController> {
                                             shape: StadiumBorder(),
                                             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                           ),
-                                          child: Text("Précédent", style: TextStyle(color: Colors.white, fontSize: 14)),
+                                          child: Text(AppLocalizations.of(context).previous, style: TextStyle(color: Colors.white, fontSize: 14)),
                                         ),
                                         ElevatedButton(
                                           onPressed: controller.nextRevisionCard,
@@ -136,7 +137,7 @@ class RevisionView extends GetView<FilesController> {
                                             shape: StadiumBorder(),
                                             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                           ),
-                                          child: Text("Suivant", style: TextStyle(color: Colors.white, fontSize: 14)),
+                                          child: Text(AppLocalizations.of(context).next, style: TextStyle(color: Colors.white, fontSize: 14)),
                                         ),
                                       ],
                                     ),

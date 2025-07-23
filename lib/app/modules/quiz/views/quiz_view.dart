@@ -12,6 +12,7 @@ import 'package:studyai/common/ui.dart';
 
 import '../controllers/quiz_controller.dart';
 import '../widgets/quiz_setting_item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuizView extends GetView<QuizController> {
   const QuizView({super.key});
@@ -24,7 +25,7 @@ class QuizView extends GetView<QuizController> {
         if (controller.generationState.value == QuizGenerationState.start || controller.generationState.value == QuizGenerationState.failed) {
           return _buildQuizSetup(context);
         } else {
-          return _buildQuizInterface();
+          return _buildQuizInterface(context);
         }
       }),
     );
@@ -32,9 +33,8 @@ class QuizView extends GetView<QuizController> {
 
   Widget _buildQuizSetup(BuildContext context) {
     return  ListView(
-
       children: [
-        Text('Générer un Quiz', style: TextStyle(fontSize: 24),).marginOnly(left: 20, bottom: 10),
+        Text(AppLocalizations.of(context).generate_quiz, style: TextStyle(fontSize: 24),).marginOnly(left: 20, bottom: 10),
         Container(
           height: Get.height,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -66,6 +66,7 @@ class QuizView extends GetView<QuizController> {
                               onTap: () {
                                 Navigator.of(context).pop();
                                 controller.selectedCourse.value = file;
+                                print("Course selected is: ${controller.selectedCourse.value = file}");
                               },
                               child: FileCard(
                                 title: file.title,
@@ -83,7 +84,7 @@ class QuizView extends GetView<QuizController> {
                           },
                         ) :
                         Center(
-                          child: Text("Aucun cours disponible"
+                          child: Text(AppLocalizations.of(context).no_course_available
                           ),
                         ),
                       ),
@@ -101,7 +102,7 @@ class QuizView extends GetView<QuizController> {
                   child: Column(
                     children: [
                       Image.asset('assets/images/document.png'),
-                      Text('choisir le cour')
+                      Text(AppLocalizations.of(context).choose_subject)
                     ],
                   )
                 )
@@ -128,13 +129,13 @@ class QuizView extends GetView<QuizController> {
               AddInstructionWidget(
                 textController: controller.instructionText,
                 suffixIcon: Image.asset('assets/images/edit.png'),
-                hintText: 'Ajouter des instructions',
+                hintText: AppLocalizations.of(context).add_instructions,
                 maxLines: 16,
               ).marginOnly(bottom: 10),
 
               Obx(() =>  QuizSettingItemWidget(
                 value: controller.numberOfQuestions.value.toString(),
-                label: "Nombre de questions",
+                label: AppLocalizations.of(context).questions_number,
                 onDecrease: (){
                   if (controller.numberOfQuestions.value > 0)
                     controller.numberOfQuestions.value--;
@@ -146,7 +147,7 @@ class QuizView extends GetView<QuizController> {
 
               Obx(() =>  QuizSettingItemWidget(
                 value: controller.difficultyLevels[controller.difficultyIndex.value],
-                label: "Niveau de difficulte",
+                label: AppLocalizations.of(context).difficulty_level,
                 onDecrease: (){
                   if (controller.difficultyIndex.value > 0)
                     controller.difficultyIndex.value--;
@@ -159,7 +160,7 @@ class QuizView extends GetView<QuizController> {
 
               Obx(() =>  QuizSettingItemWidget(
                 value: controller.questionTypes[controller.questionTypeIndex.value],
-                label: "Type de question",
+                label: AppLocalizations.of(context).question_type,
                 onDecrease: (){
                   if (controller.questionTypeIndex.value > 0)
                     controller.questionTypeIndex.value--;
@@ -175,7 +176,7 @@ class QuizView extends GetView<QuizController> {
                 child: BlockButtonWidget(
                     color: primaryColor,
                     haveBorder: false,
-                    text: Text('Générer le quiz', style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                    text: Text(AppLocalizations.of(context).generate_quiz, style: Get.textTheme.labelSmall!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
                     onPressed: (){
 
                       if(Get.find<FilesController>().courseList.where((p0) => p0.hasQuizz == false).toList().isNotEmpty){
@@ -208,7 +209,7 @@ class QuizView extends GetView<QuizController> {
                                     height: Get.height/6,
                                     width: Get.height/6,
                                   ).marginOnly(bottom: 40),
-                                  Text('Generation du quizz en cours...'),
+                                  Text(AppLocalizations.of(context).ongoing_quiz_generation),
                                   Spacer(),
                                   Obx(() => QuizGenerationState.failed == controller.generationState.value?
                                   Container(
@@ -219,7 +220,7 @@ class QuizView extends GetView<QuizController> {
                                     height: Get.height*0.2,
                                     padding: EdgeInsets.all(Get.width/6),
                                     child: Center(
-                                      child: Text('Cette opération peut prendre un certain temps en fonction de votre connexion' ,
+                                      child: Text(AppLocalizations.of(context).ongoing_generation_message ,
                                         textAlign: TextAlign.center,
                                       ),
                                     ),):SizedBox(),)
@@ -228,7 +229,7 @@ class QuizView extends GetView<QuizController> {
                             ),));
                       }
                       else{
-                        Get.showSnackbar(Ui.warningSnackBar(message: 'Vous devez avoir un cours disponible pour generer un quizz'));
+                        Get.showSnackbar(Ui.warningSnackBar(message: AppLocalizations.of(context).warning_no_course_available));
                       }
                     }),
               ).marginOnly(top: 20),
@@ -240,8 +241,9 @@ class QuizView extends GetView<QuizController> {
     );
   }
 
-  Widget _buildQuizInterface() {
+  Widget _buildQuizInterface(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 60),
       height: Get.height,
       decoration: const BoxDecoration(color: lightQuizzBackgroundColor),
       child: SingleChildScrollView(
@@ -256,7 +258,7 @@ class QuizView extends GetView<QuizController> {
             const SizedBox(height: 40),
             _buildOptionsList(),
             const SizedBox(height: 20),
-            _buildNavigationButtons(),
+            _buildNavigationButtons(context),
             SizedBox(height: Get.height/3),
           ],
         )
@@ -332,7 +334,7 @@ class QuizView extends GetView<QuizController> {
     );
   }
 
-  Widget _buildNavigationButtons() {
+  Widget _buildNavigationButtons(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -341,7 +343,7 @@ class QuizView extends GetView<QuizController> {
                 ? primaryColor
                 : Colors.grey,
             haveBorder: false,
-            text: const Text('Précédent', style: TextStyle(color: Colors.white, fontSize: 14)),
+            text: Text(AppLocalizations.of(context).previous, style: TextStyle(color: Colors.white, fontSize: 14)),
             onPressed: controller.currentQuestionIndex.value > 0
                 ? controller.previousQuestion
                 : null,
@@ -354,8 +356,8 @@ class QuizView extends GetView<QuizController> {
             haveBorder: false,
             text: Text(
                 controller.currentQuestionIndex.value < controller.questions.length - 1
-                    ? 'Suivant'
-                    : 'Soumettre',
+                    ? AppLocalizations.of(context).next
+                    : AppLocalizations.of(context).submit,
                 style: const TextStyle(color: Colors.white, fontSize: 14)),
             onPressed: () {
               if (controller.currentQuestionIndex.value < controller.questions.length - 1) {
@@ -392,7 +394,7 @@ class QuizView extends GetView<QuizController> {
               Icon(Icons.emoji_events, color: Colors.orange, size: 50), // Trophy icon
               const SizedBox(height: 10),
               Text(
-                "Félicitations",
+                AppLocalizations.of(context).congratulation,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -401,7 +403,7 @@ class QuizView extends GetView<QuizController> {
               ),
               const SizedBox(height: 8),
               Text(
-                "${controller.quizzResultRating.text} reussi",
+                "${controller.quizzResultRating.text} ${AppLocalizations.of(context).succeeded}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
@@ -435,7 +437,7 @@ class QuizView extends GetView<QuizController> {
                     Get.toNamed(Routes.QUIZZ_POST_GENERATION_VIEW,);
                   },
                   child: Obx(() => controller.viewResponses.value?CircularProgressIndicator(color: Colors.white,): Text(
-                    "Voir les responses",
+                    AppLocalizations.of(context).look_at_answers,
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),)
 
@@ -448,7 +450,7 @@ class QuizView extends GetView<QuizController> {
             children: [
 
               Text(
-                "An error occured,",
+                AppLocalizations.of(context).error_occurred,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -461,7 +463,7 @@ class QuizView extends GetView<QuizController> {
                controller.submitQuiz(courseId: controller.questions[controller.questions.length-1].courseId);
                showSuccessDialog(Get.context!);
 
-             }, child: Text("Try again", style: TextStyle(fontSize: 12, color: Colors.grey),))
+             }, child: Text(AppLocalizations.of(context).try_again, style: TextStyle(fontSize: 12, color: Colors.grey),))
             ],
           ),)
         );

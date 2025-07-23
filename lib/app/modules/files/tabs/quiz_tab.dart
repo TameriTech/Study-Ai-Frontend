@@ -4,6 +4,7 @@ import 'package:studyai/color_constants.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/files_controller.dart';
 import '../widgets/file_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuizTab extends GetView<FilesController> {
   const QuizTab({super.key});
@@ -26,7 +27,7 @@ class QuizTab extends GetView<FilesController> {
                   SliverToBoxAdapter(
                     child:  Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Recents', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                      child: Text(AppLocalizations.of(context).recents, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
                     ).marginOnly(bottom: Get.height*0.025),
                   ),
                   Obx(() => SliverGrid.builder(
