@@ -5,6 +5,7 @@
   "select_language": "Select language",
   "please_select_language": "Please Select a language",
   "account": "Account",
+  "create_account":"Create account",
   "logout_of_app": "log out of the app",
   "greeting": "Hello!",
   "farewell": "Goodbye!",
@@ -22,7 +23,7 @@
   "sign_out_warning": "Are you sure you want to leave the application?",
   "input_email": "Input Email",
   "password": "Password",
-  "school_level_question": "What is your school level?",
+  "school_level_question": "What is your academic level?",
   "class_level_question": "Quelle classe précisément?",
   "welcome": "Welcome",
   "personal_information": "Personal Information",
@@ -38,7 +39,7 @@
   "forgot_password": "Forgot password",
   "no_account": "You don''t have an account",
   "no_account_yet": "No account yet?",
-  "already_account": "Already have an account",
+  "already_account": "Already have an account? ",
   "last_name": "Last Name",
   "enter_second_name": "Enter Second Name",
   "phone": "Phone",
@@ -100,8 +101,8 @@
   "personalization":"personalization",
   "remember_to_finalize_your":"Remember to finalize your",
   "hey":"Hey",
-  "school_level":"School level",
-"sciences": "Sciences",
+  "school_level":"Academic level",
+  "sciences": "Sciences",
   "literature_and_languages": "Literature and Languages",
   "economics_and_management": "Economics and Management",
   "social_sciences": "Social Sciences",
@@ -128,10 +129,10 @@
   "understand_specific_topic": "Understand a specific topic",
   "learn_with_ai": "Learn with AI",
 
-  "university_student":"School level",
-  "high_school_student":"School level",
-  "middle_school_student":"School level",
-  "independent_candidate":"School level",
+  "university_student":"University student",
+  "high_school_student":"High school student",
+  "middle_school_student":"middle school student",
+  "independent_candidate":"Independent student",
   "bepc":"BEPC",
   "bac":"BAC",
   "hnd":"HND",
@@ -211,7 +212,7 @@
   "submit": "Submit",
 
   "update_profile_success":"Updated profile successful",
-  
+
   "no_notification":"You have no notification",
   "no_alert":"You have no alert",
   "notification":"Inbox",
@@ -229,6 +230,7 @@
   "confirm_enter_new_password": "confirm password and new password must be the same",
   "reset_password":"Reset password",
   "enter_password_confirmation": "Enter password confirmation",
+  "reset_password_message":"An email has been sent to your Gmail with a temporary password,It may take some minutes, please be patient",
 
 
   "required_field": "Required field",

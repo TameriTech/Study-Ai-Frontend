@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../files/controllers/files_controller.dart';
 import 'package:studyai/app/modules/global_widgets/block_button_widget.dart';
 import 'package:studyai/color_constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuizzPostGenerationView extends GetView<FilesController> {
   const QuizzPostGenerationView({super.key});
@@ -11,134 +11,279 @@ class QuizzPostGenerationView extends GetView<FilesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: quizzColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: quizzColor,
+        backgroundColor: Colors.white,
+        elevation: 0,
         leading: IconButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-            }, icon: Icon(Icons.arrow_back_ios)
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back, color: Colors.black),
         ),
-        title: Text(controller.questions[0].title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: primaryColor)
-        ),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Obx(() => Text(
-                '${controller.currentQuestionIndex.value + 1}/${controller.questions.length}',
-                style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-              ),)
+        title: Obx(() => Text(
+          'Quiz Review ${controller.currentQuestionIndex.value + 1} of ${controller.questions.length}',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+        )),
+      ),
+      body: Column(
+        children: [
+          // Progress Bar
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Obx(() => LinearProgressIndicator(
+              value: (controller.currentQuestionIndex.value + 1) / controller.questions.length,
+              backgroundColor: Colors.grey[300],
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
+              minHeight: 4,
+            )),
+          ),
+
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(20),
+              child: Obx(() => _buildQuestionReviewCard(context)),
+            ),
           ),
         ],
       ),
-      body:  _buildQuizInterface(context)
-
     );
   }
 
-  Widget _buildQuizInterface( BuildContext context) {
-    return Container(
-      //padding: const EdgeInsets.only(top: 100, bottom: 50),
-        height: Get.height,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-            color: backgroundColor,
-            border: Border.all(color: backgroundColor)),
-      child: SingleChildScrollView(
-        child: Obx(() => _buildQuestionAndAnswerCard(context)),
-      )
-    );
-  }
+  Widget _buildQuestionReviewCard(BuildContext context) {
+    final currentQuestion = controller.questions[controller.currentQuestionIndex.value];
+    final correctAnswer = controller.correctAnswers.isNotEmpty
+        ? controller.correctAnswers[controller.currentQuestionIndex.value]
+        : null;
+    final userAnswer = controller.selectedAnswers.isNotEmpty
+        ? controller.selectedAnswers[controller.currentQuestionIndex.value]
+        : null;
 
-  Widget _buildQuestionAndAnswerCard(BuildContext context) {
+    print('Current Question Index: ${controller.currentQuestionIndex.value}');
+    print('Correct Answer: $correctAnswer');
+    print('User Answer: $userAnswer');
+    print('Options: ${currentQuestion.options}');
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        SizedBox(height: 40),
+
+        // Question Text
         Text(
-          "${AppLocalizations.of(context).question} ${controller.currentQuestionIndex.value+1}: ${controller.questions[controller.currentQuestionIndex.value].title}",
-          style: const TextStyle(
-              color: Color(0xff174523),
-              fontWeight: FontWeight.w900,
-              fontSize: 16),
+          currentQuestion.text,
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            height: 1.4,
+            color: Colors.black,
+          ),
+          textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 10),
-        Text(
-          controller.questions[controller.currentQuestionIndex.value].text,
-          style: const TextStyle(
-              color: Color(0xff174523),
-              fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(height: 30),
+
+        SizedBox(height: 60),
+
+        // Options List with Answer Feedback
         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            for(int index = 0; index<controller.questions[controller.currentQuestionIndex.value].options.length; index++)...[
-              Obx(() => Container(
-                width: Get.width,
-                margin: EdgeInsets.symmetric(vertical: 10),
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  border: controller.selectedAnswers.isEmpty?null:
-                  controller.selectedAnswers[controller.currentQuestionIndex.value] == controller.questions[controller.currentQuestionIndex.value].options[index]?controller.selectedAnswers[controller.currentQuestionIndex.value]==controller.correctAnswers[controller.currentQuestionIndex.value]
-                      ? null : Border.all(color: Colors.red) : null,
-                  color: controller.correctAnswers.isEmpty?Colors.white
-                      :controller.correctAnswers[controller.currentQuestionIndex.value] == controller.questions[controller.currentQuestionIndex.value].options[index]?
-                  quizzColor:Colors.white,
-                ),
-                child: Text(
-                  controller.questions[controller.currentQuestionIndex.value].options[index],
-                  style: const TextStyle(color: Colors.black),
-                ),
-              ))
-            ]
-          ],
+          children: List.generate(
+            currentQuestion.options.length,
+                (index) => _buildReviewOptionItem(
+              context,
+              currentQuestion.options[index],
+              isCorrectAnswer: correctAnswer != null && currentQuestion.options[index] == correctAnswer,
+              isUserAnswer: userAnswer != null && currentQuestion.options[index] == userAnswer,
+            ),
+          ),
         ),
-        const SizedBox(height: 30),
-        Row(
-          children: [
-            Expanded(
-              child: BlockButtonWidget(
-                color: controller.currentQuestionIndex.value > 0
-                    ? primaryColor
-                    : Colors.grey,
-                haveBorder: false,
-                text: Text(AppLocalizations.of(context).previous, style: TextStyle(color: Colors.white, fontSize: 14)),
-                onPressed: controller.currentQuestionIndex.value > 0
-                    ? controller.previousQuizzQuestion
-                    : null,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: BlockButtonWidget(
-                color: primaryColor,
-                haveBorder: false,
-                text: Text(
-                    controller.currentQuestionIndex.value < controller.questions.length - 1
-                        ? AppLocalizations.of(context).next
-                        : AppLocalizations.of(context).end,
-                    style: const TextStyle(color: Colors.white, fontSize: 14)),
-                onPressed: () {
-                  if (controller.currentQuestionIndex.value < controller.questions.length - 1) {
-                    controller.nextQuizzQuestion();
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ),
-          ],
-        )
+
+        SizedBox(height: 40),
+
+        // Navigation Buttons
+        _buildNavigationButtons(context),
+
+        SizedBox(height: 40),
       ],
     );
   }
+
+  Widget _buildReviewOptionItem(
+      BuildContext context,
+      String option,
+      {required bool isCorrectAnswer,
+        required bool isUserAnswer}
+      ) {
+    Color backgroundColor;
+    Color borderColor;
+    bool showBorder = false;
+
+    if (isCorrectAnswer) {
+      // Correct answer - green background
+      backgroundColor = Color(0xFFD1FAE5);
+      borderColor = Color(0xFF10B981);
+    } else if (isUserAnswer) {
+      // User's wrong answer - red background with red border
+      backgroundColor = Color(0xFFFFE5E5);
+      borderColor = Colors.red;
+      showBorder = true;
+    } else {
+      // Other options - neutral
+      backgroundColor = Color(0xFFF5F5F5);
+      borderColor = Colors.transparent;
+    }
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: showBorder ? borderColor : (isCorrectAnswer ? borderColor : Colors.transparent),
+          width: 2,
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              option,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: isCorrectAnswer || isUserAnswer ? FontWeight.w600 : FontWeight.normal,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          SizedBox(width: 16),
+          // Radio button indicator
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isCorrectAnswer
+                    ? Color(0xFF10B981)
+                    : (isUserAnswer ? Colors.red : Colors.grey[400]!),
+                width: 2,
+              ),
+              color: (isCorrectAnswer || isUserAnswer)
+                  ? (isCorrectAnswer ? Color(0xFF10B981) : Colors.red)
+                  : Colors.transparent,
+            ),
+            child: (isCorrectAnswer || isUserAnswer)
+                ? Center(
+              child: Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            )
+                : null,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavigationButtons(BuildContext context) {
+    return Obx(() {
+      final isFirstQuestion = controller.currentQuestionIndex.value == 0;
+      final isLastQuestion = controller.currentQuestionIndex.value >= controller.questions.length - 1;
+
+      if (isFirstQuestion) {
+        // Only Next button on first question
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF1E40AF),
+              padding: EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(28),
+              ),
+              elevation: 0,
+            ),
+            onPressed: () {
+              if (isLastQuestion) {
+                Navigator.of(context).pop();
+              } else {
+                controller.nextQuizzQuestion();
+              }
+            },
+            child: Text(
+              isLastQuestion ? AppLocalizations.of(context).end : AppLocalizations.of(context).next,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        );
+      }
+
+      // Previous and Next buttons for other questions
+      return Row(
+        children: [
+          Expanded(
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                side: BorderSide(color: Colors.grey[300]!),
+                backgroundColor: Colors.grey[300],
+              ),
+              onPressed: controller.previousQuizzQuestion,
+              child: Text(
+                AppLocalizations.of(context).previous,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF1E40AF),
+                padding: EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                elevation: 0,
+              ),
+              onPressed: () {
+                if (isLastQuestion) {
+                  Navigator.of(context).pop();
+                } else {
+                  controller.nextQuizzQuestion();
+                }
+              },
+              child: Text(
+                isLastQuestion ? AppLocalizations.of(context).end : AppLocalizations.of(context).next,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
+  }
 }
-
-
-
-
-
-

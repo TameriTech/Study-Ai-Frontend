@@ -124,21 +124,23 @@ class Ui {
 
   static InputDecoration getInputDecoration({String hintText = '', var errorText, required var prefixIcon, required Widget suffixIcon, required Widget suffix, var isFirst}) {
     return InputDecoration(
-      hintText: hintText,
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 22),
-      prefixIcon: prefixIcon != null? prefixIcon: SizedBox(),
-      prefixIconConstraints: prefixIcon != null ? BoxConstraints.expand(width: 38, height: 38) : BoxConstraints.expand(width: 10, height: 10),
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      contentPadding: EdgeInsets.all(20),
-      border: isFirst== null? OutlineInputBorder(borderSide:BorderSide.none)
-      :OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid, color: Colors.black ), borderRadius: BorderRadius.circular(30),),
-      focusedBorder: isFirst== null? OutlineInputBorder(borderSide:BorderSide.none)
-      :OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid, color: Colors.black), borderRadius: BorderRadius.circular(30)),
-      enabledBorder: isFirst== null? OutlineInputBorder(borderSide:BorderSide.none)
-      :OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid,color: Colors.black), borderRadius: BorderRadius.circular(30)),
-      suffixIcon: suffixIcon,
-      suffix: suffix,
-       errorText: errorText,
+        fillColor: Color(0xffF7F7F7),
+        filled: true,
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.grey, fontSize: 22),
+        prefixIcon: prefixIcon != null? prefixIcon: SizedBox(),
+        prefixIconConstraints: prefixIcon != null ? BoxConstraints.expand(width: 38, height: 38) : BoxConstraints.expand(width: 10, height: 10),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        contentPadding: EdgeInsets.all(20),
+        border: isFirst== null? OutlineInputBorder(borderSide:BorderSide.none)
+            :OutlineInputBorder(borderSide:BorderSide(width: 0, style: BorderStyle.solid, color: Color(0xffF7F7F7) ), borderRadius: BorderRadius.circular(12),),
+        focusedBorder: isFirst== null? OutlineInputBorder(borderSide:BorderSide.none)
+            :OutlineInputBorder(borderSide:BorderSide(width: 0, style: BorderStyle.solid, color: Color(0xffF7F7F7)), borderRadius: BorderRadius.circular(12)),
+        enabledBorder: isFirst== null? OutlineInputBorder(borderSide:BorderSide.none)
+            :OutlineInputBorder(borderSide:BorderSide(width: 0, style: BorderStyle.solid,color: Color(0xffF7F7F7)), borderRadius: BorderRadius.circular(12)),
+        suffixIcon: suffixIcon,
+        suffix: suffix,
+        errorText: errorText,
         errorBorder:  errorText!=null?OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid, color: Colors.black ),borderRadius: BorderRadius.circular(30)):OutlineInputBorder(borderSide:BorderSide(width: 1, style: BorderStyle.solid, color: Colors.red ),borderRadius: BorderRadius.circular(30))
     );
   }

@@ -6,6 +6,7 @@
   "please_select_language": "Svp Sélectionnez une langue",
   "account": "Compte",
   "logout_of_app": "Déconnexion de l'' application",
+  "create_account":"Créer un compte",
   "greeting": "Bonjour!",
   "farewell": "Au revoir!",
   "profile": "Profil",
@@ -86,8 +87,9 @@
   "introduction":"Introduction",
   "notations_and_vocabularies":"Notations et vocabulaires",
   "term":"Terme",
-  "definition": "Definition",
+  "definition": "Définition",
   "end":"Terminer",
+  "question": "Question",
   "learn_revise_progress":"Apprenez, Revisez, Progressez avec l''IA",
   "power_learning_message":"Boostez votre apprentissage grâce à une plateforme intuitive et assistée par l''IA.",
   "start":"Commencer",
@@ -205,10 +207,10 @@
   "enter_feedback": "Entrez vos commentaires ici...",
   "submit": "Soumettre",
 
-  "update_ _success":"Mise à jour du profil avec succès",
 
   "no_notification":"Vous n''avez pas de notification",
   "no_alert":"Vous n''avez pas d''alert",
+  "update_profile_success":"Mise à jour du profil avec succès",
   "notification":"Inbox",
   "create_mass_message":"Créer message de masse",
   "notification_title":"Titre notification",
@@ -224,6 +226,7 @@
   "confirm_enter_new_password": "l'' ancien et le nouveau mot de passe doivent être les mêmes",
   "reset_password":"ré-initialisez le mot de passe",
   "enter_password_confirmation":"Entrez la confirmation du mot de passe",
+  "reset_password_message":"un email a été envoyé sur votre Gmail avec un mot de passe temporaire,Soyez patient svp, cette opération peut prendre quelques minutes",
 
 
     "required_field": "Champ requis",

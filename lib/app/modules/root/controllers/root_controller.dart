@@ -41,7 +41,7 @@ class RootController extends GetxController {
     } else {
       if(_index == 1){
         Get.find<QuizController>().generationState = QuizGenerationState.start.obs;
-        Get.find<QuizController>().selectedCourse = FileCardModel(title: '', timeInfo: '', type: '', createdAt: '').obs;
+        Get.find<QuizController>().selectedCourse = FileCardModel(title: '', timeInfo: '', type: '', createdAt: '', ).obs;
       }
       if(_index == 0){
         //Get.find<FilesController>().getCompleteFileList();

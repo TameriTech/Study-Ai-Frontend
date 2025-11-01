@@ -12,11 +12,11 @@ class FileCard extends StatelessWidget {
   final double? progress;
   final String timeInfo;
   final String type;
+  final String? textPreview;
   final String createdAt;
 
-
   const FileCard({
-    Key? key,
+    super.key,
     required this.title,
     this.subtitle,
     this.level,
@@ -24,116 +24,134 @@ class FileCard extends StatelessWidget {
     this.progress,
     required this.timeInfo,
     required this.type,
+    this.textPreview,
     this.id,
-    required this.createdAt
-  }) : super(key: key);
+    required this.createdAt,
+  });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final baseFontSize = screenWidth * 0.035; // Dynamically scales with screen width
+    final baseFontSize = screenWidth * 0.035;
 
     return Container(
-      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// Title
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: baseFontSize + 2,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: 0,
+              maxHeight: constraints.maxHeight, // Keeps it inside bounds
             ),
-            maxLines: 2,
-            overflow: TextOverflow.fade,
-            softWrap: true,
-          ),
-          const SizedBox(height: 4),
-
-          /// Subtitle
-          if (subtitle != null)
-            Text(
-              subtitle!,
-              style: TextStyle(
-                fontSize: baseFontSize,
-                color: Colors.black87,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.fade,
-              softWrap: true,
-            ),
-
-          /// Level
-          if (level != null)
-            Text(
-              level!,
-              style: TextStyle(
-                fontSize: baseFontSize,
-                color: Colors.black87,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.fade,
-              softWrap: true,
-            ),
-
-          const Spacer(),
-
-          /// Bottom row (time + progress/icon)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  timeInfo,
-                  style: TextStyle(
-                    fontSize: baseFontSize - 2,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-
-              /// Progress OR Revision Icon
-              if (progress != null)
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor: Colors.white,
-                  child: Text(
-                    "${(progress! * 100).toInt()}%",
-                    style: const TextStyle(
-                      fontSize: 10,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// Title
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: baseFontSize + 2,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: Colors.black,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                )
-              else if (type.toLowerCase() == 'revision')
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor: const Color(0xffFDDF83),
-                  child: Image.asset(
-                    'assets/images/file_text.png',
-                    width: 16,
-                    height: 16,
-                    fit: BoxFit.contain,
+
+                  const SizedBox(height: 8),
+
+                  /// File Type
+                  Text(
+                    type,
+                    style: TextStyle(
+                      fontSize: baseFontSize,
+                      color: Colors.black87,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-            ],
-          ),
-        ],
+
+                  const SizedBox(height: 8),
+
+                  /// Text preview
+                  if (textPreview != null)
+                    Expanded(
+                      child: Text(
+                        textPreview!,
+                        style: TextStyle(
+                          fontSize: baseFontSize,
+                          color: Colors.black87,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  else
+                    const Spacer(),
+
+                  /// Level
+                  if (level != null)
+                    Text(
+                      level!,
+                      style: TextStyle(
+                        fontSize: baseFontSize,
+                        color: Colors.black87,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+
+                  const SizedBox(height: 8),
+
+                  /// Bottom row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          timeInfo,
+                          style: TextStyle(
+                            fontSize: baseFontSize - 2,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ),
+                      if (progress != null)
+                        CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Colors.white,
+                          child: Text(
+                            "${(progress! * 100).toInt()}%",
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 }
+
+
 
 

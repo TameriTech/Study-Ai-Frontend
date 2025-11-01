@@ -63,7 +63,7 @@ class SearchTextFieldWidget extends StatelessWidget {
       padding: EdgeInsets.zero,
       margin: EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: Colors.white,
+        //color: Colors.white,
         borderRadius: BorderRadius.circular(30)
       ),
 
@@ -93,13 +93,13 @@ class SearchTextFieldWidget extends StatelessWidget {
             prefixIcon: Image.asset(
               'assets/images/search.png',
               fit: BoxFit.contain,
-              height: 32,
-              width: 32,
+              height: 20,
+              width: 20,
             ),
           ),
         ),
 
-    ).marginOnly(bottom: 20);
+    ).marginOnly(top: 10, bottom: 10);
   }
 
   BorderRadius get buildBorderRadius {

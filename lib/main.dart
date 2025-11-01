@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:studyai/app/modules/auth/views/login_register_view.dart';
+import 'package:studyai/app/modules/auth/views/login_view.dart';
 import 'package:studyai/app/modules/onboardingScreens/onboardingScreen.dart';
 import 'app/modules/auth/bindings/auth_binding.dart';
 import 'app/modules/root/bindings/root_binding.dart';
@@ -11,7 +11,8 @@ import 'app/routes/theme_app_pages.dart';
 import 'app/services/auth_service.dart';
 import 'app/services/global_services.dart';
 import 'app/services/settings_services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'l10n/app_localizations.dart';
+
 
 
   initServices() async {
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
       themeMode: Get.find<SettingsService>().getThemeMode(),
       theme: Get.find<SettingsService>().getLightTheme(),
       darkTheme: Get.find<SettingsService>().getDarkTheme(),
-      home: box.read("exists") == null ? OnboardingScreen() : LoginRegisterView(),
+      home: box.read("exists") == null ? OnboardingScreen() : LoginView(),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

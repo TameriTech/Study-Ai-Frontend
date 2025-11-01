@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
 import '../../../../color_constants.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/chat_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 
 class HistoryView extends GetView<ChatController> {
@@ -18,7 +19,7 @@ class HistoryView extends GetView<ChatController> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: bgColor,
         appBar: AppBar(
           backgroundColor: bgColor,
           leading: GestureDetector(

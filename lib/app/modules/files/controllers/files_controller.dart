@@ -197,7 +197,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
           if (updateCount >= totalUpdates) {
             _timer?.cancel();
             generationState.value = "generated";
-            Navigator.of(Get.context!).pop();
             await getCompleteFileList();
 
           }
@@ -316,7 +315,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
       var vocabulary;
 
       for(var course in courses){
-        print('Course id is: ${course['has_quiz']}');
+
 
           vocabulary = await getVocabularyByCourse(courseId: course['id_course']);
 
@@ -392,6 +391,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
       var Quizzes = result;
 
       for(var quizz in Quizzes){
+        print('quizz  is: ${quizz}');
         fileCardModel = FileCardModel(
           title: quizz[0]['course_name'],
           timeInfo: quizz[0]['estimated_completion_time']??"not defined",

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+
+import '../../../../l10n/app_localizations.dart';
 
 class LanguageController extends GetxController {
   var box = GetStorage();

@@ -23,19 +23,16 @@ class Helper {
 
   Future<bool> onWillPop() async {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
       Get.showSnackbar(Ui.defaultSnackBar(message: "Tap again to leave!".tr));
       return false;
     }
-    try {
-      await methodChannel.invokeMethod('SystemNavigator.pop');
-      return true;
-    } catch (e) {
-      // Handle any errors if invokeMethod fails
-      print('Error invoking SystemNavigator.pop: $e');
-      return false;
-    }
+
+    // Use SystemNavigator.pop() directly - no method channel needed
+    SystemNavigator.pop();
+    return true;
   }
 
 

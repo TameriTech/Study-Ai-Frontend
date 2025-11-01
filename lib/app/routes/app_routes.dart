@@ -16,6 +16,8 @@ class Routes {
   static const SETTINGS = '/settings';
   static const SETTINGS_THEME_MODE = '/settings/theme_mode';
   static const SETTINGS_LANGUAGE = '/settings/language';
+  static const CHANGE_USERNAME = '/change_username_view';
+  static const CHANGE_PASSWORD = '/change_password_view';
 
 
 }

@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:studyai/app/modules/chat/views/text_animation.dart';
 import 'package:studyai/app/modules/global_widgets/historic_widget.dart';
 import '../../../../color_constants.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/chat_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ChatView extends GetView<ChatController> {
   const ChatView({super.key});
@@ -17,7 +18,7 @@ class ChatView extends GetView<ChatController> {
     //final isSmallScreen = screenHeight < 700;
 
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: bgColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -87,7 +88,7 @@ class ChatView extends GetView<ChatController> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: primaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),

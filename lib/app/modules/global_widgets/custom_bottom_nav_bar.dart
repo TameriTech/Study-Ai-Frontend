@@ -34,55 +34,92 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
-      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-      padding: EdgeInsets.only(left: 30, right: 30, top: 10),
+      height: 70,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        color: Color(0xffECECEC),
+        color: Colors.white,
+
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 15,
+            offset: const Offset(0, -3),
+            spreadRadius: 0,
+          ),
+        ],
       ),
-
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: widget.children.map((item) {
-          var color = item.color ?? widget.itemColor;
-          var icon = item.icon;
-          var label = item.label;
-          int index = widget.children.indexOf(item);
-          return GestureDetector(
-            onTap: () {
-              _changeIndex(index);
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: icon,
-                ),
-                // Icon(
-                //   icon,
-                //   size: 20,
-                //   color: widget.currentIndex == index ? color : inactive,
-                // ),
-                Expanded(
-                        flex: 2,
-                        child: Text(
-                          label ?? '',
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight:  FontWeight.w600,
-                              color: widget.currentIndex == index ? color : Color(0xffADAAAA)),
-                        ),
-                      )
-
-              ],
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+        child: Column(
+          children: [
+            // Top indicator bar
+            SizedBox(
+              height: 3,
+              child: Row(
+                children: widget.children.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  return Expanded(
+                    child: Container(
+                      color: widget.currentIndex == index
+                          ? (entry.value.color ?? widget.itemColor)
+                          : Colors.transparent,
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
-          );
-        }).toList(),
+            // Navigation items
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: widget.children.map((item) {
+                    var color = item.color ?? widget.itemColor;
+                    var icon = item.icon;
+                    var label = item.label;
+                    int index = widget.children.indexOf(item);
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          _changeIndex(index);
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: icon,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                label ?? '',
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                    color: widget.currentIndex == index ? color : const Color(0xffADAAAA)
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

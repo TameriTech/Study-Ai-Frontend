@@ -4,603 +4,362 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../../color_constants.dart';
 import '../../../../common/helper.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../routes/app_routes.dart';
 import '../../global_widgets/block_button_widget.dart';
 import '../../global_widgets/text_field_widget.dart';
 import '../../global_widgets/warning_pupop.dart';
 import '../controllers/profile_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    return  WillPopScope(
+    return WillPopScope(
       onWillPop: Helper().onWillPop,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: bgColor,
         appBar: AppBar(
-          leadingWidth: 0,
-          backgroundColor: appColor,
+          backgroundColor: Colors.white,
+          elevation: 0,
           leading: Icon(null),
-          title: Text(AppLocalizations.of(context).my_profile, style: TextStyle(fontSize: 24, color: Colors.white)),
-          actions: [
-            Obx((){
-              return controller.currentUser.value.bestSubjects != "" ?
-                InkWell(
-                  onTap: (){
-                    controller.edit.value = !controller.edit.value;
-                    controller.fullName.text = controller.currentUser.value.fullName.toString();
-                    controller.email.text = controller.currentUser.value.email.toString();
-                    controller.selected.value = controller.currentUser.value.bestSubjects.toString();
-                    controller.selectedObj.value = controller.currentUser.value.learningObjectives.toString();
-                    controller.hasSelected.value = !controller.hasSelected.value;
-                    controller.hasSelectedObj.value = !controller.hasSelectedObj.value;
-                    controller.selectedClassLevel.value = controller.currentUser.value.classLevel.toString();
-                    controller.selectedSchoolLevel.value = controller.currentUser.value.academicLevel.toString();
-                  },
-                  child: controller.edit.value ? Icon(Icons.cancel, color: Colors.white)
-                      : Image.asset(
-                    'assets/images/edit.png',
-                    fit: BoxFit.cover,
-                  ).marginOnly(right: 16)
-              ) : SizedBox.shrink();
-            }),
-            SizedBox(width: 10)
-          ],
+          leadingWidth: 0,
+          title: Text(
+            AppLocalizations.of(context).my_profile,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
         ),
         body: SafeArea(
           child: RefreshIndicator(
             onRefresh: () async {
-              //await controller.refreshCommunity();
               controller.onInit();
             },
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Obx((){
-                    if(controller.edit.value){
-                      return Container(
-                        padding: const EdgeInsets.only(bottom: 60),
-                        width: double.infinity,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF14213D),
-                          borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-                        ),
-                        child: SizedBox.shrink()
-                      );
-                    }else{
-                      return Container(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        width: double.infinity,
-                        height: Get.height/3.5,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF14213D),
-                          borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset("assets/images/logo.png", width: 200, height: 100),
-                            Text("${AppLocalizations.of(context).hey} ${controller.currentUser.value.fullName}",
-                              style: TextStyle(fontSize: 24, color: Colors.white),),
-                            Text("${AppLocalizations.of(context).school_level} : ${controller.currentUser.value.classLevel}",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  }),
-                ),
-                Obx((){
-                  return Positioned.fill(
-                      top: controller.edit.value ? 0 : Get.height/4.5,
-                      left: 0,
-                      right: 0,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 30),
-                            Container(
-                                padding: EdgeInsets.all(10),
-                                width: double.infinity,
-                                height: controller.edit.value ? 700 : null,
-                                margin: const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      blurRadius: 8,
-                                      offset: Offset(0, 4),
-                                    ),
-                                  ],
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Profile Header Section
+                    Center(
+                      child: Column(
+                        children: [
+                          // Profile Avatar
+                          Image.asset(
+                            'assets/images/logo.png',
+                            fit: BoxFit.cover,
+                            height: 100,
+                            width: 100,
+                          ),
+                          // Name with Edit Button
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Obx(() => Text(
+                                controller.currentUser.value.fullName ?? "User",
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
                                 ),
-                                child: Column(
-                                  children: [
-                                    Obx((){
-                                      if(controller.currentUser.value.bestSubjects == ""){
-                                        return Column(
-                                          children: [
-                                            Text(
-                                              "${AppLocalizations.of(context).remember_to_finalize_your}\n${AppLocalizations.of(context).inscription}",
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            SizedBox(height: 16),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: primaryColor,
-                                                shape: StadiumBorder(),
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 40,
-                                                  vertical: 12,
-                                                ),
-                                              ),
-                                              child: Text(
-                                                AppLocalizations.of(context).inscription,
-                                                style: TextStyle(color: Colors.white, fontSize: 18),
-                                              ),
-                                            ),
-                                            SizedBox(height: 12),
-                                            Text(
-                                              "${AppLocalizations.of(context).more_option_and_more}\n${AppLocalizations.of(context).personalization}",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.grey[600],
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ],
-                                        );
-                                      }else{
-                                        return controller.edit.value
-                                            ? TabViewWidget(context)
-                                            : Column(
-                                          children: [
-                                            ListTile(
-                                              trailing: Icon(Icons.question_mark, color: Colors.grey),
-                                              title: Text(AppLocalizations.of(context).objectives, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
-                                              subtitle: Text(controller.currentUser.value.bestSubjects.toString(),
-                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
-                                              ),
-                                            ),
-                                            ListTile(
-                                              trailing: Icon(Icons.check_box_sharp, color: Colors.grey),
-                                              title: Text(AppLocalizations.of(context).favorite_courses, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
-                                              subtitle: Text(controller.currentUser.value.learningObjectives.toString(),
-                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.grey),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                    }),
-                                  ],
-                                )
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(20),
-                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    blurRadius: 8,
-                                    offset: Offset(0, 4),
+                              )),
+                              SizedBox(width: 8),
+                              InkWell(
+                                onTap: () {
+                                  Get.toNamed(Routes.CHANGE_USERNAME);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade50,
+                                    borderRadius: BorderRadius.circular(6),
                                   ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context).my_progress,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 16,
+                                    color: Colors.blue,
                                   ),
-                                  Spacer(),
-                                  progressionIndicator(context),
-                                ],
+                                ),
                               ),
-                            ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
 
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    blurRadius: 8,
-                                    offset: Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: ListTile(
-                                title: Text(AppLocalizations.of(context).language, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
-                                trailing: Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey),
-                                onTap: () => Get.toNamed(Routes.SETTINGS_LANGUAGE),
-                                subtitle: Text(controller.languageBox.read('language') =='fr'?"Français":"English", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey.shade900)),
-                              ),
-                            ),
+                    SizedBox(height: MediaQuery.of(context).size.height/6),
 
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    blurRadius: 8,
-                                    offset: Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  ListTile(
-                                    title: Text(AppLocalizations.of(context).logout, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.black)),
-                                    trailing: Icon(Icons.logout, color: Colors.grey),
-                                    onTap: () => Get.toNamed(Routes.LOGIN),
-                                  ),
-                                  ListTile(
-                                    title: Text(AppLocalizations.of(context).delete_account, style: TextStyle(fontSize: 16, color: Colors.red)),
-                                    trailing: Icon(Icons.delete_forever, color: Colors.red),
-                                    onTap: () {
-                                      WarningDialog.show(
-                                          context: context,
-                                          title: AppLocalizations.of(context).attention,
-                                          message: AppLocalizations.of(context).delete_account_warning,
-                                          confirmText: AppLocalizations.of(context).ok,
-                                          onConfirm: () {
-                                            controller.deleteAccount();
-                                          }
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
+                    // School Level Section
+                    Text(
+                      AppLocalizations.of(context).school_level,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    _buildMenuItem(
+                      context: context,
+                      title: controller.currentUser.value.academicLevel ?? "Not set",
+                      onTap: () {
+                        Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
+                      },
+                    ),
 
-                          ],
-                        ),
-                      )
-                  );
-                })
-              ],
-            ),
+                    SizedBox(height: 24),
+
+                    // Quiz Summary Section
+                    Text(
+                      "Quiz Summary",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    _buildQuizSummaryCard(context),
+
+                    SizedBox(height: 24),
+
+                    // Your Language Section
+                    Text(
+                      AppLocalizations.of(context).language,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    _buildMenuItem(
+                      context: context,
+                      title: controller.languageBox.read('language') == 'fr'
+                          ? "Français"
+                          : "English",
+                      onTap: () => Get.toNamed(Routes.SETTINGS_LANGUAGE),
+                    ),
+
+                    SizedBox(height: 24),
+
+                    // Change Password
+                    _buildMenuItem(
+                      context: context,
+                      title: AppLocalizations.of(context).password,
+                      onTap: () {
+                        Get.toNamed(Routes.CHANGE_PASSWORD);
+                      },
+                    ),
+
+                    SizedBox(height: 16),
+
+                    // Logout
+                    _buildMenuItem(
+                      context: context,
+                      title: AppLocalizations.of(context).logout,
+                      icon: Icons.logout,
+                      showArrow: false,
+                      onTap: () => Get.toNamed(Routes.LOGIN),
+                    ),
+
+                    SizedBox(height: 16),
+
+                    // Delete Account
+                    _buildMenuItem(
+                      context: context,
+                      title: AppLocalizations.of(context).delete_account,
+                      icon: Icons.delete_forever,
+                      iconColor: Colors.red,
+                      titleColor: Colors.red,
+                      showArrow: false,
+                      onTap: () {
+                        WarningDialog.show(
+                          context: context,
+                          title: AppLocalizations.of(context).attention,
+                          message: AppLocalizations.of(context).delete_account_warning,
+                          confirmText: AppLocalizations.of(context).ok,
+                          onConfirm: () {
+                            controller.deleteAccount();
+                          },
+                        );
+                      },
+                    ),
+
+                    SizedBox(height: 32),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
+      ),
     );
   }
 
-  TabViewWidget(BuildContext context) {
-    return SizedBox(
-      height: 600,
-      child: DefaultTabController(
-        length: 2,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              color: Colors.white,
-              child: TabBar(
-                labelColor: Colors.black,
-                dividerColor: Colors.transparent,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: Colors.black,
-                onTap: (value) {
-                  controller.selectedHomeIndex.value = value;
-                },
-                tabs: [
-                  Tab(text: AppLocalizations.of(context).info),
-                  Tab(text: AppLocalizations.of(context).password),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Expanded( // This is crucial!
-              child: TabBarView(
+  Widget _buildMenuItem({
+    required BuildContext context,
+    required String title,
+    IconData? icon,
+    Color? iconColor,
+    Color? titleColor,
+    bool showArrow = true,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: ListTile(
+        onTap: onTap,
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: titleColor ?? Colors.black,
+          ),
+        ),
+        trailing: icon != null
+            ? Icon(icon, color: iconColor ?? Colors.grey.shade400)
+            : showArrow
+            ? Icon(Icons.arrow_forward_ios,
+            size: 16,
+            color: Colors.grey.shade400)
+            : null,
+      ),
+    );
+  }
+
+  Widget _buildQuizSummaryCard(BuildContext context) {
+    var statistic = double.tryParse(
+        controller.currentUser.value.statistic?.toString() ?? "0"
+    ) ?? 0;
+    var progressValue = statistic / 100;
+
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Left side - Stats
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Info(context),
-                  Password(context)
+                  Text(
+                    "Completed Quiz",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    "40", // You can make this dynamic from controller
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    "Highest Score",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    "60%",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    "Lowest Score",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    "20%",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget Info(BuildContext context){
-    final GlobalKey<FormState> _formKeyInfo = GlobalKey<FormState>();
-    var user = controller.currentUser.value;
-    return Form(
-      key: _formKeyInfo,
-      child: Column(
-        children: [
-          TextFieldWidget(
-            suffixIcon: Icon(null),
-            suffix: Icon(null),
-            textController: controller.fullName,
-            readOnly: false,
-            isFirst: true,
-            labelText: AppLocalizations.of(context).name,
-            hintText: "John",
-            onChanged: (value) {
-              controller.currentUser.value.fullName = value;
-              controller.newName = value;
-            },
-            validator: (input) => input!.length < 3 ? AppLocalizations.of(context).enter_three_characters : null,
-          ),
-          TextFieldWidget(
-            suffixIcon: Icon(null),
-            textController: controller.email,
-            suffix: Icon(null),
-            readOnly: false,
-            labelText: AppLocalizations.of(context).email,
-            hintText: 'user@gmail.com',
-            isFirst: true,
-            onChanged: (value) => {
-              controller.currentUser.value.email = value,
-              controller.newEmail = value
-            },
-            validator: (input) => !input!.contains('@') ? AppLocalizations.of(context).input_email : null,
-
-          ),
-          Container(
-              color: bgColor,
-            margin: EdgeInsets.only(bottom: 10),
-            height: 70,
-              width: Get.width,
-              child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for(var level in controller.classDegree)...[
-                        InkWell(
-                          onTap: (){
-                            controller.currentUser.value.classLevel = level;
-                            controller.selectedClassLevel.value = level;
-                            controller.newSelected = level;
-                          },
-                          child: Obx(() => Container(
-                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                              margin: EdgeInsets.only(right: 8),
-                              decoration: BoxDecoration(
-                                color: controller.selectedClassLevel.value == controller.currentUser.value.classLevel.toString()
-                                    && controller.selectedClassLevel.value == level
-                                    ? primaryColor.withOpacity(0.8):Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-
-                              ),
-                              child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400)),),
-                          ),),
-                        )
-                      ],
-                    ],
-                  )
-              )
-          ),
-          Container(
-            color: bgColor,
-              height: 70,
-              width: Get.width,
-              child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for(var level in controller.schoolLevel)...[
-                        InkWell(
-                          onTap: (){
-                            controller.currentUser.value.academicLevel = level;
-                            controller.selectedSchoolLevel.value = level;
-                            controller.newObjSelected = level;
-                          },
-                          child: Obx(() => Container(
-                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                            margin: EdgeInsets.only(right: 8),
-                            decoration: BoxDecoration(
-                              color: controller.selectedSchoolLevel.value == controller.currentUser.value.academicLevel.toString()
-                                  && controller.selectedSchoolLevel.value == level
-                                  ? primaryColor.withOpacity(0.8) : Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-
+              // Right side - Circular Progress
+              Column(
+                children: [
+                  Text(
+                    "Average Score Rating",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: CircularProgressIndicator(
+                            value: progressValue,
+                            strokeWidth: 12,
+                            backgroundColor: Colors.grey.shade200,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              progressValue <= 0.30
+                                  ? Colors.red
+                                  : progressValue <= 0.50
+                                  ? Colors.orange
+                                  : appColor,
                             ),
-                            child: Text(level, style: Get.textTheme.labelSmall!.merge(TextStyle(fontWeight: FontWeight.w400)),),
-
-                          ),),
+                          ),
                         ),
-                      ]
-                    ],
-                  )
-              )
-          ),
-
-          SizedBox(height: 20),
-          TextButton(
-              onPressed: (){
-                Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
-              },
-              child: Text(AppLocalizations.of(context).others, style: Get.textTheme.labelSmall!.
-              merge(TextStyle(color: primaryColor, fontWeight: FontWeight.w600))),
-          ),
-          SizedBox(height: 10),
-          BlockButtonWidget(
-              color: controller.newName != user.fullName.toString() &&
-                  controller.newEmail != user.email.toString() &&
-                  controller.newClassLevel != user.classLevel.toString() &&
-                  controller.newAcademicLevel != user.academicLevel.toString() ?
-              Colors.black : Colors.black.withOpacity(0.5),
-              haveBorder: false,
-              text: Center(
-                child: Text(AppLocalizations.of(context).submit, style: Get.textTheme.labelSmall!.
-                merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                        Text(
+                          "${statistic.toInt()}%",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              onPressed: (){
-                if(controller.newName != user.fullName.toString() &&
-                    controller.newEmail != user.email.toString() &&
-                    controller.newClassLevel == user.classLevel.toString() &&
-                    controller.newAcademicLevel == user.academicLevel.toString()
-                ){
-                  if(_formKeyInfo.currentState!.validate()){
-                    controller.updateProfile();
-                  }
-                }
-              })
+            ],
+          ),
         ],
       ),
     );
   }
-
-  Widget Password(BuildContext context){
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          Obx(() => TextFieldWidget(
-            suffix: Icon(null),
-            readOnly: false,
-            isFirst: true,
-            labelText: AppLocalizations.of(context).old_password,
-            hintText: "••••••••••••••••",
-            textController: TextEditingController(text: controller.currentUser.value.password),
-            obscureText: !controller.hidePassword.value,
-            onChanged: (value) => controller.oldPassword.value = value,
-            validator: (input) => input!.length < 6 ? AppLocalizations.of(context).enter_six_characters : null,
-            keyboardType: TextInputType.visiblePassword,
-            suffixIcon: IconButton(
-              onPressed: () {
-                controller.hidePassword.value = !controller.hidePassword.value;
-              },
-              color: Theme.of(context).focusColor,
-              icon: Icon(controller.hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-            ),
-
-          ),
-          ),
-          Obx(() => TextFieldWidget(
-            suffix: Icon(null),
-            readOnly: false,
-            isFirst: true,
-            labelText: AppLocalizations.of(context).enter_new_password,
-            hintText: "••••••••••••••••",
-            textController: TextEditingController(text: controller.currentUser.value.password),
-            obscureText: !controller.hidePassword.value,
-            onChanged: (value) => controller.newPassword.value = value,
-            validator: (input) => input!.length < 6 ? AppLocalizations.of(context).enter_six_characters : null,
-            keyboardType: TextInputType.visiblePassword,
-            suffixIcon: IconButton(
-              onPressed: () {
-                controller.hidePassword.value = !controller.hidePassword.value;
-              },
-              color: Theme.of(context).focusColor,
-              icon: Icon(controller.hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-            ),
-
-          ),
-          ),
-          Obx(() => TextFieldWidget(
-            suffix: Icon(null),
-            readOnly: false,
-            isFirst: true,
-            labelText: AppLocalizations.of(context).confirm_password,
-            hintText: "••••••••••••••••",
-            textController: TextEditingController(text: controller.currentUser.value.password),
-            obscureText: !controller.hidePassword.value,
-            onChanged: (value) => controller.confirmPassword.value = value,
-            validator: (input) => input != controller.newPassword.value ? AppLocalizations.of(context).confirm_enter_new_password : null,
-            keyboardType: TextInputType.visiblePassword,
-            suffixIcon: IconButton(
-              onPressed: () {
-                controller.hidePassword.value = !controller.hidePassword.value;
-              },
-              color: Theme.of(context).focusColor,
-              icon: Icon(controller.hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-            ),
-
-          ),
-          ),
-          SizedBox(height: 20),
-          Obx(() {
-            return !controller.onResetPassword.value ?
-            BlockButtonWidget(
-                color: Colors.black,
-                haveBorder: false,
-                text: Center(
-                  child: Text(AppLocalizations.of(context).submit, style: Get.textTheme.labelSmall!.
-                  merge(TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
-                ),
-                onPressed: (){
-                  if(_formKey.currentState!.validate()){
-                    controller.updatePassword();
-                  }
-                }) :
-            BlockButtonWidget(
-                color: Colors.black,
-                haveBorder: false,
-                text: Center(
-                  child: SpinKitThreeBounce(color: Colors.white, size: 20)
-                ),
-                onPressed: (){
-                });
-          }),
-        ],
-      ),
-    );
-  }
-
-  Widget progressionIndicator(BuildContext context){
-    var val = double.parse(controller.currentUser.value.statistic.toString()) / 100;
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox(
-          height: 100,
-          width: 100,
-          child: CircularProgressIndicator(
-            value: val,
-            strokeWidth: 10,
-            backgroundColor: bgColor,
-            color: (){
-              if (val <= 0.30) return Colors.red;
-              if (val > 0.31 && val < 0.50) return Colors.orange;
-              return Colors.green;
-            }()
-          )
-        ),
-        Text( controller.currentUser.value.statistic.toString(),
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
-  }
-
 }
-
-

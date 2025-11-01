@@ -7,9 +7,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/modules/chat/views/text_animation.dart';
 import '../../../../color_constants.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../controllers/chat_controller.dart';
 import 'expandable_markdown.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ChatPlatform extends GetView<ChatController> {
   ChatPlatform({super.key});

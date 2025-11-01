@@ -6,13 +6,15 @@ import 'package:studyai/app/modules/chat/views/history_view.dart';
 import 'package:studyai/app/modules/files/views/import_support_view.dart';
 import 'package:studyai/app/modules/files/views/quizz_post_generation_view.dart';
 import 'package:studyai/app/modules/files/views/revision_view.dart';
+import 'package:studyai/app/modules/profile/views/change_password_view.dart';
+import 'package:studyai/app/modules/profile/views/change_username_view.dart';
 import 'package:studyai/app/modules/profile/views/complete_profile_view.dart';
 
 
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/forgot_password_view.dart';
-import '../modules/auth/views/login_register_view.dart';
+import '../modules/auth/views/login_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/root/bindings/root_binding.dart';
@@ -29,7 +31,7 @@ class Theme1AppPages {
     //GetPage(name: Routes.ROOT, page: () => RootView(), binding: RootBinding()),
     GetPage(name: Routes.SETTINGS, page: () => SettingsView(), binding: SettingsBinding()),
     GetPage(name: Routes.SETTINGS_THEME_MODE, page: () => ThemeModeView(), binding: SettingsBinding()),
-    GetPage(name: Routes.LOGIN, page: () => LoginRegisterView(), binding: AuthBinding(), ),
+    GetPage(name: Routes.LOGIN, page: () => LoginView(), binding: AuthBinding(), ),
     GetPage(name: Routes.REGISTER, page: () => RegisterViews(), binding: AuthBinding(), ),
     GetPage(name: Routes.FORGOT_PASSWORD, page: () => ForgotPasswordView(), binding: AuthBinding(), transition: Transition.zoom),
     GetPage(name: Routes.ROOT, page: () => const RootView(), binding: RootBinding(), transition: Transition.zoom ),
@@ -41,6 +43,8 @@ class Theme1AppPages {
     GetPage(name: Routes.REVISION, page: () => RevisionView(),  transition: Transition.rightToLeft),
     GetPage(name: Routes.QUIZZ_POST_GENERATION_VIEW, page: () => QuizzPostGenerationView(),  transition: Transition.rightToLeft),
     GetPage(name: Routes.SETTINGS_LANGUAGE, page: () =>LanguageView(), binding: SettingsBinding(),transition: Transition.rightToLeft ),
+    GetPage(name: Routes.CHANGE_USERNAME, page: () => ChangeUsernameView(), binding: ProfileBinding(), transition: Transition.rightToLeft),
+    GetPage(name: Routes.CHANGE_PASSWORD, page: () => ChangePasswordView(), binding: ProfileBinding(), transition: Transition.rightToLeft),
 
   ];
 }

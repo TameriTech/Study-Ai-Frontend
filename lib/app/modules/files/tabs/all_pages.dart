@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studyai/color_constants.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/files_controller.dart';
 import '../widgets/file_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class AllPages extends GetView<FilesController> {
   const AllPages({super.key});
@@ -19,17 +20,11 @@ class AllPages extends GetView<FilesController> {
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-                  color: bgColorFileScreen
+                  color: tertiaryColor
               ),
               height: Get.height,
               child: CustomScrollView(
                 slivers: [
-                  SliverToBoxAdapter(
-                    child:  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(AppLocalizations.of(context).recents, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                    ).marginOnly(bottom: Get.height*0.025),
-                  ),
                   Obx(() => controller.filesLoading.value?
                   SliverToBoxAdapter(
                     child: Center(child: CircularProgressIndicator(
@@ -47,7 +42,7 @@ class AllPages extends GetView<FilesController> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
-                      childAspectRatio: 1,
+                      childAspectRatio: 0.85,
                     ),
                     itemCount: controller.filesList.length,
 
@@ -80,6 +75,9 @@ class AllPages extends GetView<FilesController> {
                           subtitle: file.subtitle,
                           type: file.type,
                           createdAt: file.createdAt,
+                          textPreview: file.type == "Course"?file.courseData[0]["body"]
+                              :file.type == "Revision"?file.revisionData[0]["body"]
+                          :file.quizzData[0]["question"],
                         ),
                       );
 

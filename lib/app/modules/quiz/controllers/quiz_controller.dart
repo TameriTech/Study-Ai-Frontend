@@ -6,9 +6,9 @@ import 'package:studyai/app/models/file_card_model.dart';
 import 'package:studyai/app/models/question_model.dart';
 import 'package:studyai/app/repositories/quizz_repository.dart';
 import '../../../../common/ui.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../models/user_model.dart';
 import '../../../services/auth_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 enum QuizGenerationState { start, ongoing, failed, generated }
 
 
@@ -40,7 +40,7 @@ class QuizController extends GetxController {
   final RxInt currentQuestionIndex = 0.obs;
   final RxList<int?> selectedAnswers = <int?>[].obs;
   var selectedAnswer = 100.obs;
-  Rx<FileCardModel> selectedCourse = FileCardModel(title: '', timeInfo: '', type: '', createdAt: '').obs;
+  Rx<FileCardModel> selectedCourse = FileCardModel(title: '', timeInfo: '', type: '', createdAt: '', courseData: '').obs;
 
   // Question timer
   final RxDouble questionProgress = 0.0.obs;
