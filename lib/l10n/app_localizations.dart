@@ -137,7 +137,7 @@ abstract class AppLocalizations {
   /// No description provided for @create_account.
   ///
   /// In en, this message translates to:
-  /// **'Create account'**
+  /// **'Create new account'**
   String get create_account;
 
   /// No description provided for @logout_of_app.
@@ -227,14 +227,8 @@ abstract class AppLocalizations {
   /// No description provided for @input_email.
   ///
   /// In en, this message translates to:
-  /// **'Input Email'**
+  /// **'Enter Email'**
   String get input_email;
-
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
 
   /// No description provided for @school_level_question.
   ///
@@ -299,7 +293,7 @@ abstract class AppLocalizations {
   /// No description provided for @enter_valid_email_address.
   ///
   /// In en, this message translates to:
-  /// **'Enter a valid email address'**
+  /// **'Please enter a valid email address'**
   String get enter_valid_email_address;
 
   /// No description provided for @enter_six_characters.
@@ -443,8 +437,20 @@ abstract class AppLocalizations {
   /// No description provided for @confirm_password.
   ///
   /// In en, this message translates to:
-  /// **'Confirm Password'**
+  /// **'Confirm password'**
   String get confirm_password;
+
+  /// No description provided for @confirm_your_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your password'**
+  String get confirm_your_password;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
 
   /// No description provided for @enter_confirm_password.
   ///
@@ -455,7 +461,7 @@ abstract class AppLocalizations {
   /// No description provided for @password_not_same.
   ///
   /// In en, this message translates to:
-  /// **'Password and confirm password are not the same'**
+  /// **'Passwords do not match'**
   String get password_not_same;
 
   /// No description provided for @next.
@@ -587,7 +593,7 @@ abstract class AppLocalizations {
   /// No description provided for @ongoing_generation.
   ///
   /// In en, this message translates to:
-  /// **'Ongoing generation'**
+  /// **'Ongoing generation....'**
   String get ongoing_generation;
 
   /// No description provided for @ongoing_generation_message.
@@ -602,11 +608,11 @@ abstract class AppLocalizations {
   /// **'Introduction'**
   String get introduction;
 
-  /// No description provided for @notations_and_vocabularies.
+  /// No description provided for @vocabularies.
   ///
   /// In en, this message translates to:
-  /// **'Notations and vocabularies'**
-  String get notations_and_vocabularies;
+  /// **'Vocabularies'**
+  String get vocabularies;
 
   /// No description provided for @term.
   ///
@@ -625,6 +631,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Question'**
   String get question;
+
+  /// No description provided for @questions.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions'**
+  String get questions;
 
   /// No description provided for @end.
   ///
@@ -1430,11 +1442,677 @@ abstract class AppLocalizations {
   /// **'By'**
   String get by;
 
+  /// No description provided for @primary_education.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary education'**
+  String get primary_education;
+
+  /// No description provided for @form_one.
+  ///
+  /// In en, this message translates to:
+  /// **'Form one'**
+  String get form_one;
+
+  /// No description provided for @form_two.
+  ///
+  /// In en, this message translates to:
+  /// **'Form two'**
+  String get form_two;
+
+  /// No description provided for @form_three.
+  ///
+  /// In en, this message translates to:
+  /// **'Form three'**
+  String get form_three;
+
+  /// No description provided for @form_four.
+  ///
+  /// In en, this message translates to:
+  /// **'Form four'**
+  String get form_four;
+
+  /// No description provided for @senior_high_school.
+  ///
+  /// In en, this message translates to:
+  /// **'Senior high school'**
+  String get senior_high_school;
+
+  /// No description provided for @grade_six.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 6'**
+  String get grade_six;
+
+  /// No description provided for @grade_seven.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 7'**
+  String get grade_seven;
+
+  /// No description provided for @grade_eight.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 8'**
+  String get grade_eight;
+
+  /// No description provided for @grade_nine.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 9'**
+  String get grade_nine;
+
+  /// No description provided for @grade_ten.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 10'**
+  String get grade_ten;
+
+  /// No description provided for @grade_eleven.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 11'**
+  String get grade_eleven;
+
+  /// No description provided for @grade_twelve.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 12'**
+  String get grade_twelve;
+
+  /// No description provided for @undergraduate.
+  ///
+  /// In en, this message translates to:
+  /// **'Undergraduate'**
+  String get undergraduate;
+
+  /// No description provided for @year_one.
+  ///
+  /// In en, this message translates to:
+  /// **'Year 1'**
+  String get year_one;
+
+  /// No description provided for @year_two.
+  ///
+  /// In en, this message translates to:
+  /// **'Year 2'**
+  String get year_two;
+
+  /// No description provided for @year_three.
+  ///
+  /// In en, this message translates to:
+  /// **'Year 3'**
+  String get year_three;
+
+  /// No description provided for @year_four.
+  ///
+  /// In en, this message translates to:
+  /// **'Year 4'**
+  String get year_four;
+
+  /// No description provided for @year_five.
+  ///
+  /// In en, this message translates to:
+  /// **'Year 5'**
+  String get year_five;
+
+  /// No description provided for @post_graduate.
+  ///
+  /// In en, this message translates to:
+  /// **'Postgraduate'**
+  String get post_graduate;
+
+  /// No description provided for @master_degree.
+  ///
+  /// In en, this message translates to:
+  /// **'Master\'\' s degree'**
+  String get master_degree;
+
+  /// No description provided for @doctoral_degree.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctoral degree'**
+  String get doctoral_degree;
+
+  /// No description provided for @postgraduate_diplomas.
+  ///
+  /// In en, this message translates to:
+  /// **'Postgraduate diplomas'**
+  String get postgraduate_diplomas;
+
+  /// No description provided for @professional_doctorates.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional doctorates'**
+  String get professional_doctorates;
+
   /// No description provided for @or.
   ///
   /// In en, this message translates to:
   /// **'or'**
   String get or;
+
+  /// No description provided for @please_select_school_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a school level'**
+  String get please_select_school_level;
+
+  /// No description provided for @please_select_class_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a class level'**
+  String get please_select_class_level;
+
+  /// No description provided for @email_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get email_required;
+
+  /// No description provided for @password_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get password_required;
+
+  /// No description provided for @full_name_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name is required'**
+  String get full_name_required;
+
+  /// No description provided for @password_changed.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed'**
+  String get password_changed;
+
+  /// No description provided for @sent_email_with_password.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent an email with a new password to'**
+  String get sent_email_with_password;
+
+  /// No description provided for @enter_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter email'**
+  String get enter_email;
+
+  /// No description provided for @enter_your_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get enter_your_email;
+
+  /// No description provided for @enter_email_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the email address you used to register your account'**
+  String get enter_email_message;
+
+  /// No description provided for @enter_your_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get enter_your_password;
+
+  /// No description provided for @select_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Select level'**
+  String get select_level;
+
+  /// No description provided for @login_to_your_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Login to your account'**
+  String get login_to_your_account;
+
+  /// No description provided for @login_with_Apple.
+  ///
+  /// In en, this message translates to:
+  /// **'Login with Apple'**
+  String get login_with_Apple;
+
+  /// No description provided for @login_with_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Login with Google'**
+  String get login_with_google;
+
+  /// No description provided for @login_with_facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Login with Facebook'**
+  String get login_with_facebook;
+
+  /// No description provided for @select_school_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Select school level'**
+  String get select_school_level;
+
+  /// No description provided for @select_class_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Select class level'**
+  String get select_class_level;
+
+  /// No description provided for @register_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Register an account'**
+  String get register_account;
+
+  /// No description provided for @name_minimum_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 3 characters'**
+  String get name_minimum_characters;
+
+  /// No description provided for @full_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get full_name;
+
+  /// No description provided for @enter_full_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get enter_full_name;
+
+  /// No description provided for @password_minimum_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get password_minimum_characters;
+
+  /// No description provided for @create_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Create password'**
+  String get create_password;
+
+  /// No description provided for @create_your_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your password'**
+  String get create_your_password;
+
+  /// No description provided for @by_signing_up.
+  ///
+  /// In en, this message translates to:
+  /// **'By signing up, you agree with our '**
+  String get by_signing_up;
+
+  /// No description provided for @terms_conditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & Conditions'**
+  String get terms_conditions;
+
+  /// No description provided for @and_our.
+  ///
+  /// In en, this message translates to:
+  /// **'and our'**
+  String get and_our;
+
+  /// No description provided for @privacy_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacy_policy;
+
+  /// No description provided for @or_continue_with.
+  ///
+  /// In en, this message translates to:
+  /// **'Or continue with'**
+  String get or_continue_with;
+
+  /// No description provided for @one_two_steps.
+  ///
+  /// In en, this message translates to:
+  /// **'1 of 2 steps'**
+  String get one_two_steps;
+
+  /// No description provided for @next_select_class.
+  ///
+  /// In en, this message translates to:
+  /// **' - Next: Select class.'**
+  String get next_select_class;
+
+  /// No description provided for @primary_education_question.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your primary education level?'**
+  String get primary_education_question;
+
+  /// No description provided for @high_school_education_question.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your high school education level?'**
+  String get high_school_education_question;
+
+  /// No description provided for @senior_high_school_education_question.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your senior high school education level?'**
+  String get senior_high_school_education_question;
+
+  /// No description provided for @undergraduate_level_question.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your undergraduate level?'**
+  String get undergraduate_level_question;
+
+  /// No description provided for @postgraduate_level_question.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your postgraduate level?'**
+  String get postgraduate_level_question;
+
+  /// No description provided for @two_two_steps.
+  ///
+  /// In en, this message translates to:
+  /// **'2 of 2 steps'**
+  String get two_two_steps;
+
+  /// No description provided for @final_step.
+  ///
+  /// In en, this message translates to:
+  /// **' - Final step'**
+  String get final_step;
+
+  /// No description provided for @setting_up_profile_message.
+  ///
+  /// In en, this message translates to:
+  /// **'The details you provide help us deliver a more personalized and relevant experience.'**
+  String get setting_up_profile_message;
+
+  /// No description provided for @setting_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting up your profile'**
+  String get setting_profile;
+
+  /// No description provided for @account_created_first_part.
+  ///
+  /// In en, this message translates to:
+  /// **'All set! Your account has'**
+  String get account_created_first_part;
+
+  /// No description provided for @account_created_second_part.
+  ///
+  /// In en, this message translates to:
+  /// **'been created successfully'**
+  String get account_created_second_part;
+
+  /// No description provided for @tameri_ai.
+  ///
+  /// In en, this message translates to:
+  /// **'Tameri AI'**
+  String get tameri_ai;
+
+  /// No description provided for @network_problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Network problem???'**
+  String get network_problem;
+
+  /// No description provided for @document_analysis_ongoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Document analysis ongoing...This operation may take some minutes'**
+  String get document_analysis_ongoing;
+
+  /// No description provided for @goog_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning,'**
+  String get goog_morning;
+
+  /// No description provided for @create_new_quizz.
+  ///
+  /// In en, this message translates to:
+  /// **'Create new quiz'**
+  String get create_new_quizz;
+
+  /// No description provided for @create_new_course.
+  ///
+  /// In en, this message translates to:
+  /// **'Create new course'**
+  String get create_new_course;
+
+  /// No description provided for @scan_your_course.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan your course'**
+  String get scan_your_course;
+
+  /// No description provided for @upload_document.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a document'**
+  String get upload_document;
+
+  /// No description provided for @pdf_images_only.
+  ///
+  /// In en, this message translates to:
+  /// **'(pdf and images) only'**
+  String get pdf_images_only;
+
+  /// No description provided for @enter_detailed_instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter detailed instructions'**
+  String get enter_detailed_instructions;
+
+  /// No description provided for @beginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get beginner;
+
+  /// No description provided for @intermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get intermediate;
+
+  /// No description provided for @advanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advanced;
+
+  /// No description provided for @level.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get level;
+
+  /// No description provided for @read_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Read time'**
+  String get read_time;
+
+  /// No description provided for @no_vocabularies_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No vocabularies available'**
+  String get no_vocabularies_available;
+
+  /// No description provided for @quizz_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiz Review'**
+  String get quizz_review;
+
+  /// No description provided for @of_preposition.
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get of_preposition;
+
+  /// No description provided for @change_password_message.
+  ///
+  /// In en, this message translates to:
+  /// **'To change password, enter current and new password'**
+  String get change_password_message;
+
+  /// No description provided for @enter_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter password'**
+  String get enter_password;
+
+  /// No description provided for @enter_current_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Current Password'**
+  String get enter_current_password;
+
+  /// No description provided for @confirm_new_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get confirm_new_password;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @change_username.
+  ///
+  /// In en, this message translates to:
+  /// **'Change username'**
+  String get change_username;
+
+  /// No description provided for @change_username_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name correctly below, it will be displaced the same way it is entered'**
+  String get change_username_message;
+
+  /// No description provided for @account_completed_first_part.
+  ///
+  /// In en, this message translates to:
+  /// **'All set! Your account has'**
+  String get account_completed_first_part;
+
+  /// No description provided for @account_completed_second_part.
+  ///
+  /// In en, this message translates to:
+  /// **'been completed successfully'**
+  String get account_completed_second_part;
+
+  /// No description provided for @not_set.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get not_set;
+
+  /// No description provided for @quiz_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiz summary'**
+  String get quiz_summary;
+
+  /// No description provided for @average_score_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Score Rating'**
+  String get average_score_rating;
+
+  /// No description provided for @failed_delete_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete account'**
+  String get failed_delete_account;
+
+  /// No description provided for @create_quizz_message_first_part.
+  ///
+  /// In en, this message translates to:
+  /// **'Create personalized quizzes tailored to'**
+  String get create_quizz_message_first_part;
+
+  /// No description provided for @create_quizz_message_ssecond_part.
+  ///
+  /// In en, this message translates to:
+  /// **'your needs'**
+  String get create_quizz_message_ssecond_part;
+
+  /// No description provided for @number_of_questions.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of questions'**
+  String get number_of_questions;
+
+  /// No description provided for @beginner_level.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner level'**
+  String get beginner_level;
+
+  /// No description provided for @objective_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Objective format'**
+  String get objective_format;
+
+  /// No description provided for @please_select_course_first.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a course first'**
+  String get please_select_course_first;
+
+  /// No description provided for @loading_results.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading results'**
+  String get loading_results;
+
+  /// No description provided for @your_score_is.
+  ///
+  /// In en, this message translates to:
+  /// **'Your score is'**
+  String get your_score_is;
+
+  /// No description provided for @review_answers.
+  ///
+  /// In en, this message translates to:
+  /// **'Review answers'**
+  String get review_answers;
+
+  /// No description provided for @new_challenge.
+  ///
+  /// In en, this message translates to:
+  /// **'New challenge'**
+  String get new_challenge;
+
+  /// No description provided for @select_new_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Select new language'**
+  String get select_new_language;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @ai_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'AI chat'**
+  String get ai_chat;
 }
 
 class _AppLocalizationsDelegate

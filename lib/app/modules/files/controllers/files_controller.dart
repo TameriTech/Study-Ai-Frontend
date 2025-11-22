@@ -58,6 +58,8 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
 // Quizz Question management
   final RxList<Question> questions = <Question>[].obs;
 
+  var selectLevel = ''.obs;
+
 
   final RxInt currentQuestionIndex = 0.obs;
   final RxList<dynamic> correctAnswers = <dynamic>[].obs;
@@ -93,6 +95,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     quizzRepository = QuizzRepository();
     generationState = 'start'.obs;
     instructionsController.text = "";
+
     //initialize file List
 
     await getCompleteFileList();
@@ -225,7 +228,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
 
 
     } catch(e){
-
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
 
     }

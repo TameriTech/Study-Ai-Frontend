@@ -23,6 +23,13 @@ class ProfileController extends GetxController {
   TextEditingController fullName = TextEditingController();
   TextEditingController email = TextEditingController();
 
+  TextEditingController oldPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+
+
+
   var selectedHomeIndex = 0.obs;
   var hidePassword = false.obs;
   var oldPassword = "".obs;
@@ -37,6 +44,7 @@ class ProfileController extends GetxController {
   var newObjSelected = '';
 
   var onResetPassword = false.obs;
+  var onResetUserName = false.obs;
 
   late UserRepository userRepository;
 
@@ -106,29 +114,29 @@ class ProfileController extends GetxController {
   // School levels with their corresponding class levels
   final List<Map<String, dynamic>> schoolLevels = [
     {
-      'name': 'Primary Education',
+      'name': AppLocalizations.of(Get.context!).primary_education,
       'icon': '🏫',
-      'classes': ['Form One', 'Form Two', 'Form Three', 'Form Four']
+      'classes': [AppLocalizations.of(Get.context!).form_one, AppLocalizations.of(Get.context!).form_two, AppLocalizations.of(Get.context!).form_three, AppLocalizations.of(Get.context!).form_four]
     },
     {
-      'name': 'High School',
+      'name': AppLocalizations.of(Get.context!).high_school_student,
       'icon': '🏠',
-      'classes': ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9']
+      'classes': [AppLocalizations.of(Get.context!).grade_six, AppLocalizations.of(Get.context!).grade_seven, AppLocalizations.of(Get.context!).grade_eight, AppLocalizations.of(Get.context!).grade_nine]
     },
     {
-      'name': 'Senior High School',
+      'name': AppLocalizations.of(Get.context!).senior_high_school,
       'icon': '📚',
-      'classes': ['Grade 10', 'Grade 11', 'Grade 12']
+      'classes': [AppLocalizations.of(Get.context!).grade_ten, AppLocalizations.of(Get.context!).grade_eleven, AppLocalizations.of(Get.context!).grade_twelve]
     },
     {
-      'name': 'Undergraduate',
+      'name': AppLocalizations.of(Get.context!).undergraduate,
       'icon': '🎓',
-      'classes': ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5']
+      'classes': [AppLocalizations.of(Get.context!).year_one, AppLocalizations.of(Get.context!).year_two, AppLocalizations.of(Get.context!).year_three, AppLocalizations.of(Get.context!).year_four, AppLocalizations.of(Get.context!).year_five]
     },
     {
-      'name': 'Postgraduate',
+      'name': AppLocalizations.of(Get.context!).post_graduate,
       'icon': '📖',
-      'classes': ['Master\'s Degree', 'Doctoral Degree', 'Postgraduate Diplomas', 'Professional Doctorates']
+      'classes': [AppLocalizations.of(Get.context!).master_degree, AppLocalizations.of(Get.context!).doctoral_degree, AppLocalizations.of(Get.context!).postgraduate_diplomas, AppLocalizations.of(Get.context!).professional_doctorates]
     },
   ];
 
@@ -185,12 +193,12 @@ class ProfileController extends GetxController {
   void _startLoadingProgress() {
     registrationProgress.value = 0.0;
 
-    _progressTimer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+    _progressTimer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      _completeRegistration();
       if (registrationProgress.value < 1.0) {
         registrationProgress.value += 0.02; // Increment by 2%
       } else {
         timer.cancel();
-        _completeRegistration();
       }
     });
   }
@@ -202,10 +210,13 @@ class ProfileController extends GetxController {
       currentUser.value.classLevel = selectedClassLevel.value;
 
       // Save to backend
-      await updateProfile();
+     await updateProfile();
 
       // Show success screen
-      registrationStep.value = 3;
+      if (currentUser.value.userId != null){
+        registrationStep.value = 3;
+      }
+
 
     } catch (e) {
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
@@ -227,7 +238,7 @@ class ProfileController extends GetxController {
 
   Future updateProfile() async {
     try {
-      isLoading.value = true;
+      onResetUserName.value = true;
       currentUser.value = await userRepository.updateUser(currentUser.value);
       Get.find<AuthService>().user.value = currentUser.value;
       print(currentUser.value);
@@ -236,12 +247,12 @@ class ProfileController extends GetxController {
           message: AppLocalizations.of(Get.context!).profile_info_updated_successful
       ));
 
-      isLoading.value = false;
+      onResetUserName.value = false;
     } catch (e) {
-      isLoading.value = false;
+      onResetUserName.value = false;
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
     } finally {
-      isLoading.value = false;
+      onResetUserName.value = false;
     }
   }
 

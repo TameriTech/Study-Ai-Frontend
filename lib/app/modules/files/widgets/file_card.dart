@@ -54,11 +54,11 @@ class FileCard extends StatelessWidget {
                   /// Title
                   Text(
                     title,
-                    style: TextStyle(
+                    style: Get.textTheme.labelSmall?.merge(TextStyle(
                       fontSize: baseFontSize + 2,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                    ),
+                    )),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -68,10 +68,10 @@ class FileCard extends StatelessWidget {
                   /// File Type
                   Text(
                     type,
-                    style: TextStyle(
+                    style: Get.textTheme.labelSmall?.merge(TextStyle(
                       fontSize: baseFontSize,
-                      color: Colors.black87,
-                    ),
+                      color: Color(0xff2A2A2A),
+                    ),),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -85,7 +85,7 @@ class FileCard extends StatelessWidget {
                         textPreview!,
                         style: TextStyle(
                           fontSize: baseFontSize,
-                          color: Colors.black87,
+                          color: Color(0xff585858),
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
@@ -121,10 +121,10 @@ class FileCard extends StatelessWidget {
                         ),
                         child: Text(
                           timeInfo,
-                          style: TextStyle(
+                          style: Get.textTheme.labelSmall?.merge(TextStyle(
                             fontSize: baseFontSize - 2,
-                            fontWeight: FontWeight.w300,
-                          ),
+                            fontWeight: FontWeight.w400,
+                          ),),
                         ),
                       ),
                       if (progress != null)

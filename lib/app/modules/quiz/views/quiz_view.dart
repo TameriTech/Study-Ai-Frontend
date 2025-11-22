@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studyai/app/modules/files/controllers/files_controller.dart';
 import 'package:studyai/app/modules/files/widgets/file_card.dart';
-import 'package:studyai/app/modules/global_widgets/add_instruction_widget.dart';
 import 'package:studyai/app/modules/global_widgets/block_button_widget.dart';
 import 'package:studyai/app/modules/root/controllers/root_controller.dart';
 import 'package:studyai/app/routes/app_routes.dart';
@@ -18,257 +17,287 @@ class QuizView extends GetView<QuizController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor,
 
-      body: Obx(() {
-        if (controller.generationState.value == QuizGenerationState.start ||
-            controller.generationState.value == QuizGenerationState.failed) {
-          return _buildQuizSetup(context);
-        } else {
-          return _buildQuizInterface(context);
-        }
-      }),
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.generationState.value == QuizGenerationState.start ||
+              controller.generationState.value == QuizGenerationState.failed) {
+            return _buildQuizSetup(context);
+          } else {
+            return _buildQuizInterface(context);
+          }
+        }),
+      ),
     );
   }
 
   Widget _buildQuizSetup(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
-            Text(
-              'Create personalized quizzes tailored to\nyour needs',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-                height: 1.5,
-              ),
-            ),
-            SizedBox(height: 30),
-
-            // Course Selection Card
-            GestureDetector(
-              onTap: () {
-                _showCourseSelectionBottomSheet(context);
-              },
-              child: Obx(() => controller.selectedCourse.value.title == ''
-                  ? Container(
-                padding: EdgeInsets.symmetric(vertical: 40),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Color(0xFFFFF9E6),
-                  border: Border.all(color: Color(0xFFE8DDB5)),
-                ),
-                child: Column(
-                  children: [
-                    Icon(Icons.menu_book, size: 48, color: Color(0xFFB8860B)),
-                    SizedBox(height: 12),
-                    Text(
-                      'Cole Palmer - UI/UX Designer',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFFB8860B),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+          Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Quiz', style: Get.textTheme.headlineSmall,),
+              GestureDetector(
+                onTap: (){},
+                child:  Image.asset(
+                  'assets/icons/notification_bell.png',
+                  fit: BoxFit.cover,
                 ),
               )
-                  : Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Color(0xFFFFF9E6),
-                  border: Border.all(color: Color(0xFFE8DDB5)),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.menu_book, size: 32, color: Color(0xFFB8860B)),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        controller.selectedCourse.value.title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFFB8860B),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )),
+            ],
+          ).marginSymmetric(vertical: 20, horizontal: 20),
+          Text(
+            'Create personalized quizzes tailored to\nyour needs',
+            style: TextStyle(
+              fontSize: 16,
+              color: Color(0xff525866),
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Inter'
             ),
+          ).marginOnly(left: 20, right: 20, top: 20),
 
-            SizedBox(height: 20),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                color: Colors.white),
+            child: Column(
+              children: [
 
-            // Instruction Input
-            Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: TextField(
-                controller: controller.instructionText,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  hintText: 'I want you to make it easy to understand',
-                  hintStyle: TextStyle(color: Colors.grey[600]),
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            // Number of Questions
-            _buildSettingCard(
-              context,
-              label: 'Number of questions',
-              child: Obx(() => Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildCircularButton(
-                        icon: Icons.remove,
-                        onPressed: () {
-                          if (controller.numberOfQuestions.value > 1)
-                            controller.numberOfQuestions.value--;
-                        },
-                      ),
-                      SizedBox(width: 40),
-                      Text(
-                        '${controller.numberOfQuestions.value}',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(width: 40),
-                      _buildCircularButton(
-                        icon: Icons.add,
-                        onPressed: () {
-                          if (controller.numberOfQuestions.value < 50)
-                            controller.numberOfQuestions.value++;
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Questions',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
+                // Course Selection Card
+                GestureDetector(
+                  onTap: () {
+                    _showCourseSelectionBottomSheet(context);
+                  },
+                  child: Obx(() => controller.selectedCourse.value.title == ''
+                      ? Container(
+                    padding: EdgeInsets.symmetric(vertical: 40),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Color(0xFFFFF9E6),
+                      border: Border.all(color: Color(0xFFE8DDB5)),
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  // Slider
-                  SliderTheme(
-                    data: SliderThemeData(
-                      activeTrackColor: Color(0xFF1E40AF),
-                      inactiveTrackColor: Colors.grey[300],
-                      thumbColor: Color(0xFF1E40AF),
-                      overlayColor: Color(0xFF1E40AF).withOpacity(0.2),
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
-                    ),
-                    child: Slider(
-                      value: controller.numberOfQuestions.value.toDouble(),
-                      min: 1,
-                      max: 50,
-                      onChanged: (value) {
-                        controller.numberOfQuestions.value = value.toInt();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Text('1', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                        Text('25', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                        Text('50', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                        Icon(Icons.menu_book, size: 48, color: Color(0xFFB8860B)),
+                        SizedBox(height: 12),
+                        Text(
+                          'Cole Palmer - UI/UX Designer',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFFB8860B),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ],
-              )),
-            ),
-
-            SizedBox(height: 16),
-
-            // Difficulty Level Dropdown
-            _buildDropdownCard(
-              context,
-              label: 'Beginner level',
-              items: controller.difficultyLevels,
-              selectedIndex: controller.difficultyIndex,
-            ),
-
-            SizedBox(height: 16),
-
-            // Question Type Dropdown
-            _buildDropdownCard(
-              context,
-              label: 'Objective format',
-              items: controller.questionTypes,
-              selectedIndex: controller.questionTypeIndex,
-            ),
-
-            SizedBox(height: 40),
-
-            // Generate Button
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1E40AF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  elevation: 0,
+                  )
+                      : Container(
+                    height: 60,
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Color(0xFFFFF9E6),
+                      border: Border.all(color: Color(0xFFE8DDB5)),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.menu_book, size: 32, color: Color(0xFFB8860B)),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            controller.selectedCourse.value.title,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color(0xFFB8860B),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
                 ),
-                onPressed: () {
-                  if (controller.selectedCourse.value.title.isEmpty) {
-                    Get.showSnackbar(Ui.warningSnackBar(
-                        message: 'Please select a course first'));
-                    return;
-                  }
 
-                  _showGeneratingDialog(context);
+                SizedBox(height: 20),
 
-                  controller.startGenerationProgress(
-                    idCourse: controller.selectedCourse.value.id!,
-                    instruction: controller.instructionText.text,
-                    levelOfDifficulty:
-                    controller.getLevelOfDifficulty(controller.difficultyIndex.value),
-                    questionsNumber: controller.numberOfQuestions.value,
-                    quizzType:
-                    controller.getQuizzType(controller.questionTypeIndex.value),
-                  );
-                },
-                child: Text(
-                  'Generate Quiz',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                // Instruction Input
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    controller: controller.instructionText,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      hintText: 'Enter detailed instructions',
+                      hintStyle:TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Inter',
+                          color: Color(0xff0E121B)
+                      ),
+                      border: InputBorder.none,
+                    ),
                   ),
                 ),
-              ),
-            ),
 
-            SizedBox(height: 40),
-          ],
-        ),
+                SizedBox(height: 20),
+
+                // Number of Questions
+                _buildSettingCard(
+                  context,
+                  label: 'Number of questions',
+                  child: Obx(() => Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildCircularButton(
+                            icon: Icons.remove,
+                            onPressed: () {
+                              if (controller.numberOfQuestions.value > 1)
+                                controller.numberOfQuestions.value--;
+                            },
+                          ),
+                          SizedBox(width: 40),
+                          Text(
+                            '${controller.numberOfQuestions.value}',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 40),
+                          _buildCircularButton(
+                            icon: Icons.add,
+                            onPressed: () {
+                              if (controller.numberOfQuestions.value < 50)
+                                controller.numberOfQuestions.value++;
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Questions',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      // Slider
+                      SliderTheme(
+                        data: SliderThemeData(
+                          activeTrackColor: Color(0xFF1E40AF),
+                          inactiveTrackColor: Colors.grey[300],
+                          thumbColor: Color(0xFF1E40AF),
+                          overlayColor: Color(0xFF1E40AF).withOpacity(0.2),
+                          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
+                        ),
+                        child: Slider(
+                          value: controller.numberOfQuestions.value.toDouble(),
+                          min: 1,
+                          max: 50,
+                          onChanged: (value) {
+                            controller.numberOfQuestions.value = value.toInt();
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('1', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                            Text('25', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                            Text('50', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+                ),
+
+                SizedBox(height: 16),
+
+                // Difficulty Level Dropdown
+                _buildDropdownCard(
+                  context,
+                  label: 'Beginner level',
+                  items: controller.difficultyLevels,
+                  selectedIndex: controller.difficultyIndex,
+                ),
+
+                SizedBox(height: 16),
+
+                // Question Type Dropdown
+                _buildDropdownCard(
+                  context,
+                  label: 'Objective format',
+                  items: controller.questionTypes,
+                  selectedIndex: controller.questionTypeIndex,
+                ),
+
+                SizedBox(height: 40),
+
+                // Generate Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(28),
+                      ),
+                      elevation: 0,
+                    ),
+                    onPressed: () {
+                      if (controller.selectedCourse.value.title.isEmpty) {
+                        Get.showSnackbar(Ui.warningSnackBar(
+                            message: 'Please select a course first'));
+                        return;
+                      }
+
+                      _showGeneratingDialog(context);
+
+                      controller.startGenerationProgress(
+                        idCourse: controller.selectedCourse.value.id!,
+                        instruction: controller.instructionText.text,
+                        levelOfDifficulty:
+                        controller.getLevelOfDifficulty(controller.difficultyIndex.value),
+                        questionsNumber: controller.numberOfQuestions.value,
+                        quizzType:
+                        controller.getQuizzType(controller.questionTypeIndex.value),
+                      );
+                    },
+                    child: Text(
+                      'Generate Quiz',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 40),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -286,8 +315,9 @@ class QuizView extends GetView<QuizController> {
           Text(
             label,
             style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Inter'
             ),
           ),
           SizedBox(height: 16),
@@ -364,8 +394,9 @@ class QuizView extends GetView<QuizController> {
               Obx(() => Text(
                 'Question ${controller.currentQuestionIndex.value + 1} of ${controller.questions.length}',
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'Inter'
                 ),
               )),
             ],
@@ -398,6 +429,7 @@ class QuizView extends GetView<QuizController> {
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
                     height: 1.4,
+                    fontFamily: 'Inter'
                   ),
                   textAlign: TextAlign.center,
                 )),
@@ -460,8 +492,9 @@ class QuizView extends GetView<QuizController> {
                 child: Text(
                   option,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                    fontFamily: 'Inter'
                   ),
                 ),
               ),
@@ -508,7 +541,7 @@ class QuizView extends GetView<QuizController> {
           width: double.infinity,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF1E40AF),
+              backgroundColor: primaryColor,
               padding: EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(28),
@@ -527,11 +560,7 @@ class QuizView extends GetView<QuizController> {
             },
             child: Text(
               isLastQuestion ? 'Submit' : 'Next',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Get.textTheme.labelMedium
             ),
           ),
         );
@@ -548,16 +577,12 @@ class QuizView extends GetView<QuizController> {
                   borderRadius: BorderRadius.circular(28),
                 ),
                 side: BorderSide(color: Colors.grey[300]!),
-                backgroundColor: Colors.grey[300],
+                backgroundColor: disableButtonColor,
               ),
               onPressed: controller.previousQuestion,
               child: Text(
                 'Previous',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Get.textTheme.labelMedium
               ),
             ),
           ),
@@ -565,7 +590,7 @@ class QuizView extends GetView<QuizController> {
           Expanded(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF1E40AF),
+                backgroundColor: primaryColor,
                 padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28),
@@ -584,11 +609,7 @@ class QuizView extends GetView<QuizController> {
               },
               child: Text(
                 isLastQuestion ? 'Submit' : 'Next',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Get.textTheme.labelMedium
               ),
             ),
           ),
@@ -622,7 +643,7 @@ class QuizView extends GetView<QuizController> {
               crossAxisCount: 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
-              childAspectRatio: 1.2,
+              childAspectRatio: 0.85,
             ),
             itemCount: availableCourses.length,
             itemBuilder: (context, index) {
@@ -680,9 +701,10 @@ class QuizView extends GetView<QuizController> {
                 Text(
                   'Ongoing generation....',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontFamily: 'Inter'
                   ),
                 ),
               ],
@@ -769,16 +791,19 @@ class QuizView extends GetView<QuizController> {
                     'Congratulations',
                     style: TextStyle(
                       fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF10B981),
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF166136),
+                      fontFamily: 'Inter'
                     ),
                   ),
                   SizedBox(height: 12),
                   Text(
-                    'Perfect Score ${controller.quizzResultRating.text}!',
+                    'Your score is ${controller.quizzResultRating.text}!',
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
+                        fontFamily: 'Inter',
+                      color: Color(0xff0E121B),
                     ),
                   ),
                   SizedBox(height: 16),
@@ -786,9 +811,10 @@ class QuizView extends GetView<QuizController> {
                     controller.quizzResultComment.text,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[700],
-                      height: 1.5,
+                      fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Inter',
+                      color: Color(0xff0E121B),
                     ),
                   ),
                   SizedBox(height: 30),
@@ -796,7 +822,7 @@ class QuizView extends GetView<QuizController> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF1E40AF),
+                        backgroundColor: primaryColor,
                         padding: EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(28),
@@ -826,11 +852,7 @@ class QuizView extends GetView<QuizController> {
                       )
                           : Text(
                         'Review Answers',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: Get.textTheme.labelMedium
                       ),
                     ),
                   ),

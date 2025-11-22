@@ -27,7 +27,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get account => 'Compte';
 
   @override
-  String get create_account => 'Créer un compte';
+  String get create_account => 'Créer un nouveau compte';
 
   @override
   String get logout_of_app => 'Déconnexion de l\' application';
@@ -79,9 +79,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get input_email => 'Entrez votre Email';
 
   @override
-  String get password => 'Mot de passe';
-
-  @override
   String get school_level_question => 'Quel est ton niveau scolaire?';
 
   @override
@@ -112,7 +109,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enter_owner_name => 'Entre le nom du propriétaire';
 
   @override
-  String get enter_valid_email_address => 'Entrez une addresse email valide';
+  String get enter_valid_email_address =>
+      'Svp, entrez une addresse email valide';
 
   @override
   String get enter_six_characters => 'Entrez au moins six charactères';
@@ -188,6 +186,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get confirm_password => 'Confirmez le mot de passe';
 
   @override
+  String get confirm_your_password => 'Confirmez votre mot de passe';
+
+  @override
+  String get password => 'Mot de passe';
+
+  @override
   String get enter_confirm_password => 'Confirmez le mot de passe';
 
   @override
@@ -259,7 +263,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get generate => 'Génerer';
 
   @override
-  String get ongoing_generation => 'Géneration en cours';
+  String get ongoing_generation => 'Géneration en cours....';
 
   @override
   String get ongoing_generation_message =>
@@ -269,7 +273,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get introduction => 'Introduction';
 
   @override
-  String get notations_and_vocabularies => 'Notations et vocabulaires';
+  String get vocabularies => 'Vocabulaires';
 
   @override
   String get term => 'Terme';
@@ -279,6 +283,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get question => 'Question';
+
+  @override
+  String get questions => 'Questions';
 
   @override
   String get end => 'Terminer';
@@ -403,7 +410,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get university_student => 'Etudiant';
 
   @override
-  String get high_school_student => 'Lycéen';
+  String get high_school_student => 'High school student';
 
   @override
   String get middle_school_student => 'Collégien';
@@ -696,5 +703,357 @@ class AppLocalizationsFr extends AppLocalizations {
   String get by => 'Par';
 
   @override
+  String get primary_education => 'Enseignement primaire';
+
+  @override
+  String get form_one => 'Classe de Form One';
+
+  @override
+  String get form_two => 'Classe de Form Two';
+
+  @override
+  String get form_three => 'Classe de Form Three';
+
+  @override
+  String get form_four => 'Classe de Form Four';
+
+  @override
+  String get senior_high_school => 'Enseignement secondaire supérieur';
+
+  @override
+  String get grade_six => 'Classe de Sixième';
+
+  @override
+  String get grade_seven => 'Classe de Cinquième';
+
+  @override
+  String get grade_eight => 'Classe de Quatrième';
+
+  @override
+  String get grade_nine => 'Classe de Troisième';
+
+  @override
+  String get grade_ten => 'Classe de Seconde';
+
+  @override
+  String get grade_eleven => 'Classe de Première';
+
+  @override
+  String get grade_twelve => 'Classe de Terminale';
+
+  @override
+  String get undergraduate => 'Premier cycle universitaire';
+
+  @override
+  String get year_one => 'Première année';
+
+  @override
+  String get year_two => 'Deuxième année';
+
+  @override
+  String get year_three => 'Troisième année';
+
+  @override
+  String get year_four => 'Quatrième année';
+
+  @override
+  String get year_five => 'Cinquième année';
+
+  @override
+  String get post_graduate => 'Études postuniversitaires';
+
+  @override
+  String get master_degree => 'Master';
+
+  @override
+  String get doctoral_degree => 'Doctorat';
+
+  @override
+  String get postgraduate_diplomas => 'Diplômes postuniversitaires';
+
+  @override
+  String get professional_doctorates => 'Doctorats professionnels';
+
+  @override
   String get or => 'ou';
+
+  @override
+  String get please_select_school_level =>
+      'Veuillez sélectionner un niveau scolaire';
+
+  @override
+  String get please_select_class_level =>
+      'Veuillez sélectionner un niveau de classe';
+
+  @override
+  String get email_required => 'L’e-mail est requis';
+
+  @override
+  String get password_required => 'Le mot de passe est requis';
+
+  @override
+  String get full_name_required => 'Le nom complet est requis';
+
+  @override
+  String get password_changed => 'Mot de passe modifié';
+
+  @override
+  String get sent_email_with_password =>
+      'Nous avons envoyé un e-mail avec un nouveau mot de passe à';
+
+  @override
+  String get enter_email => 'Saisissez l’e-mail';
+
+  @override
+  String get enter_your_email => 'Saisissez votre e-mail';
+
+  @override
+  String get enter_email_message =>
+      'Saisissez l’adresse e-mail utilisée lors de l’enregistrement de votre compte';
+
+  @override
+  String get enter_your_password => 'Saisissez votre mot de passe';
+
+  @override
+  String get select_level => 'Sélectionner le niveau';
+
+  @override
+  String get login_to_your_account => 'Connectez-vous à votre compte';
+
+  @override
+  String get login_with_Apple => 'Connexion avec Apple';
+
+  @override
+  String get login_with_google => 'Connexion avec Google';
+
+  @override
+  String get login_with_facebook => 'Connexion avec Facebook';
+
+  @override
+  String get select_school_level => 'Sélectionner le niveau scolaire';
+
+  @override
+  String get select_class_level => 'Sélectionner le niveau de classe';
+
+  @override
+  String get register_account => 'Créer un compte';
+
+  @override
+  String get name_minimum_characters =>
+      'Le nom doit contenir au moins 3 caractères';
+
+  @override
+  String get full_name => 'Nom complet';
+
+  @override
+  String get enter_full_name => 'Saisissez votre nom complet';
+
+  @override
+  String get password_minimum_characters =>
+      'Le mot de passe doit contenir au moins 6 caractères';
+
+  @override
+  String get create_password => 'Créer un mot de passe';
+
+  @override
+  String get create_your_password => 'Créez votre mot de passe';
+
+  @override
+  String get by_signing_up => 'En vous inscrivant, vous acceptez nos ';
+
+  @override
+  String get terms_conditions => 'Conditions générales';
+
+  @override
+  String get and_our => 'et notre';
+
+  @override
+  String get privacy_policy => 'Politique de confidentialité';
+
+  @override
+  String get or_continue_with => 'Ou continuer avec';
+
+  @override
+  String get one_two_steps => '1 sur 2 étapes';
+
+  @override
+  String get next_select_class => ' - Suivant : Sélectionner une classe.';
+
+  @override
+  String get primary_education_question =>
+      'Quel est votre niveau d\'éducation primaire ?';
+
+  @override
+  String get high_school_education_question =>
+      'Quel est votre niveau d’éducation au lycée ?';
+
+  @override
+  String get senior_high_school_education_question =>
+      'Quel est votre niveau d’éducation au collège/lycée supérieur ?';
+
+  @override
+  String get undergraduate_level_question =>
+      'Quel est votre niveau d\'études universitaires ?';
+
+  @override
+  String get postgraduate_level_question =>
+      'Quel est votre niveau d\'études postuniversitaires ?';
+
+  @override
+  String get two_two_steps => '2 sur 2 étapes';
+
+  @override
+  String get final_step => ' - Dernière étape';
+
+  @override
+  String get setting_up_profile_message =>
+      'Les informations que vous fournissez nous aident à vous offrir une expérience plus personnalisée et pertinente.';
+
+  @override
+  String get setting_profile => 'Configuration de votre profil';
+
+  @override
+  String get account_created_first_part => 'Tout est prêt ! Votre compte a été';
+
+  @override
+  String get account_created_second_part => 'créé avec succès';
+
+  @override
+  String get tameri_ai => 'Tameri AI';
+
+  @override
+  String get network_problem => 'Problème de réseau ???';
+
+  @override
+  String get document_analysis_ongoing =>
+      'Analyse du document en cours... Cette opération peut prendre quelques minutes';
+
+  @override
+  String get goog_morning => 'Good morning,';
+
+  @override
+  String get create_new_quizz => 'Créer un nouveau quiz';
+
+  @override
+  String get create_new_course => 'Créer un nouveau cours';
+
+  @override
+  String get scan_your_course => 'Scanner votre cours';
+
+  @override
+  String get upload_document => 'Télécharger un document';
+
+  @override
+  String get pdf_images_only => '(PDF et images uniquement)';
+
+  @override
+  String get enter_detailed_instructions =>
+      'Entrez des instructions détaillées';
+
+  @override
+  String get beginner => 'Débutant';
+
+  @override
+  String get intermediate => 'Intermédiaire';
+
+  @override
+  String get advanced => 'Avancé';
+
+  @override
+  String get level => 'Niveau';
+
+  @override
+  String get read_time => 'Temps de lecture';
+
+  @override
+  String get no_vocabularies_available => 'Aucun vocabulaire disponible';
+
+  @override
+  String get quizz_review => 'Révision du quiz';
+
+  @override
+  String get of_preposition => 'de';
+
+  @override
+  String get change_password_message =>
+      'Pour modifier le mot de passe, entrez l\'ancien et le nouveau mot de passe';
+
+  @override
+  String get enter_password => 'Entrez le mot de passe';
+
+  @override
+  String get enter_current_password => 'Entrez le mot de passe actuel';
+
+  @override
+  String get confirm_new_password => 'Confirmez le nouveau mot de passe';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get change_username => 'Changer le nom d\'utilisateur';
+
+  @override
+  String get change_username_message =>
+      'Entrez correctement votre nom ci-dessous, il sera affiché exactement tel que saisi';
+
+  @override
+  String get account_completed_first_part =>
+      'Tout est prêt ! Votre compte a été';
+
+  @override
+  String get account_completed_second_part => 'complété avec succès';
+
+  @override
+  String get not_set => 'Non défini';
+
+  @override
+  String get quiz_summary => 'Résumé du quiz';
+
+  @override
+  String get average_score_rating => 'Score moyen';
+
+  @override
+  String get failed_delete_account => 'Échec de la suppression du compte';
+
+  @override
+  String get create_quizz_message_first_part =>
+      'Créez des quiz personnalisés adaptés à';
+
+  @override
+  String get create_quizz_message_ssecond_part => 'your needs';
+
+  @override
+  String get number_of_questions => 'Nombre de questions';
+
+  @override
+  String get beginner_level => 'Niveau débutant';
+
+  @override
+  String get objective_format => 'Format objectif';
+
+  @override
+  String get please_select_course_first =>
+      'Veuillez d\'abord sélectionner un cours';
+
+  @override
+  String get loading_results => 'Chargement des résultats';
+
+  @override
+  String get your_score_is => 'Votre score est';
+
+  @override
+  String get review_answers => 'Revoir les réponses';
+
+  @override
+  String get new_challenge => 'Nouveau défi';
+
+  @override
+  String get select_new_language => 'Sélectionner une nouvelle langue';
+
+  @override
+  String get home => 'Accueil';
+
+  @override
+  String get ai_chat => 'Chat IA';
 }

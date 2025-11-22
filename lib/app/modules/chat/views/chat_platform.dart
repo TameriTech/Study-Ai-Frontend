@@ -27,10 +27,10 @@ class ChatPlatform extends GetView<ChatController> {
                 children: [
                   Image.asset('assets/images/logo.png', width: 200, height: 200),
                   TypewriterText(
-                    text: "Welcome back! How can I help you today?",
+                    text: "Hi ${controller.currentUser.value.fullName?? "User"}👋! What would you like to work on today?",
                     speed: Duration(milliseconds: 50),
                     startDelay: Duration(seconds: 1), // speed between each character
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                   )
                 ]
               );
@@ -106,12 +106,20 @@ class ChatPlatform extends GetView<ChatController> {
       appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text("Tameri Study AI"),
-          leading: IconButton(
-              icon: new Icon(Icons.arrow_back_ios, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              }
+          title: Text("Tameri AI", style: Get.textTheme.titleMedium,),
+          leading:   Center(
+            child: Container(
+              child: IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 12,),
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+              ),
+              margin: EdgeInsets.only(left: 20, top: 10, bottom: 10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8)),
+            ),
           ),
           actions: [
             InkWell(

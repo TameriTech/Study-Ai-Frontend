@@ -314,7 +314,7 @@ class LaravelApiClient extends GetxService {
 
   Future extractTextFromPDFFile({required int id, required pdfFile}) async {
     print(pdfFile.path);
-    print(id);
+    print('user id is : $id');
     try {
       if (pdfFile == null || !await File(pdfFile!.path).exists()) {
         throw Exception("Fichier PDF introuvable");
@@ -332,6 +332,7 @@ class LaravelApiClient extends GetxService {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
+      print('data is: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         var data = await response.stream.bytesToString();
@@ -345,8 +346,8 @@ class LaravelApiClient extends GetxService {
     } on FormatException catch (_) {
       throw const FormatException("Unable to process the data");
     } catch (e) {
-      throw NetworkExceptions.getDioException(e);
-    }//
+      throw Exception(e);
+    }
   }
 
   getUserCourses(int userId)async{

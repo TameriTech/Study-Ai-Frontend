@@ -21,28 +21,31 @@ class ForgotPasswordView extends GetView<AuthController> {
             // Grey header section with back button and title
             Container(
               height: 200,
-              color: Colors.grey[100],
+              color: bgColor,
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              child: Row(
+              child:Row(
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-                    onPressed: () => Get.back(),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Enter Email Address',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.center,
+                  Container(
+
+                    child: IconButton(
+                      onPressed: () => Get.back(),
+                      icon: Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 12,),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
                     ),
+                    margin: EdgeInsets.only(left: 10, right: MediaQuery.of(context).size.width/8),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8)),
                   ),
-                  SizedBox(width: 48), // Balance the back button width
+                  SizedBox(width: 16),
+                  Text(
+                    AppLocalizations.of(context).enter_email,
+                    style: Get.textTheme.titleMedium,
+                  ),
                 ],
-              ),
+                crossAxisAlignment: CrossAxisAlignment.center,
+              )
             ),
 
             // White content section
@@ -53,56 +56,31 @@ class ForgotPasswordView extends GetView<AuthController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Enter the email address you used to register your account',
+                      AppLocalizations.of(context).enter_email_message,
                       style: TextStyle(
-                        color: Colors.black87,
+                        color: Color(0xff2A2A2A),
                         fontSize: 16,
-                        height: 1.5,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Inter'
                       ),
                     ),
                     SizedBox(height: 32),
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: TextEditingController(text: controller.emailController.text),
-                      decoration: InputDecoration(
-                        hintText: 'Enter your email',
-                        hintStyle: TextStyle(color: Colors.grey[400]),
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: primaryColor, width: 2),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
-                      ),
-                      onChanged: (value) {
+
+                    TextFieldWidget(
+                      textController: TextEditingController(text: controller.emailController.text),
+                      onChanged: (value){
                         controller.currentUser.value.email = value;
                         controller.emailController.text = value;
                       },
-                      validator: (input) => !GetUtils.isEmail(input ?? '')
-                          ? AppLocalizations.of(context).enter_valid_email_address
-                          : null,
+                      validator: (input) => !input!.contains('@') ? AppLocalizations.of(context).enter_valid_email_address : null,
+                      suffixIcon: Icon(null),
+                      labelText: AppLocalizations.of(context).email,
+                      hintText: AppLocalizations.of(context).enter_email,
+                      suffix: Icon(null),
+                      readOnly: false,
+                      isFirst: true,
                     ),
+
                   ],
                 ),
               ),
@@ -125,9 +103,9 @@ class ForgotPasswordView extends GetView<AuthController> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: controller.emailController.text.isNotEmpty
-                        ? Color(0xFF0056D2)
-                        : Colors.grey[400],
-                    disabledBackgroundColor: Colors.grey[400],
+                        ? primaryColor
+                        : Color(0xff9C9C9C),
+                    disabledBackgroundColor: disableButtonColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
@@ -143,7 +121,7 @@ class ForgotPasswordView extends GetView<AuthController> {
                     ),
                   )
                       : Text(
-                    'Continue',
+                    AppLocalizations.of(context).continu,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,

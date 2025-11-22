@@ -50,7 +50,7 @@ class LoginView extends GetView<AuthController> {
                   height: 48,
                   width: 48,
                 ),
-                Text("Studyai", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)
+                Text("Studyai", style: Get.textTheme.titleLarge,)
               ],
             ),
           ),
@@ -63,15 +63,17 @@ class LoginView extends GetView<AuthController> {
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))
               ),
               child: ListView(
+                padding: EdgeInsets.only(top: 10),
                 children: [
-                  Text("Login to your account", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+                  Text("Login to your account".tr, style: Get.textTheme.titleSmall,),
+                  SizedBox(height: MediaQuery.of(context).size.height/35,),
                   TextFieldWidget(
                     textController: TextEditingController(text: controller.emailController.text),
                     suffixIcon: Icon(null),
                     suffix: Icon(null),
                     readOnly: false,
                     labelText: AppLocalizations.of(context).email,
-                    hintText: 'Enter your email',
+                    hintText: AppLocalizations.of(context).enter_email,
                     isFirst: true,
                     onChanged: (value) => {
                       controller.emailController.text = value,
@@ -109,23 +111,21 @@ class LoginView extends GetView<AuthController> {
                         Get.toNamed(Routes.FORGOT_PASSWORD);
                       },
                       child: Text(AppLocalizations.of(context).forgot_password,style:
-                      TextStyle(fontFamily: "poppins",fontSize: 16, color: buttonColor)),
-                    ).marginOnly(bottom: 10),
+                      TextStyle(fontFamily: "Inter",fontSize: 14, color: primaryColor, fontWeight: FontWeight.w500)),
+                    ),
                   ),
 
-                  if(!(controller.currentUser.value.email!= null &&
-                      controller.currentUser.value.email!.contains('@') &&
-                      controller.currentUser.value.password!=null&&
-                      controller.currentUser.value.password!.length >= 6))...[
+                  if(!(controller.emailController.text != "" &&
+                      controller.emailController.text.contains('@') &&
+                      controller.passwordController.text !=''&&
+                      controller.passwordController.text.length >= 6))...[
                     SizedBox(
                       width: Get.width,
                       child:
                       BlockButtonWidget(
                           color: disableButtonColor,
                           haveBorder: false,
-                          text: Text(AppLocalizations.of(context).login, style: Get.textTheme.labelSmall!.
-                          merge(TextStyle(color: Colors.white,
-                              fontWeight: FontWeight.w600))),
+                          text: Text(AppLocalizations.of(context).login, style: Get.textTheme.labelMedium),
                           onPressed: (){
                             controller.login();
                           })).marginOnly(top: 20),
@@ -136,9 +136,7 @@ class LoginView extends GetView<AuthController> {
                       BlockButtonWidget(
                           color: primaryColor,
                           haveBorder: false,
-                          text: Text(AppLocalizations.of(context).login, style: Get.textTheme.labelSmall!.
-                          merge(TextStyle(color: Colors.white,
-                              fontWeight: FontWeight.w600))),
+                          text: Text(AppLocalizations.of(context).login, style: Get.textTheme.labelMedium),
                           onPressed: (){
                             controller.login();
                           }):
@@ -158,32 +156,31 @@ class LoginView extends GetView<AuthController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(AppLocalizations.of(context).no_account_yet,
-                        style: TextStyle(color: Color(0xff474646), fontSize: 16, fontWeight: FontWeight.w400),
+                        style: TextStyle(color: Color(0xff666262), fontSize: 14, fontWeight: FontWeight.normal, fontFamily: 'Inter'),
                       ),
                       TextButton(
                           onPressed: (){
                             Get.toNamed(Routes.REGISTER);
                           },
-                          child: Text(AppLocalizations.of(context).register, style: Get.textTheme.bodyMedium!
-                              .merge(TextStyle(color: primaryColor,))
+                          child: Text(AppLocalizations.of(context).register, style: (TextStyle(color: primaryColor,fontWeight: FontWeight.w600, fontSize: 14, fontFamily: 'Inter'))
                           )
                       )
                     ],
-                  ).marginOnly(top: 15),
+                  ).marginOnly(top: 10),
 
                   Row(
                     children: [
-                      const Expanded(child: Divider(thickness: 1)),
+                      const Expanded(child: Divider(thickness: 1, color: Color(0xffC9C9C9))),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          AppLocalizations.of(context).or,
-                          style: TextStyle(color: Colors.grey[600]),
+                          AppLocalizations.of(context).or.toUpperCase(),
+                          style: TextStyle(color: Color(0xffC9C9C9), fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                         ),
                       ),
-                      const Expanded(child: Divider(thickness: 1)),
+                      const Expanded(child: Divider(thickness: 1, color: Color(0xffC9C9C9))),
                     ],
-                  ).marginOnly(top: 20, bottom: 30),
+                  ).marginOnly(top: 10, bottom: 30),
 
                   _socialButton(
                     text: "  Login with Apple     ",
@@ -208,7 +205,6 @@ class LoginView extends GetView<AuthController> {
                   _socialButton(
                     text: "  Login with Facebook",
                     onTapped: () {
-
                     },
                     imagePath: 'assets/images/logos_facebook.png',
                   ),
@@ -251,6 +247,8 @@ class LoginView extends GetView<AuthController> {
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Inter'
                   ),
                 ),
               ],

@@ -39,7 +39,8 @@ class ImportSupportView extends GetView<FilesController> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+                    color: Colors.black,
+                    fontFamily: 'Inter'
                   ),
                 ),
                 Spacer(),
@@ -113,12 +114,7 @@ class ImportSupportView extends GetView<FilesController> {
                   SizedBox(height: 16),
                   Text(
                     controller.generatedCourse.title,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      height: 1.3,
-                    ),
+                    style: Get.textTheme.titleMedium,
                   ),
                   SizedBox(height: 12),
                   Row(
@@ -126,9 +122,10 @@ class ImportSupportView extends GetView<FilesController> {
                       Text(
                         "level - ${controller.generatedCourse.subtitle}",
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black54,
+                          fontFamily: 'Inter',
+                          color: Color(0xff525866),
                         ),
                       ),
                       SizedBox(width: 8),
@@ -144,9 +141,10 @@ class ImportSupportView extends GetView<FilesController> {
                       Text(
                         "Read Time - ${controller.generatedCourse.timeInfo}",
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black54,
+                          fontFamily: 'Inter',
+                          color: Color(0xff525866),
                         ),
                       ),
                     ],
@@ -185,16 +183,17 @@ class ImportSupportView extends GetView<FilesController> {
                       padding: EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         color: !controller.introductionSelected.value
-                            ? Color(0xFF007AFF)
-                            : Colors.grey[100],
+                            ? Color(0xFF2F80ED)
+                            : Color(0xffE0E0E0),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
                         child: Text(
                           "All",
                           style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Inter',
                             color: !controller.introductionSelected.value
                                 ? Colors.white
                                 : Colors.black87,
@@ -215,19 +214,20 @@ class ImportSupportView extends GetView<FilesController> {
                       padding: EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         color: controller.introductionSelected.value
-                            ? Color(0xFF007AFF)
-                            : Colors.grey[100],
+                            ? Color(0xFF2F80ED)
+                            : Color(0xffE0E0E0),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
                         child: Text(
                           "Vocabularies",
                           style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Inter',
                             color: controller.introductionSelected.value
                                 ? Colors.white
-                                : Colors.black87,
+                                : Color(0xff525866),
                           ),
                         ),
                       ),
@@ -260,12 +260,7 @@ class ImportSupportView extends GetView<FilesController> {
                 padding: EdgeInsets.only(bottom: 16),
                 child: Text(
                   item["topic"],
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    height: 1.4,
-                  ),
+                  style: Get.textTheme.headlineSmall
                 ),
               ),
             if (item["body"] != null && item["body"].toString().isNotEmpty)
@@ -274,10 +269,11 @@ class ImportSupportView extends GetView<FilesController> {
                 child: Text(
                   item["body"],
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black87,
+                    color: Colors.black,
                     height: 1.6,
+                    fontFamily: 'Inter'
                   ),
                 ),
               ),
@@ -303,12 +299,7 @@ class ImportSupportView extends GetView<FilesController> {
                 padding: EdgeInsets.only(bottom: 16),
                 child: Text(
                   item["term"],
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    height: 1.4,
-                  ),
+                  style: Get.textTheme.headlineSmall
                 ),
               ),
             if (item["definition"] != null &&
@@ -318,10 +309,11 @@ class ImportSupportView extends GetView<FilesController> {
                 child: Text(
                   item["definition"],
                   style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black87,
-                    height: 1.6,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      height: 1.6,
+                      fontFamily: 'Inter'
                   ),
                 ),
               ),

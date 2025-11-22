@@ -26,7 +26,7 @@ class FilesView extends GetView<FilesController> {
     return WillPopScope(
       onWillPop: Helper().onWillPop,
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: bgColor,
         appBar: AppBar(
           toolbarHeight: 80,
           leadingWidth: 0,
@@ -38,31 +38,21 @@ class FilesView extends GetView<FilesController> {
             children: [
               Text(
                 "Good morning,",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black87,
-                ),
-              ),
+                style: Get.textTheme.labelLarge,),
               Text(
-                controller.currentUser.value.fullName ?? "Palmer",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+                controller.currentUser.value.fullName ?? "User",
+                style: Get.textTheme.labelLarge,
               ),
             ],
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: Colors.black,
-                size: 28,
-              ),
-            ),
+           GestureDetector(
+             onTap: (){},
+             child:  Image.asset(
+               'assets/icons/notification_bell.png',
+               fit: BoxFit.cover,
+             ),
+           ).marginOnly(right: 20)
           ],
         ),
         body: RefreshIndicator(
@@ -128,7 +118,7 @@ class FilesView extends GetView<FilesController> {
             controller.selectedHomeIndex.value == 2
                 ? "Create new quiz"
                 : "Create new course",
-            style: TextStyle(fontSize: 14, color: Colors.white),
+            style: Get.textTheme.labelMedium,
           ),
         )).marginOnly(bottom: 80, right: 10),
       ),
@@ -150,17 +140,19 @@ class FilesView extends GetView<FilesController> {
             toolbarHeight: 60,
             title: TabBar(
               dividerColor: Colors.transparent,
-              labelColor: appColor,
-              unselectedLabelColor: Colors.black54,
-              labelStyle: TextStyle(
-                fontSize: 15,
+              labelColor: primaryColor,
+              unselectedLabelColor: Color(0xff99A0AE),
+              labelStyle: Get.textTheme.labelSmall?.merge(TextStyle(
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
+              ),),
+              unselectedLabelStyle: Get.textTheme.labelSmall?.merge(
+                TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-              unselectedLabelStyle: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-              ),
-              indicatorColor: appColor,
+              indicatorColor: primaryColor,
               indicatorWeight: 3,
               indicatorPadding: EdgeInsets.symmetric(horizontal: 8),
               indicatorSize: TabBarIndicatorSize.tab,
@@ -205,11 +197,7 @@ class FilesView extends GetView<FilesController> {
               SizedBox(width: 40),
               Text(
                 "Create new course",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+                style: Get.textTheme.titleMedium
               ),
               IconButton(
                 icon: Icon(Icons.close, color: Colors.black),
@@ -261,6 +249,7 @@ class FilesView extends GetView<FilesController> {
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Color(0xffA67C52),
+                      fontFamily: 'Inter'
                     ),
                   ),
                 ],
@@ -311,14 +300,16 @@ class FilesView extends GetView<FilesController> {
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
+                        fontFamily: 'Inter'
                     ),
                   ),
                   Text(
-                    "(pdf) only",
+                    "(pdf and images) only",
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.black54,
+                        fontFamily: 'Inter'
                     ),
                   ),
                 ],
@@ -353,11 +344,7 @@ class FilesView extends GetView<FilesController> {
                SizedBox(width: 40),
                Text(
                  "Add Instructions",
-                 style: TextStyle(
-                   fontSize: 20,
-                   fontWeight: FontWeight.w600,
-                   color: Colors.black,
-                 ),
+                 style: Get.textTheme.titleMedium,
                ),
                IconButton(
                  icon: Icon(Icons.close, color: Colors.black),
@@ -433,10 +420,12 @@ class FilesView extends GetView<FilesController> {
                          color: Colors.black87,
                        ),
                        decoration: InputDecoration(
-                         hintText: "I want the CV simplified enough for me to understand",
+                         hintText: "Enter detailed instructions",
                          hintStyle: TextStyle(
                            fontSize: 14,
-                           color: Colors.grey[400],
+                           fontWeight: FontWeight.w400,
+                           fontFamily: 'Inter',
+                           color: Color(0xff0E121B)
                          ),
                          border: InputBorder.none,
                          enabledBorder: InputBorder.none,
@@ -454,13 +443,17 @@ class FilesView extends GetView<FilesController> {
                        border: Border.all(color: Colors.grey.shade300, width: 1),
                      ),
                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                     child: DropdownButton<String>(
-                       value: null,
+                     child: Obx(() => DropdownButton<String>(
+                       value: controller.selectLevel.value.isEmpty
+                           ? null
+                           : controller.selectLevel.value,
                        hint: Text(
                          "Select level",
                          style: TextStyle(
-                           fontSize: 14,
-                           color: Colors.grey[400],
+                             fontSize: 14,
+                             color: Color(0xff9C9C9C),
+                             fontWeight: FontWeight.normal,
+                             fontFamily: 'Inter'
                          ),
                        ),
                        isExpanded: true,
@@ -474,9 +467,11 @@ class FilesView extends GetView<FilesController> {
                          );
                        }).toList(),
                        onChanged: (String? newValue) {
-                         // Handle level selection
+                         if(newValue != null){
+                           controller.selectLevel.value = newValue;
+                         }
                        },
-                     ),
+                     ),)
                    ),
                    SizedBox(height: 30),
 
@@ -498,12 +493,8 @@ class FilesView extends GetView<FilesController> {
                          controller.startProgress();
                        },
                        child: Text(
-                         "Generate",
-                         style: TextStyle(
-                           color: Colors.white,
-                           fontSize: 16,
-                           fontWeight: FontWeight.w600,
-                         ),
+                           AppLocalizations.of(context).generate,
+                         style: Get.textTheme.labelMedium
                        ),
                      ),
                    ),

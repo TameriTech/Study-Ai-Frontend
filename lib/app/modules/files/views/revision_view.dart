@@ -34,11 +34,7 @@ class RevisionView extends GetView<FilesController> {
                     child: Text(
                       fileInfo.title,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
+                      style: Get.textTheme.headlineSmall
                     ),
                   ),
                   SizedBox(width: 40), // Balance the back button
@@ -89,17 +85,12 @@ class RevisionView extends GetView<FilesController> {
                                     children: [
                                       TextSpan(
                                         text: controller.revisions[index]['topic'] + "\n\n",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          height: 1.5,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
+                                        style: Get.textTheme.titleMedium
                                       ),
                                       TextSpan(
                                         text: controller.revisions[index]['body'],
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           height: 1.5,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
@@ -146,11 +137,7 @@ class RevisionView extends GetView<FilesController> {
         ),
         child: Text(
           AppLocalizations.of(context).next,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          style: Get.textTheme.labelMedium
         ),
       );
     }
@@ -171,11 +158,7 @@ class RevisionView extends GetView<FilesController> {
         ),
         child: Text(
           'Continue',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+          style: Get.textTheme.labelMedium
         ),
       );
     }
@@ -187,7 +170,7 @@ class RevisionView extends GetView<FilesController> {
           child: ElevatedButton(
             onPressed: controller.previousRevisionCard,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFAAAAAA),
+              backgroundColor: disableButtonColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
@@ -196,11 +179,7 @@ class RevisionView extends GetView<FilesController> {
             ),
             child: Text(
               AppLocalizations.of(context).previous,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Get.textTheme.labelMedium
             ),
           ),
         ),
@@ -218,11 +197,7 @@ class RevisionView extends GetView<FilesController> {
             ),
             child: Text(
               AppLocalizations.of(context).next,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Get.textTheme.labelMedium
             ),
           ),
         ),

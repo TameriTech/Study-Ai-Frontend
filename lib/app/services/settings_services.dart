@@ -45,21 +45,106 @@ class SettingsService extends GetxService {
         textTheme: GoogleFonts.getTextTheme(
           'Inter',
           TextTheme(
-            labelSmall:TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: labelColor, height: 1) ,
-            labelLarge:TextStyle(fontSize: 32.0, fontWeight: FontWeight.w500, color: labelColor, height: 1) ,
-            labelMedium:TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600, color: labelColor, height: 1) ,
-            displayMedium: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: labelColor, height: 1),
-            displaySmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w300, color: labelColor, height: 1),
-            headlineMedium: TextStyle(fontSize: 22.0, fontWeight: FontWeight.normal, color: Colors.black, height: 1),
 
-            // headlineLarge: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700, color: Colors.black, height: 1.4),
-            // headlineSmall: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black, height: 1.4, ),
-            // titleSmall: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w700, color: Color(0xff021D40), height: 1.5),
-            // labelMedium:TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: labelColor, height: 1.2) ,
-            // bodyMedium: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w600, color: labelColor, height: 1.2),
-            // bodySmall: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600, color: Color(0xff6B6B6B), height: 1.2),
+            // Display styles - For large, prominent text
+            displayLarge: const TextStyle(
+              fontSize: 57.0,
+              fontWeight: FontWeight.w400,
+              color: labelColor,
 
+            ),
+            displayMedium: const TextStyle(
+              fontSize: 45.0,
+              fontWeight: FontWeight.w400,
+              color: labelColor,
 
+            ),
+            displaySmall: const TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w600,
+              color: labelColor,
+
+            ),
+
+            // Headline styles - For high-emphasis text
+            headlineLarge: const TextStyle(
+              fontSize: 32.0,
+              fontWeight: FontWeight.w600,
+              color: labelColor,
+
+            ),
+            headlineMedium: const TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.w600,
+              color: labelColor,
+
+            ),
+            headlineSmall: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w600,
+              color: labelColor,
+
+            ),
+
+            // Title styles - For medium-emphasis text
+            titleLarge: const TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+              color: labelColor,
+
+            ),
+            titleMedium: const TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600,
+              color: labelColor,
+
+            ),
+            titleSmall: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+              color: labelColor,
+
+            ),
+
+            // Body styles - For body text
+            bodyLarge: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w400,
+              color: labelColor,
+
+            ),
+            bodyMedium: const TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w400,
+              color: labelColor,
+
+            ),
+            bodySmall: const TextStyle(
+              fontSize: 12.0,
+              fontWeight: FontWeight.w400,
+              color: labelColor,
+
+            ),
+
+            // Label styles - For buttons, chips, small text
+            labelLarge: const TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+
+            ),
+            labelMedium: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+
+            ),
+            labelSmall: const TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+
+            ),
           ),
 
         )

@@ -24,9 +24,9 @@ class QuizzPostGenerationView extends GetView<FilesController> {
         title: Obx(() => Text(
           'Quiz Review ${controller.currentQuestionIndex.value + 1} of ${controller.questions.length}',
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Inter'
           ),
         )),
       ),
@@ -77,10 +77,10 @@ class QuizzPostGenerationView extends GetView<FilesController> {
         Text(
           currentQuestion.text,
           style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            height: 1.4,
-            color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              height: 1.4,
+              fontFamily: 'Inter'
           ),
           textAlign: TextAlign.center,
         ),
@@ -152,9 +152,10 @@ class QuizzPostGenerationView extends GetView<FilesController> {
             child: Text(
               option,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: isCorrectAnswer || isUserAnswer ? FontWeight.w600 : FontWeight.normal,
                 color: Colors.black,
+                  fontFamily: 'Inter'
               ),
             ),
           ),
@@ -204,7 +205,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
           width: double.infinity,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF1E40AF),
+              backgroundColor: primaryColor,
               padding: EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(28),
@@ -220,11 +221,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
             },
             child: Text(
               isLastQuestion ? AppLocalizations.of(context).end : AppLocalizations.of(context).next,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Get.textTheme.labelMedium
             ),
           ),
         );
@@ -241,16 +238,12 @@ class QuizzPostGenerationView extends GetView<FilesController> {
                   borderRadius: BorderRadius.circular(28),
                 ),
                 side: BorderSide(color: Colors.grey[300]!),
-                backgroundColor: Colors.grey[300],
+                backgroundColor: disableButtonColor,
               ),
               onPressed: controller.previousQuizzQuestion,
               child: Text(
                 AppLocalizations.of(context).previous,
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Get.textTheme.labelMedium
               ),
             ),
           ),
@@ -258,7 +251,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
           Expanded(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF1E40AF),
+                backgroundColor: primaryColor,
                 padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28),
@@ -274,11 +267,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
               },
               child: Text(
                 isLastQuestion ? AppLocalizations.of(context).end : AppLocalizations.of(context).next,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Get.textTheme.labelMedium
               ),
             ),
           ),

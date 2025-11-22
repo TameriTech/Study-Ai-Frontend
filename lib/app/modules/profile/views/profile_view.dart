@@ -20,20 +20,6 @@ class ProfileView extends GetView<ProfileController> {
       onWillPop: Helper().onWillPop,
       child: Scaffold(
         backgroundColor: bgColor,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: Icon(null),
-          leadingWidth: 0,
-          title: Text(
-            AppLocalizations.of(context).my_profile,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-        ),
         body: SafeArea(
           child: RefreshIndicator(
             onRefresh: () async {
@@ -45,7 +31,12 @@ class ProfileView extends GetView<ProfileController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                        'My profile',
+                        style: Get.textTheme.titleMedium
+                    ),
                     // Profile Header Section
+                    SizedBox(height: MediaQuery.of(context).size.height/20),
                     Center(
                       child: Column(
                         children: [
@@ -62,11 +53,7 @@ class ProfileView extends GetView<ProfileController> {
                             children: [
                               Obx(() => Text(
                                 controller.currentUser.value.fullName ?? "User",
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
+                                style: Get.textTheme.displaySmall
                               )),
                               SizedBox(width: 8),
                               InkWell(
@@ -92,14 +79,16 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ),
 
-                    SizedBox(height: MediaQuery.of(context).size.height/6),
+                    SizedBox(height: MediaQuery.of(context).size.height/14),
 
                     // School Level Section
                     Text(
                       AppLocalizations.of(context).school_level,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey.shade600,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff2A2A2A),
+                        fontFamily: 'Inter'
                       ),
                     ),
                     SizedBox(height: 8),
@@ -117,8 +106,10 @@ class ProfileView extends GetView<ProfileController> {
                     Text(
                       "Quiz Summary",
                       style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff2A2A2A),
+                          fontFamily: 'Inter'
                       ),
                     ),
                     SizedBox(height: 8),
@@ -130,8 +121,10 @@ class ProfileView extends GetView<ProfileController> {
                     Text(
                       AppLocalizations.of(context).language,
                       style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff2A2A2A),
+                          fontFamily: 'Inter'
                       ),
                     ),
                     SizedBox(height: 8),
@@ -219,9 +212,10 @@ class ProfileView extends GetView<ProfileController> {
         title: Text(
           title,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.w500,
             color: titleColor ?? Colors.black,
+            fontFamily: 'Inter'
           ),
         ),
         trailing: icon != null
@@ -253,74 +247,81 @@ class ProfileView extends GetView<ProfileController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Left side - Stats
-              Column(
+              // // Left side - Stats
+               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Completed Quiz",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    "40", // You can make this dynamic from controller
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    "Highest Score",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    "60%",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    "Lowest Score",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    "20%",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
+                 children: [
+                   Text(
+                     "Average Score Rating",
+                     style: TextStyle(
+                         fontSize: 10,
+                         color: Color(0xff525866),
+                         fontFamily: 'Inter',
+                         fontWeight: FontWeight.w400
+                     ),
+                   ),
+              //     Text(
+              //       "Completed Quiz",
+              //       style: TextStyle(
+              //         fontSize: 10,
+              //         color: Color(0xff525866),
+              //         fontFamily: 'Inter',
+              //         fontWeight: FontWeight.w400
+              //       ),
+              //     ),
+              //     SizedBox(height: 4),
+              //     Text(
+              //       "40", // You can make this dynamic from controller
+              //       style: TextStyle(
+              //         fontSize: 16,
+              //         fontWeight: FontWeight.bold,
+              //         color: primaryColor,
+              //       ),
+              //     ),
+              //     SizedBox(height: 16),
+              //     Text(
+              //       "Highest Score",
+              //       style: TextStyle(
+              //           fontSize: 10,
+              //           color: Color(0xff525866),
+              //           fontFamily: 'Inter',
+              //           fontWeight: FontWeight.w400
+              //       ),
+              //     ),
+              //     SizedBox(height: 4),
+              //     Text(
+              //       "60%",
+              //       style: TextStyle(
+              //         fontSize: 16,
+              //         fontWeight: FontWeight.bold,
+              //         color: primaryColor,
+              //       ),
+              //     ),
+              //     SizedBox(height: 16),
+              //     Text(
+              //       "Lowest Score",
+              //       style: TextStyle(
+              //           fontSize: 10,
+              //           color: Color(0xff525866),
+              //           fontFamily: 'Inter',
+              //           fontWeight: FontWeight.w400
+              //       ),
+              //     ),
+              //     SizedBox(height: 4),
+              //     Text(
+              //       "20%",
+              //       style: TextStyle(
+              //         fontSize: 16,
+              //         fontWeight: FontWeight.bold,
+              //         color: primaryColor,
+              //       ),
+              //     ),
                 ],
-              ),
+               ),
 
               // Right side - Circular Progress
               Column(
                 children: [
-                  Text(
-                    "Average Score Rating",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  SizedBox(height: 12),
                   SizedBox(
                     height: 80,
                     width: 80,
@@ -339,16 +340,16 @@ class ProfileView extends GetView<ProfileController> {
                                   ? Colors.red
                                   : progressValue <= 0.50
                                   ? Colors.orange
-                                  : appColor,
+                                  : primaryColor,
                             ),
                           ),
                         ),
                         Text(
                           "${statistic.toInt()}%",
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color: primaryColor,
                           ),
                         ),
                       ],

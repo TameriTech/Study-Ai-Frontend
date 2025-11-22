@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import '../../../color_constants.dart';
 
@@ -103,12 +105,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                                 label ?? '',
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                    color: widget.currentIndex == index ? color : const Color(0xffADAAAA)
+                                style: Get.textTheme.labelSmall?.merge(
+                                TextStyle(
+                                    color: widget.currentIndex == index ? color :  primaryColor,
                                 ),
-                              )
+                              ))
                             ],
                           ),
                         ),

@@ -84,9 +84,10 @@ class TextFieldWidget extends StatelessWidget {
           minLines: maxLines,
           validator: validator,
           enabled: editable,
-          style: style ?? Get.textTheme.headlineMedium,
+          style: style ?? Get.textTheme.labelSmall,
           obscureText: obscureText ?? false,
           textAlign: textAlign ?? TextAlign.start,
+          textAlignVertical: TextAlignVertical.center,
           decoration: Ui.getInputDecoration(
             hintText: hintText ?? '',
             //iconData: Image.asset(name),

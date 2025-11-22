@@ -81,7 +81,13 @@ class SearchTextFieldWidget extends StatelessWidget {
           minLines: maxLines,
           validator: validator,
           enabled: editable,
-          style: style ?? Get.textTheme.headlineMedium,
+          style: style ?? TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+            fontFamily: 'Inter',
+            height: 1.45,
+          ),
           obscureText: obscureText ?? false,
           textAlign: textAlign ?? TextAlign.start,
           decoration: Ui.getSearchInputDecoration(
