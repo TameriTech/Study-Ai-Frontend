@@ -109,13 +109,17 @@ class ImportSupportView extends GetView<FilesController> {
                           ),
                         ),
                       ),
+                      SizedBox(width: 10),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*0.80,
+                        child: Text(
+                          controller.generatedCourse.title,
+                          style: Get.textTheme.titleMedium,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    controller.generatedCourse.title,
-                    style: Get.textTheme.titleMedium,
-                  ),
+
                   SizedBox(height: 12),
                   Row(
                     children: [
