@@ -18,11 +18,12 @@ class QuizzPostGenerationView extends GetView<FilesController> {
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
+            controller.currentQuestionIndex.value = 0;
           },
           icon: Icon(Icons.arrow_back, color: Colors.black),
         ),
         title: Obx(() => Text(
-          'Quiz Review ${controller.currentQuestionIndex.value + 1} of ${controller.questions.length}',
+          '${AppLocalizations.of(context).quizz_review} ${controller.currentQuestionIndex.value + 1} ${AppLocalizations.of(context).of_preposition} ${controller.questions.length}',
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -215,6 +216,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
             onPressed: () {
               if (isLastQuestion) {
                 Navigator.of(context).pop();
+                controller.currentQuestionIndex.value = 0;
               } else {
                 controller.nextQuizzQuestion();
               }
@@ -261,6 +263,7 @@ class QuizzPostGenerationView extends GetView<FilesController> {
               onPressed: () {
                 if (isLastQuestion) {
                   Navigator.of(context).pop();
+                  controller.currentQuestionIndex.value = 0;
                 } else {
                   controller.nextQuizzQuestion();
                 }

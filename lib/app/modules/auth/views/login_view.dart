@@ -65,7 +65,7 @@ class LoginView extends GetView<AuthController> {
               child: ListView(
                 padding: EdgeInsets.only(top: 10),
                 children: [
-                  Text("Login to your account".tr, style: Get.textTheme.titleSmall,),
+                  Text("${AppLocalizations.of(context).login_to_your_account}".tr, style: Get.textTheme.titleSmall,),
                   SizedBox(height: MediaQuery.of(context).size.height/35,),
                   TextFieldWidget(
                     textController: TextEditingController(text: controller.emailController.text),
@@ -86,7 +86,7 @@ class LoginView extends GetView<AuthController> {
                     readOnly: false,
                     isFirst: true,
                     labelText: AppLocalizations.of(context).password,
-                    hintText: "Enter your password",
+                    hintText: AppLocalizations.of(context).enter_your_password,
                     textController: TextEditingController(text: controller.passwordController.text),
                     obscureText: !controller.hidePassword.value,
                     onChanged: (value) => {
@@ -183,7 +183,7 @@ class LoginView extends GetView<AuthController> {
                   ).marginOnly(top: 10, bottom: 30),
 
                   _socialButton(
-                    text: "  Login with Apple     ",
+                    text: "  ${AppLocalizations.of(context).login_with_Apple}     ",
                     onTapped: () {
 
                     },
@@ -193,7 +193,7 @@ class LoginView extends GetView<AuthController> {
                   SizedBox(height: 10,),
 
                   _socialButton(
-                    text: "  Login with Google    ",
+                    text: "  ${AppLocalizations.of(context).login_with_google}    ",
                     onTapped: () {
                       controller.handleGoogleSignIn();
                     },
@@ -203,7 +203,7 @@ class LoginView extends GetView<AuthController> {
                   SizedBox(height: 10,),
 
                   _socialButton(
-                    text: "  Login with Facebook",
+                    text: "  ${AppLocalizations.of(context).login_with_facebook}",
                     onTapped: () {
                     },
                     imagePath: 'assets/images/logos_facebook.png',

@@ -41,7 +41,7 @@ class QuizView extends GetView<QuizController> {
           Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Quiz', style: Get.textTheme.headlineSmall,),
+              Text(AppLocalizations.of(context).quiz, style: Get.textTheme.headlineSmall,),
               GestureDetector(
                 onTap: (){},
                 child:  Image.asset(
@@ -52,7 +52,7 @@ class QuizView extends GetView<QuizController> {
             ],
           ).marginSymmetric(vertical: 20, horizontal: 20),
           Text(
-            'Create personalized quizzes tailored to\nyour needs',
+            '${AppLocalizations.of(context).create_quizz_message_first_part}\n${AppLocalizations.of(context).create_quizz_message_second_part}',
             style: TextStyle(
               fontSize: 16,
               color: Color(0xff525866),
@@ -139,7 +139,7 @@ class QuizView extends GetView<QuizController> {
                     controller: controller.instructionText,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'Enter detailed instructions',
+                      hintText: AppLocalizations.of(context).enter_detailed_instructions,
                       hintStyle:TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -156,7 +156,7 @@ class QuizView extends GetView<QuizController> {
                 // Number of Questions
                 _buildSettingCard(
                   context,
-                  label: 'Number of questions',
+                  label: AppLocalizations.of(context).number_of_questions,
                   child: Obx(() => Column(
                     children: [
                       Row(
@@ -189,7 +189,7 @@ class QuizView extends GetView<QuizController> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Questions',
+                        AppLocalizations.of(context).questions,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey[600],
@@ -234,7 +234,7 @@ class QuizView extends GetView<QuizController> {
                 // Difficulty Level Dropdown
                 _buildDropdownCard(
                   context,
-                  label: 'Beginner level',
+                  label: AppLocalizations.of(context).beginner_level,
                   items: controller.difficultyLevels,
                   selectedIndex: controller.difficultyIndex,
                 ),
@@ -244,7 +244,7 @@ class QuizView extends GetView<QuizController> {
                 // Question Type Dropdown
                 _buildDropdownCard(
                   context,
-                  label: 'Objective format',
+                  label: AppLocalizations.of(context).objective_format,
                   items: controller.questionTypes,
                   selectedIndex: controller.questionTypeIndex,
                 ),
@@ -266,7 +266,7 @@ class QuizView extends GetView<QuizController> {
                     onPressed: () {
                       if (controller.selectedCourse.value.title.isEmpty) {
                         Get.showSnackbar(Ui.warningSnackBar(
-                            message: 'Please select a course first'));
+                            message: AppLocalizations.of(context).please_select_course_first));
                         return;
                       }
 
@@ -283,7 +283,7 @@ class QuizView extends GetView<QuizController> {
                       );
                     },
                     child: Text(
-                      'Generate Quiz',
+                      AppLocalizations.of(context).generate_quiz,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -392,7 +392,7 @@ class QuizView extends GetView<QuizController> {
                 onPressed: () => Get.back(),
               ),
               Obx(() => Text(
-                'Question ${controller.currentQuestionIndex.value + 1} of ${controller.questions.length}',
+                '${AppLocalizations.of(context).question} ${controller.currentQuestionIndex.value + 1} ${AppLocalizations.of(context).of_preposition} ${controller.questions.length}',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -559,7 +559,7 @@ class QuizView extends GetView<QuizController> {
               }
             },
             child: Text(
-              isLastQuestion ? 'Submit' : 'Next',
+              isLastQuestion ? AppLocalizations.of(context).submit : AppLocalizations.of(context).next,
               style: Get.textTheme.labelMedium
             ),
           ),
@@ -581,7 +581,7 @@ class QuizView extends GetView<QuizController> {
               ),
               onPressed: controller.previousQuestion,
               child: Text(
-                'Previous',
+                  AppLocalizations.of(context).previous,
                 style: Get.textTheme.labelMedium
               ),
             ),
@@ -608,7 +608,7 @@ class QuizView extends GetView<QuizController> {
                 }
               },
               child: Text(
-                isLastQuestion ? 'Submit' : 'Next',
+                isLastQuestion ? AppLocalizations.of(context).submit : AppLocalizations.of(context).next,
                 style: Get.textTheme.labelMedium
               ),
             ),
@@ -699,7 +699,7 @@ class QuizView extends GetView<QuizController> {
                 ),
                 SizedBox(height: 30),
                 Text(
-                  'Ongoing generation....',
+                  AppLocalizations.of(context).ongoing_generation,
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -733,7 +733,7 @@ class QuizView extends GetView<QuizController> {
                   children: [
                     CircularProgressIndicator(),
                     SizedBox(height: 20),
-                    Text('Loading results...'),
+                    Text(AppLocalizations.of(context).loading_results),
                   ],
                 ),
               );
@@ -788,7 +788,7 @@ class QuizView extends GetView<QuizController> {
                   ),
                   SizedBox(height: 24),
                   Text(
-                    'Congratulations',
+                    AppLocalizations.of(context).congratulation,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
@@ -798,7 +798,7 @@ class QuizView extends GetView<QuizController> {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    'Your score is ${controller.quizzResultRating.text}!',
+                    '${AppLocalizations.of(context).your_score_is} ${controller.quizzResultRating.text}!',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -851,7 +851,7 @@ class QuizView extends GetView<QuizController> {
                         ),
                       )
                           : Text(
-                        'Review Answers',
+                          AppLocalizations.of(context).review_answers,
                         style: Get.textTheme.labelMedium
                       ),
                     ),
@@ -860,10 +860,12 @@ class QuizView extends GetView<QuizController> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Get.back();
+                      controller.resetFields();
+                      controller.generationState.value = QuizGenerationState.start;
+
                     },
                     child: Text(
-                      'New Challenge',
+                      AppLocalizations.of(context).new_challenge,
                       style: TextStyle(
                         color: Color(0xFF1E40AF),
                         fontSize: 16,

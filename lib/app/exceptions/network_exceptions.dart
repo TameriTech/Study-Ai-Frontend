@@ -1,9 +1,14 @@
 // coverage:ignore-file
+// coverage:ignore-file
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:get/get.dart' as _get;
+import 'package:get/get.dart' hide Response;
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_core/src/get_main.dart' as _get;
 
+
+import '../../l10n/app_localizations.dart';
 import '../routes/app_routes.dart';
 
 abstract class NetworkExceptions {
@@ -14,28 +19,35 @@ abstract class NetworkExceptions {
       case 401:
       case 403:
         _get.Get.offAllNamed(Routes.LOGIN);
-        return "Unauthorized request";
+        return AppLocalizations.of(Get.context!).unauthorized_request;
         break;
+
       case 404:
-        return "Not found";
+        return AppLocalizations.of(Get.context!).an_error_occurred;
         break;
+
       case 409:
-        return "Error due to a conflict";
+        return AppLocalizations.of(Get.context!).conflict_error;
         break;
+
       case 408:
-        return "Connection request timeout";
+        return AppLocalizations.of(Get.context!).connection_timeout;
         break;
+
       case 500:
-        return "Internal Server Error";
+        return AppLocalizations.of(Get.context!).internal_server_error;
         break;
+
       case 503:
-        return "Service unavailable";
+        return AppLocalizations.of(Get.context!).service_unavailable;
         break;
+
       case 422:
-        return "Invalid Credentials";
+        return AppLocalizations.of(Get.context!).invalid_credentials;
         break;
+
       default:
-        return "Received invalid status code";
+        return AppLocalizations.of(Get.context!).invalid_status_code;
     }
   }
 
@@ -46,44 +58,53 @@ abstract class NetworkExceptions {
         if (error is DioError) {
           switch (error.type) {
             case DioExceptionType.cancel:
-              errorMessage = "Request Cancelled";
+              errorMessage = AppLocalizations.of(Get.context!).request_cancelled;
               break;
+
             case DioExceptionType.connectionTimeout:
-              errorMessage = "Connection request timeout";
+              errorMessage = AppLocalizations.of(Get.context!).connection_request_timeout;
               break;
+
             case DioExceptionType.connectionError:
-              errorMessage = "No internet connection";
+              errorMessage = AppLocalizations.of(Get.context!).no_internet_connection;
               break;
+
             case DioExceptionType.receiveTimeout:
-              errorMessage = "Send timeout in connection with API server";
+              errorMessage = AppLocalizations.of(Get.context!).send_timeout;
               break;
+
             case DioExceptionType.badResponse:
               errorMessage = NetworkExceptions.handleResponse(error.response!);
               break;
+
             case DioExceptionType.sendTimeout:
-              errorMessage = "Send timeout in connection with API server";
+              errorMessage = AppLocalizations.of(Get.context!).send_timeout;
               break;
+
             case DioExceptionType.badCertificate:
-              // TODO: Handle this case.
+            // TODO: Handle this case.
+              break;
+
             case DioExceptionType.unknown:
-              // TODO: Handle this case.
+            // TODO: Handle this case.
+              break;
           }
         } else if (error is SocketException) {
-          errorMessage = "No internet connection";
+          errorMessage = AppLocalizations.of(Get.context!).no_internet_connection;
         } else {
-          errorMessage = "Unexpected error occurred";
+          errorMessage = AppLocalizations.of(Get.context!).unexpected_error;
         }
         return errorMessage;
       } on FormatException {
-        return "Unexpected error occurred";
+        return AppLocalizations.of(Get.context!).unexpected_error;
       } catch (_) {
-        return "Unexpected error occurred";
+        return AppLocalizations.of(Get.context!).unexpected_error;
       }
     } else {
       if (error.toString().contains("is not a subtype of")) {
-        return "Unable to process the data";
+        return AppLocalizations.of(Get.context!).unable_to_process_data;
       } else {
-        return "Unexpected error occurred";
+        return AppLocalizations.of(Get.context!).unexpected_error;
       }
     }
   }

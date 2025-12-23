@@ -205,11 +205,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get smart_study_assistant_message =>
-      'Your smart study assistant to help you understand, revise and progress.';
+      'Welcome to your smart study assistant';
 
   @override
   String get ask_question_upload_file =>
-      'Ask questions or upload pdf file: Let\'s work together.';
+      'Upload a PDF or ask questions any question, Let\'s study smarter together.';
 
   @override
   String get discussion_history => 'Discussion history';
@@ -984,6 +984,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get change_username => 'Change username';
 
   @override
+  String get change_password => 'Change password';
+
+  @override
   String get change_username_message =>
       'Enter your name correctly below, it will be displaced the same way it is entered';
 
@@ -1010,7 +1013,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Create personalized quizzes tailored to';
 
   @override
-  String get create_quizz_message_ssecond_part => 'your needs';
+  String get create_quizz_message_second_part => 'your needs';
 
   @override
   String get number_of_questions => 'Number of questions';
@@ -1025,7 +1028,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get please_select_course_first => 'Please select a course first';
 
   @override
-  String get loading_results => 'Loading results';
+  String get loading_results => 'Loading results...';
 
   @override
   String get your_score_is => 'Your score is';
@@ -1044,4 +1047,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ai_chat => 'AI chat';
+
+  @override
+  String get pages => 'pages';
+
+  @override
+  String get hi => 'Hi';
+
+  @override
+  String get what_you_want_question => 'What would u want to work on today?';
+
+  @override
+  String get ask_anything => 'Ask anything';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get photos => 'Photos';
+
+  @override
+  String get files => 'Files';
+
+  @override
+  String get unauthorized_request => 'Unauthorized request';
+
+  @override
+  String get an_error_occurred => 'An error occured';
+
+  @override
+  String get conflict_error => 'Error due to a conflict';
+
+  @override
+  String get connection_timeout => 'Connection request timeout';
+
+  @override
+  String get internal_server_error => 'Internal Server Error';
+
+  @override
+  String get service_unavailable => 'Service unavailable';
+
+  @override
+  String get invalid_credentials => 'Invalid Credentials';
+
+  @override
+  String get invalid_status_code => 'Received invalid status code';
+
+  @override
+  String get request_cancelled => 'Request Cancelled';
+
+  @override
+  String get connection_request_timeout => 'Connection request timeout';
+
+  @override
+  String get no_internet_connection => 'No internet connection';
+
+  @override
+  String get send_timeout => 'Send timeout in connection with API server';
+
+  @override
+  String get unexpected_error => 'Unexpected error occurred';
+
+  @override
+  String get unable_to_process_data => 'Unable to process the data';
+
+  @override
+  String get pdf_file_not_found => 'PDF file not found';
+
+  @override
+  String get user_with_email_exists => 'A user with this email already exists';
+
+  @override
+  String get tap_again_to_leave => 'Tap again to leave!';
 }

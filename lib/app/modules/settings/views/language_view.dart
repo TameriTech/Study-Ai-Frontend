@@ -35,9 +35,11 @@ class LanguageView extends GetView<LanguageController> {
                         borderRadius: BorderRadius.circular(8)),
                   ),
                   SizedBox(width: 16),
-                  Text(
-                    'Select New Language',
-                    style: Get.textTheme.titleMedium,
+                  Expanded(
+                    child: Text(
+                      AppLocalizations.of(context).select_new_language,
+                      style: Get.textTheme.titleMedium,
+                    ),
                   ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,7 +107,7 @@ class LanguageView extends GetView<LanguageController> {
             child: BlockButtonWidget(
                 color: primaryColor,
                 haveBorder: false,
-                text: Text('Save', style: Get.textTheme.labelMedium),
+                text: Text(AppLocalizations.of(context).save, style: Get.textTheme.labelMedium),
                 onPressed: (){
                   Navigator.pop(context);
                 }),

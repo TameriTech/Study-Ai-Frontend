@@ -27,7 +27,7 @@ class ChatView extends GetView<ChatController> {
             children: [
               // 1. Welcome message
               TypewriterText(
-                text: '${AppLocalizations.of(context).welcome} 👋',
+                text: '${AppLocalizations.of(context).smart_study_assistant_message} 👋',
                 speed: Duration(milliseconds: 50),
                 startDelay: Duration(seconds: 1), // speed between each character
                 style: TextStyle(
@@ -35,19 +35,19 @@ class ChatView extends GetView<ChatController> {
                   fontWeight: FontWeight.bold,
                 )
               ),
-              SizedBox(height: 8),
-
-              // 2. Intro description
-
-              TypewriterText(
-                  text: AppLocalizations.of(context).smart_study_assistant_message,
-                  speed: Duration(milliseconds: 50),
-                  startDelay: Duration(seconds: 1), // speed between each character
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.04,
-                    color: Colors.grey[700],
-                  ),
-              ),
+              // SizedBox(height: 8),
+              //
+              // // 2. Intro description
+              //
+              // TypewriterText(
+              //     text: AppLocalizations.of(context).smart_study_assistant_message,
+              //     speed: Duration(milliseconds: 50),
+              //     startDelay: Duration(seconds: 1), // speed between each character
+              //     style: TextStyle(
+              //       fontSize: screenWidth * 0.04,
+              //       color: Colors.grey[700],
+              //     ),
+              // ),
               SizedBox(height: 16),
 
               // 3. Features preview

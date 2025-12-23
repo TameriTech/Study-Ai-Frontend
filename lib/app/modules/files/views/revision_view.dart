@@ -46,7 +46,7 @@ class RevisionView extends GetView<FilesController> {
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 8, bottom: 16),
               child: Obx(() => Text(
-                '${controller.currentRevisionIndex.value + 1}/${controller.revisions.length} Pages',
+                '${controller.currentRevisionIndex.value + 1}/${controller.revisions.length} ${AppLocalizations.of(context).pages}',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
@@ -157,7 +157,7 @@ class RevisionView extends GetView<FilesController> {
           elevation: 0,
         ),
         child: Text(
-          'Continue',
+            AppLocalizations.of(context).continu,
           style: Get.textTheme.labelMedium
         ),
       );

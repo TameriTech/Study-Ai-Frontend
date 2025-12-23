@@ -22,8 +22,8 @@ class QuizController extends GetxController {
 
   // Quiz configuration
   final RxInt numberOfQuestions = 1.obs;
-  final RxList<String> difficultyLevels = [AppLocalizations.of(Get.context!).basic, AppLocalizations.of(Get.context!).medium, AppLocalizations.of(Get.context!).expert].obs;
-  final RxList<String> questionTypes = [AppLocalizations.of(Get.context!).mcq, AppLocalizations.of(Get.context!).true_false, AppLocalizations.of(Get.context!).text].obs;
+  RxList<String> difficultyLevels = [''].obs;
+  RxList<String> questionTypes = [''].obs;
   final RxInt difficultyIndex = 0.obs;
   final RxInt questionTypeIndex = 0.obs;
   var userAnswer = '';
@@ -77,9 +77,8 @@ class QuizController extends GetxController {
   @override
   void onInit() {
     quizzRepository = QuizzRepository();
-    instructionText.text = '';
-    quizzResultRating.text = '';
-    quizzResultComment.text = '';
+    resetFields();
+
 
     super.onInit();
   }
@@ -92,6 +91,28 @@ class QuizController extends GetxController {
     super.dispose();
   }
 
+  resetFields(){
+    difficultyLevels.value = [AppLocalizations.of(Get.context!).basic, AppLocalizations.of(Get.context!).medium, AppLocalizations.of(Get.context!).expert];
+    questionTypes.value = [AppLocalizations.of(Get.context!).mcq, AppLocalizations.of(Get.context!).true_false, AppLocalizations.of(Get.context!).text].obs;
+
+    numberOfQuestions.value = 1;
+
+    instructionText.text = '';
+
+    selectedAnswer = 100.obs;
+
+    difficultyIndex.value = 0;
+    questionTypeIndex.value = 0;
+
+    quizzResultRating.text = '';
+    quizzResultComment.text = '';
+    currentQuestionIndex.value = 0;
+    questions.clear();
+    selectedAnswers.clear();
+
+
+  }
+
   Future<void> startGenerationProgress(
       {required int idCourse,
       required String quizzType,
@@ -99,6 +120,7 @@ class QuizController extends GetxController {
       required int questionsNumber,
       required String instruction}) async {
     try {
+      resetFields();
       generationState.value = QuizGenerationState.start; // Initial state
 
       // --- Step 1: Perform API calls ---
@@ -120,11 +142,11 @@ class QuizController extends GetxController {
           print("Quizz data: quizz: ${quizz.toString()}");
            extractedChoices = extractChoices(quizz["choices"]);
 
-          print('Extaracted choices are: ${extractedChoices.toString()}');
+          print('Extracted choices are: ${extractedChoices.toString()}');
 
           extractedCorrectIndex = extractCorrectIndex(extractedChoices, quizz["correct_answer"]);
 
-          print('Extaracted correct index: ${extractedCorrectIndex.toString()}');
+          print('Extracted correct index: ${extractedCorrectIndex.toString()}');
 
           question = Question(
             courseId: courseId,
@@ -164,6 +186,8 @@ class QuizController extends GetxController {
           },
         );
 
+
+
       }
 
     } catch (e) {
@@ -171,6 +195,7 @@ class QuizController extends GetxController {
       generationState.value = QuizGenerationState.failed;
 
       _generationTimer?.cancel();
+
 
       Get.showSnackbar(Ui.ErrorSnackBar(message: e.toString()));
     }
@@ -298,13 +323,6 @@ class QuizController extends GetxController {
     await updateUserAnswer(quizzId: quizzId, userAnswer: userAnswer );
   }
 
-  void initializeNewQuiz(List<Question> newQuestions) {
-    questions.value = newQuestions;
-    selectedAnswers.value = List.filled(newQuestions.length, null);
-    currentQuestionIndex.value = 0;
-    generationState.value = QuizGenerationState.generated;
-    startQuestionTimer();
-  }
 
    submitQuiz({int? courseId}) async {
     _questionTimer?.cancel();

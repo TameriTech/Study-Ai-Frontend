@@ -95,6 +95,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     quizzRepository = QuizzRepository();
     generationState = 'start'.obs;
     instructionsController.text = "";
+    currentQuestionIndex.value = 0;
 
     //initialize file List
 
@@ -104,6 +105,8 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     tabViewController = TabController(length: 4, vsync: this);
 
   }
+
+
 
   getCompleteFileList() async {
     filesList.clear();
@@ -167,6 +170,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
           pdfFile: importedFile,
         );
       }
+
       print('Course id is $courseId');
 
       var vocabulary = await createVocabulary(courseId: courseId);
@@ -205,11 +209,13 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
           }
         },
       );
+      instructionsController.text = "";
     } catch (e) {
       // --- Step 4: Handle error during API call ---
       generationState.value = "failed";
 
       _timer?.cancel();
+      instructionsController.text = "";
 
       Navigator.of(Get.context!).pop();// Stop progress if error
 
@@ -415,7 +421,6 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
 
   }
 
-
   void nextRevisionCard() {
     if (currentRevisionIndex.value < revisions.length - 1) {
       currentRevisionIndex.value++;
@@ -454,6 +459,7 @@ class FilesController extends GetxController with GetTickerProviderStateMixin{
     questions.clear();
     correctAnswers.clear();
     selectedAnswers.clear();
+    currentQuestionIndex.value = 0;
 
 
     for(var data in quiz){

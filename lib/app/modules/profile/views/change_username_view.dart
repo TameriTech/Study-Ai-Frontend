@@ -42,7 +42,7 @@ class ChangeUsernameView extends GetView<ProfileController> {
                   ),
                   SizedBox(width: 16),
                   Text(
-                    'Change Username',
+                    AppLocalizations.of(context).change_username,
                     style: Get.textTheme.titleMedium,
                   ),
                 ],
@@ -58,7 +58,7 @@ class ChangeUsernameView extends GetView<ProfileController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Enter your name correctly below, it will be displaced the same way it is entered',
+                    AppLocalizations.of(context).change_username_message,
                     style: TextStyle(
                         color: Color(0xff2A2A2A),
                         fontSize: 16,
@@ -73,10 +73,10 @@ class ChangeUsernameView extends GetView<ProfileController> {
                     onChanged: (value){
                       nameController.text= value;
                     },
-                    validator: (input) => input!.length < 3 ? 'Name must be at least 3 characters' : null,
+                    validator: (input) => input!.length < 3 ? AppLocalizations.of(context).name_minimum_characters : null,
                     suffixIcon: Icon(null),
-                    labelText: 'Full Name',
-                    hintText: "Enter your full name",
+                    labelText: AppLocalizations.of(context).full_name,
+                    hintText: AppLocalizations.of(context).enter_full_name,
                     suffix: Icon(null),
                     readOnly: false,
                     isFirst: true,
@@ -98,7 +98,7 @@ class ChangeUsernameView extends GetView<ProfileController> {
                     :(){
                   controller.currentUser.value.fullName = nameController.text;
                   controller.updateProfile().then((_) {
-                    Get.back();
+                    Navigator.of(context).pop();
                   });
                 },
                 style: ElevatedButton.styleFrom(
@@ -111,7 +111,7 @@ class ChangeUsernameView extends GetView<ProfileController> {
                 child:controller.onResetUserName.value?
                 SpinKitThreeBounce(color: Colors.white, size: 20)
                     :Text(
-                  'Save',
+                  AppLocalizations.of(context).save,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,

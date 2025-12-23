@@ -32,7 +32,7 @@ class ProfileView extends GetView<ProfileController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        'My profile',
+                        AppLocalizations.of(context).my_profile,
                         style: Get.textTheme.titleMedium
                     ),
                     // Profile Header Section
@@ -94,7 +94,7 @@ class ProfileView extends GetView<ProfileController> {
                     SizedBox(height: 8),
                     _buildMenuItem(
                       context: context,
-                      title: controller.currentUser.value.academicLevel ?? "Not set",
+                      title: controller.currentUser.value.academicLevel ?? AppLocalizations.of(context).not_set,
                       onTap: () {
                         Get.toNamed(Routes.COMPLETE_PROFILE_VIEW);
                       },
@@ -104,7 +104,7 @@ class ProfileView extends GetView<ProfileController> {
 
                     // Quiz Summary Section
                     Text(
-                      "Quiz Summary",
+                      AppLocalizations.of(context).quiz_summary,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -252,7 +252,7 @@ class ProfileView extends GetView<ProfileController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
                    Text(
-                     "Average Score Rating",
+                     AppLocalizations.of(context).average_score_rating,
                      style: TextStyle(
                          fontSize: 10,
                          color: Color(0xff525866),

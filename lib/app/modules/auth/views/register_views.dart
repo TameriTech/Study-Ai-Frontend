@@ -55,20 +55,23 @@ class RegisterViews extends GetView<AuthController> {
                                     borderRadius: BorderRadius.circular(8)),
                               ),
                               SizedBox(width: 16),
-                              Text(
-                                'Select school Level',
-                                style: Get.textTheme.titleMedium,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.69,
+                                child: Text(
+                                  AppLocalizations.of(context).select_school_level,
+                                  style: Get.textTheme.titleMedium,
+                                ),
                               ),
                             ],
                             crossAxisAlignment: CrossAxisAlignment.center,
                           );
                         case 2:
                         // Determine the header title based on selected level
-                          String headerTitle = controller.selectedSchoolLevel.value == 'Primary Education'
-                              ? 'Select Class Level'
-                              : controller.selectedSchoolLevel.value == 'Postgraduate'
-                              ? 'Academic Level'
-                              : 'Select Class Level';
+                          String headerTitle = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+                              ? AppLocalizations.of(context).select_class_level
+                              : controller.selectedSchoolLevel.value == AppLocalizations.of(context).post_graduate
+                              ? AppLocalizations.of(context).school_level
+                              : AppLocalizations.of(context).select_class_level;
                           return  Row(
                             children: [
                               Container(
@@ -84,18 +87,21 @@ class RegisterViews extends GetView<AuthController> {
                                 ),
                               ),
                               SizedBox(width: 16),
-                              Text(
-                                headerTitle,
-                                style: Get.textTheme.titleMedium,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.69,
+                                child: Text(
+                                  headerTitle,
+                                  style: Get.textTheme.titleMedium,
+                                ),
                               ),
                             ],
                           );
                         case 3:
-                          String headerTitle = controller.selectedSchoolLevel.value == 'Primary Education'
-                              ? 'Select Class Level'
-                              : controller.selectedSchoolLevel.value == 'Postgraduate'
-                              ? 'Academic Level'
-                              : 'Select Class Level';
+                          String headerTitle = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+                              ? AppLocalizations.of(context).select_class_level
+                              : controller.selectedSchoolLevel.value == AppLocalizations.of(context).post_graduate
+                              ? AppLocalizations.of(context).school_level
+                              : AppLocalizations.of(context).select_class_level;
                           return  Row(
                             children: [
                               Container(
@@ -111,16 +117,19 @@ class RegisterViews extends GetView<AuthController> {
                                 ),
                               ),
                               SizedBox(width: 16),
-                              Text(
-                                headerTitle,
-                                style: Get.textTheme.titleMedium,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.69,
+                                child: Text(
+                                  headerTitle,
+                                  style: Get.textTheme.titleMedium,
+                                ),
                               ),
                             ],
                           );
                         case 4:
                           return SizedBox.shrink();
                         default:
-                          return Text("Create new account", style: Get.textTheme.titleMedium,);
+                          return Text(AppLocalizations.of(context).create_account, style: Get.textTheme.titleMedium,);
                       }
                     }),
 
@@ -170,17 +179,17 @@ class RegisterViews extends GetView<AuthController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Register an Account',
+                AppLocalizations.of(context).register_account,
               style: Get.textTheme.headlineSmall
             ).marginOnly(bottom: 30, top: 20),
 
             TextFieldWidget(
               textController: TextEditingController(text: controller.fullNameController.text),
               onChanged: (value) => controller.fullNameController.text = value,
-              validator: (input) => input!.length < 3 ? 'Name must be at least 3 characters' : null,
+              validator: (input) => input!.length < 3 ? AppLocalizations.of(context).name_minimum_characters : null,
               suffixIcon: Icon(null),
-              labelText: 'Full Name',
-              hintText: "Enter your full name",
+              labelText: AppLocalizations.of(context).full_name,
+              hintText: AppLocalizations.of(context).enter_full_name,
               suffix: Icon(null),
               readOnly: false,
               isFirst: true,
@@ -190,10 +199,10 @@ class RegisterViews extends GetView<AuthController> {
             TextFieldWidget(
               textController: TextEditingController(text: controller.emailController.text),
               onChanged: (value) => controller.emailController.text = value,
-              validator: (input) => !input!.contains('@') ? 'Please enter a valid email' : null,
+              validator: (input) => !input!.contains('@') ? AppLocalizations.of(context).enter_valid_email_address : null,
               suffixIcon: Icon(null),
-              labelText: 'Email',
-              hintText: "Enter your email",
+              labelText: AppLocalizations.of(context).email,
+              hintText: AppLocalizations.of(context).enter_your_email,
               suffix: Icon(null),
               readOnly: false,
               isFirst: true,
@@ -204,10 +213,10 @@ class RegisterViews extends GetView<AuthController> {
               textController: TextEditingController(text: controller.passwordController.text),
               obscureText: !controller.hidePassword.value,
               onChanged: (value) => controller.passwordController.text = value,
-              validator: (input) => input!.length < 6 ? 'Password must be at least 6 characters' : null,
+              validator: (input) => input!.length < 6 ? AppLocalizations.of(context).password_minimum_characters : null,
               suffixIcon: Icon(null),
-              labelText: "Create Password",
-              hintText: "Create your password",
+              labelText: AppLocalizations.of(context).create_password,
+              hintText: AppLocalizations.of(context).create_your_password,
               suffix: Icon(null),
               readOnly: false,
               isFirst: true,
@@ -217,11 +226,11 @@ class RegisterViews extends GetView<AuthController> {
               textController: TextEditingController(text: controller.confirmPasswordController.text),
               obscureText: !controller.hideConfirmPassword.value,
               onChanged: (value) => controller.confirmPasswordController.text = value,
-              validator: (input) => input!.length < 6 ? 'Password must be at least 6 characters' : null,
+              validator: (input) => input!.length < 6 ? AppLocalizations.of(context).password_minimum_characters : null,
               suffixIcon: Icon(null),
               suffix: Icon(null),
-              labelText: 'Confirm Password',
-              hintText: "Confirm your password",
+              labelText: AppLocalizations.of(context).confirm_password,
+              hintText: AppLocalizations.of(context).confirm_your_password,
               readOnly: false,
               isFirst: true,
             )),
@@ -232,13 +241,13 @@ class RegisterViews extends GetView<AuthController> {
               alignment: WrapAlignment.center,
               children: [
                 Text(
-                  'By signing up, you agree with our ',
+                  AppLocalizations.of(context).by_signing_up,
                   style: TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontFamily: 'Inter'),
                 ),
                 GestureDetector(
                   onTap: () {},
                   child: Text(
-                    'Terms & Conditions',
+                    AppLocalizations.of(context).terms_conditions,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 14,
@@ -249,13 +258,13 @@ class RegisterViews extends GetView<AuthController> {
                   ),
                 ),
                 Text(
-                  ' and our ',
+                  ' ${AppLocalizations.of(context).and_our} ',
                   style: TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontFamily: 'Inter'),
                 ),
                 GestureDetector(
                   onTap: () {},
                   child: Text(
-                    'Privacy policy',
+                    AppLocalizations.of(context).privacy_policy,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 14,
@@ -291,7 +300,7 @@ class RegisterViews extends GetView<AuthController> {
                   elevation: 0,
                 ),
                 child: Text(
-                  'Create Account',
+                    AppLocalizations.of(context).create_account,
                   style: Get.textTheme.labelMedium
                 ),
               ),
@@ -302,7 +311,7 @@ class RegisterViews extends GetView<AuthController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Already have an account? ', style: TextStyle(
+                Text('${AppLocalizations.of(context).already_account} ', style: TextStyle(
                     color: Color(0xff666262),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -311,7 +320,7 @@ class RegisterViews extends GetView<AuthController> {
                 GestureDetector(
                   onTap: () => Get.offAllNamed(Routes.LOGIN),
                   child: Text(
-                    'Login',
+                    AppLocalizations.of(context).login,
                     style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w600,
@@ -332,7 +341,7 @@ class RegisterViews extends GetView<AuthController> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'or continue with',
+                    AppLocalizations.of(context).or_continue_with,
                     style: TextStyle(color: Color(0xffB3B3B3), fontWeight: FontWeight.w400, fontSize: 14, fontFamily: 'Inter'),
                   ),
                 ),
@@ -397,11 +406,11 @@ class RegisterViews extends GetView<AuthController> {
                       style: TextStyle(fontSize: 14, height: 1.4),
                       children: [
                         TextSpan(
-                          text: '1 of 2 steps',
+                          text: AppLocalizations.of(context).one_two_steps,
                           style: TextStyle(color: Color(0xff121214), fontWeight: FontWeight.normal, fontSize: 14, fontFamily: 'Inter'),
                         ),
                         TextSpan(
-                          text: ' - Next: Select class.',
+                          text: ' ${AppLocalizations.of(context).next_select_class}',
                           style: TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                         ),
                       ],
@@ -409,7 +418,7 @@ class RegisterViews extends GetView<AuthController> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'what is your school level?',
+                    AppLocalizations.of(context).school_level_question,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: 'Inter'),
                   ),
                   SizedBox(height: 24),
@@ -457,7 +466,7 @@ class RegisterViews extends GetView<AuthController> {
                 disabledBackgroundColor: Color(0xFFD3D3D3),
               ),
               child: Text(
-                'Next',
+                  AppLocalizations.of(context).next,
                 style: Get.textTheme.labelMedium
               ),
             ),
@@ -526,15 +535,15 @@ class RegisterViews extends GetView<AuthController> {
 
 
       // Determine the question based on selected level
-      String question = controller.selectedSchoolLevel.value == 'Primary Education'
-          ? 'what is your primary education level?'
-          : controller.selectedSchoolLevel.value == 'High School'
-          ? 'what is your high school education level?'
-          : controller.selectedSchoolLevel.value == 'Senior High School'
-          ? 'what is your senior high school education level?'
-          : controller.selectedSchoolLevel.value == 'Undergraduate'
-          ? 'what is your undergraduate level?'
-          : 'what is your postgraduate level?';
+      String question = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+          ? AppLocalizations.of(context).primary_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).high_school_student
+          ? AppLocalizations.of(context).high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).senior_high_school
+          ? AppLocalizations.of(context).senior_high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).undergraduate
+          ? AppLocalizations.of(context).undergraduate_level_question
+          : AppLocalizations.of(context).postgraduate_level_question;
 
       return Column(
         children: [
@@ -552,11 +561,11 @@ class RegisterViews extends GetView<AuthController> {
                         style: TextStyle(fontSize: 14, height: 1.4, fontFamily: 'Inter'),
                         children: [
                           TextSpan(
-                            text: '2 of 2 steps',
+                            text: AppLocalizations.of(context).two_two_steps,
                             style: TextStyle(color: Color(0xff121214), fontWeight: FontWeight.normal, fontSize: 14, fontFamily: 'Inter'),
                           ),
                           TextSpan(
-                            text: ' - Final step',
+                            text: ' ${AppLocalizations.of(context).final_step}',
                             style:  TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                           ),
                         ],
@@ -644,7 +653,7 @@ class RegisterViews extends GetView<AuthController> {
                   disabledBackgroundColor: Color(0xFFD3D3D3),
                 ),
                 child: Text(
-                  'Next',
+                  AppLocalizations.of(context).next,
                   style: Get.textTheme.labelMedium,
                 ),
               ),
@@ -660,15 +669,15 @@ class RegisterViews extends GetView<AuthController> {
     return Obx(() {
 
 
-      String question = controller.selectedSchoolLevel.value == 'Primary Education'
-          ? 'what is your primary education level?'
-          : controller.selectedSchoolLevel.value == 'High School'
-          ? 'what is your high school education level?'
-          : controller.selectedSchoolLevel.value == 'Senior High School'
-          ? 'what is your senior high school education level?'
-          : controller.selectedSchoolLevel.value == 'Undergraduate'
-          ? 'what is your undergraduate level?'
-          : 'what is your postgraduate level?';
+      String question = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+          ? AppLocalizations.of(context).primary_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).high_school_student
+          ? AppLocalizations.of(context).high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).senior_high_school
+          ? AppLocalizations.of(context).senior_high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).undergraduate
+          ? AppLocalizations.of(context).undergraduate_level_question
+          : AppLocalizations.of(context).postgraduate_level_question;
 
       return Column(
         children: [
@@ -684,11 +693,11 @@ class RegisterViews extends GetView<AuthController> {
                       style: TextStyle(fontSize: 14, height: 1.4),
                       children: [
                         TextSpan(
-                          text: '2 of 2 steps',
+                          text: AppLocalizations.of(context).two_two_steps,
                           style: TextStyle(color: Color(0xff121214), fontWeight: FontWeight.normal, fontSize: 14, fontFamily: 'Inter'),
                         ),
                         TextSpan(
-                          text: ' - Final step',
+                          text: ' ${AppLocalizations.of(context).final_step}',
                           style: TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                         ),
                       ],
@@ -719,13 +728,13 @@ class RegisterViews extends GetView<AuthController> {
                     child: Column(
                       children: [
                         Text(
-                          'The details you provide help us deliver a more personalized and relevant experience.',
+                          AppLocalizations.of(context).setting_up_profile_message,
                           style: Get.textTheme.titleSmall,
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 32),
                         Text(
-                          'Setting up your profile',
+                          AppLocalizations.of(context).setting_profile,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -771,7 +780,7 @@ class RegisterViews extends GetView<AuthController> {
                   disabledBackgroundColor: disableButtonColor,
                 ),
                 child: Text(
-                  'Next',
+                    AppLocalizations.of(context).next,
                   style: Get.textTheme.labelMedium
                 ),
               ),
@@ -810,7 +819,7 @@ class RegisterViews extends GetView<AuthController> {
                 ),
                 SizedBox(height: 40),
                 Text(
-                  'All set! Your account has\nbeen created successfully',
+                  '${AppLocalizations.of(context).account_completed_first_part}\n${AppLocalizations.of(context).account_completed_second_part}',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -842,7 +851,7 @@ class RegisterViews extends GetView<AuthController> {
                   elevation: 0,
                 ),
                 child: Text(
-                  'Continue',
+                    AppLocalizations.of(context).continu,
                   style: Get.textTheme.labelMedium
                   ),
                 ),

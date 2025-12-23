@@ -37,7 +37,7 @@ class FilesView extends GetView<FilesController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Good morning,",
+                AppLocalizations.of(context).goog_morning,
                 style: Get.textTheme.labelLarge,),
               Text(
                 controller.currentUser.value.fullName ?? "User",
@@ -116,8 +116,8 @@ class FilesView extends GetView<FilesController> {
           },
           label: Text(
             controller.selectedHomeIndex.value == 2
-                ? "Create new quiz"
-                : "Create new course",
+                ? AppLocalizations.of(context).create_new_quizz
+                : AppLocalizations.of(context).create_new_course,
             style: Get.textTheme.labelMedium,
           ),
         )).marginOnly(bottom: 80, right: 10),
@@ -196,7 +196,7 @@ class FilesView extends GetView<FilesController> {
             children: [
               SizedBox(width: 40),
               Text(
-                "Create new course",
+                  AppLocalizations.of(context).create_new_course,
                 style: Get.textTheme.titleMedium
               ),
               IconButton(
@@ -244,7 +244,7 @@ class FilesView extends GetView<FilesController> {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    "Scan your course",
+                    AppLocalizations.of(context).scan_your_course,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -295,7 +295,7 @@ class FilesView extends GetView<FilesController> {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    "Upload a document",
+                    AppLocalizations.of(context).upload_document,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -304,7 +304,7 @@ class FilesView extends GetView<FilesController> {
                     ),
                   ),
                   Text(
-                    "(pdf and images) only",
+                    AppLocalizations.of(context).pdf_images_only,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -343,7 +343,7 @@ class FilesView extends GetView<FilesController> {
              children: [
                SizedBox(width: 40),
                Text(
-                 "Add Instructions",
+                 AppLocalizations.of(context).add_instructions,
                  style: Get.textTheme.titleMedium,
                ),
                IconButton(
@@ -420,7 +420,7 @@ class FilesView extends GetView<FilesController> {
                          color: Colors.black87,
                        ),
                        decoration: InputDecoration(
-                         hintText: "Enter detailed instructions",
+                         hintText: AppLocalizations.of(context).enter_detailed_instructions,
                          hintStyle: TextStyle(
                            fontSize: 14,
                            fontWeight: FontWeight.w400,
@@ -448,7 +448,7 @@ class FilesView extends GetView<FilesController> {
                            ? null
                            : controller.selectLevel.value,
                        hint: Text(
-                         "Select level",
+                         AppLocalizations.of(context).select_level,
                          style: TextStyle(
                              fontSize: 14,
                              color: Color(0xff9C9C9C),
@@ -459,7 +459,7 @@ class FilesView extends GetView<FilesController> {
                        isExpanded: true,
                        underline: SizedBox(),
                        icon: Icon(Icons.keyboard_arrow_down, color: Colors.black54),
-                       items: ['Beginner', 'Intermediate', 'Advanced']
+                       items: [AppLocalizations.of(context).beginner, AppLocalizations.of(context).intermediate, AppLocalizations.of(context).advanced]
                            .map((String level) {
                          return DropdownMenuItem<String>(
                            value: level,

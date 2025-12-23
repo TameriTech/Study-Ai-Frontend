@@ -208,11 +208,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get smart_study_assistant_message =>
-      'Ton assistant d’étude intelligent est là pour t’aider à comprendre, réviser, et progresser.';
+      'Bienvenue chez ton assistant d’étude intelligent';
 
   @override
   String get ask_question_upload_file =>
-      'Pose des questions ou envoie un fichier PDF : on bosse ensemble.';
+      'Envoie un fichier PDF ou Pose des questions, étudions ensemble intelligemment';
 
   @override
   String get discussion_history => 'Historique de discussions';
@@ -994,6 +994,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get change_username => 'Changer le nom d\'utilisateur';
 
   @override
+  String get change_password => 'Changer le mot de passe';
+
+  @override
   String get change_username_message =>
       'Entrez correctement votre nom ci-dessous, il sera affiché exactement tel que saisi';
 
@@ -1021,7 +1024,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Créez des quiz personnalisés adaptés à';
 
   @override
-  String get create_quizz_message_ssecond_part => 'your needs';
+  String get create_quizz_message_second_part => 'your needs';
 
   @override
   String get number_of_questions => 'Nombre de questions';
@@ -1037,7 +1040,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Veuillez d\'abord sélectionner un cours';
 
   @override
-  String get loading_results => 'Chargement des résultats';
+  String get loading_results => 'Chargement des résultats...';
 
   @override
   String get your_score_is => 'Votre score est';
@@ -1056,4 +1059,79 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ai_chat => 'Chat IA';
+
+  @override
+  String get pages => 'pages';
+
+  @override
+  String get hi => 'Bonjour';
+
+  @override
+  String get what_you_want_question => 'Que voulez-vous faire aujourd\' hui?';
+
+  @override
+  String get ask_anything => 'Pose des questions';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get photos => 'Photos';
+
+  @override
+  String get files => 'Fichiers';
+
+  @override
+  String get unauthorized_request => 'Requête non autorisée';
+
+  @override
+  String get an_error_occurred => 'Une erreur s\'est produite';
+
+  @override
+  String get conflict_error => 'Erreur due à un conflit';
+
+  @override
+  String get connection_timeout => 'Délai d\'attente de la connexion dépassé';
+
+  @override
+  String get internal_server_error => 'Erreur interne du serveur';
+
+  @override
+  String get service_unavailable => 'Service indisponible';
+
+  @override
+  String get invalid_credentials => 'Identifiants invalides';
+
+  @override
+  String get invalid_status_code => 'Code de statut invalide reçu';
+
+  @override
+  String get request_cancelled => 'Requête annulée';
+
+  @override
+  String get connection_request_timeout =>
+      'Délai d\'attente de la demande de connexion dépassé';
+
+  @override
+  String get no_internet_connection => 'Pas de connexion Internet';
+
+  @override
+  String get send_timeout =>
+      'Délai d\'envoi dépassé lors de la connexion au serveur API';
+
+  @override
+  String get unexpected_error => 'Une erreur inattendue s\'est produite';
+
+  @override
+  String get unable_to_process_data => 'Impossible de traiter les données';
+
+  @override
+  String get pdf_file_not_found => 'Fichier PDF introuvable';
+
+  @override
+  String get user_with_email_exists =>
+      'Un utilisateur avec cet email existe déjà';
+
+  @override
+  String get tap_again_to_leave => 'Appuyez encore une fois pour quitter !';
 }

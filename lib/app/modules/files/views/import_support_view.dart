@@ -12,73 +12,78 @@ class ImportSupportView extends GetView<FilesController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Obx(() {
-        // Show loading dialog
-        if (controller.generationState.value == controller.courseGenerationState[0] ||
-            controller.generationState.value == controller.courseGenerationState[1]) {
-          return Container(
-            width: Get.width,
-            height: Get.height,
-            color: Colors.grey[100],
-            child: Column(
-              children: [
-                SizedBox(height: Get.height / 3),
-                SizedBox(
-                  child: CircularProgressIndicator(
-                    color: appColor,
-                    strokeWidth: 6,
-                  ),
-                  height: 80,
-                  width: 80,
-                ),
-                SizedBox(height: 40),
-                Text(
-                  "Ongoing generation....",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontFamily: 'Inter'
-                  ),
-                ),
-                Spacer(),
-                if (controller.generationState.value == controller.courseGenerationState[1])
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
+    return WillPopScope(
+      onWillPop: () async{
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Obx(() {
+          // Show loading dialog
+          if (controller.generationState.value == controller.courseGenerationState[0] ||
+              controller.generationState.value == controller.courseGenerationState[1]) {
+            return Container(
+              width: Get.width,
+              height: Get.height,
+              color: Colors.grey[100],
+              child: Column(
+                children: [
+                  SizedBox(height: Get.height / 3),
+                  SizedBox(
+                    child: CircularProgressIndicator(
+                      color: appColor,
+                      strokeWidth: 6,
                     ),
-                    height: Get.height * 0.2,
-                    padding: EdgeInsets.all(Get.width / 6),
-                    child: Center(
-                      child: Text(
-                        AppLocalizations.of(context).ongoing_generation_message,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black87,
+                    height: 80,
+                    width: 80,
+                  ),
+                  SizedBox(height: 40),
+                  Text(
+                    AppLocalizations.of(context).ongoing_generation,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontFamily: 'Inter'
+                    ),
+                  ),
+                  Spacer(),
+                  if (controller.generationState.value == controller.courseGenerationState[1])
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                      ),
+                      height: Get.height * 0.2,
+                      padding: EdgeInsets.all(Get.width / 6),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context).ongoing_generation_message,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-              ],
-            ),
-          );
-        }
+                ],
+              ),
+            );
+          }
 
-        // Show course detail view when generated
-        if (controller.generationState.value == controller.courseGenerationState[3]) {
-          return CourseDetailView(context, controller.generatedCourse);
-        }
+          // Show course detail view when generated
+          if (controller.generationState.value == controller.courseGenerationState[3]) {
+            return CourseDetailView(context, controller.generatedCourse);
+          }
 
-        // Default empty state
-        return Container();
-      }),
+          // Default empty state
+          return Container();
+        }),
+      ),
     );
   }
 
@@ -124,7 +129,7 @@ class ImportSupportView extends GetView<FilesController> {
                   Row(
                     children: [
                       Text(
-                        "level - ${controller.generatedCourse.subtitle}",
+                        "${AppLocalizations.of(context).level} - ${controller.generatedCourse.subtitle}",
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -143,7 +148,7 @@ class ImportSupportView extends GetView<FilesController> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "Read Time - ${controller.generatedCourse.timeInfo}",
+                        "${AppLocalizations.of(context).read_time} - ${controller.generatedCourse.timeInfo}",
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -193,7 +198,7 @@ class ImportSupportView extends GetView<FilesController> {
                       ),
                       child: Center(
                         child: Text(
-                          "All",
+                          AppLocalizations.of(context).all,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -224,7 +229,7 @@ class ImportSupportView extends GetView<FilesController> {
                       ),
                       child: Center(
                         child: Text(
-                          "Vocabularies",
+                          AppLocalizations.of(context).vocabularies,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -326,7 +331,7 @@ class ImportSupportView extends GetView<FilesController> {
       )
           : Center(
         child: Text(
-          "No vocabularies available",
+          AppLocalizations.of(context).no_vocabularies_available,
           style: TextStyle(
             fontSize: 15,
             color: Colors.grey,

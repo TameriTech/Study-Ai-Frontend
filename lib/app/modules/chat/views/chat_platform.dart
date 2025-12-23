@@ -18,7 +18,7 @@ class ChatPlatform extends GetView<ChatController> {
   // final int ticketId;
   // final String code;
 
-  Widget chatList() {
+  Widget chatList(BuildContext context) {
     return Obx(
           () {
             if(controller.messagesSent.isEmpty){
@@ -27,7 +27,7 @@ class ChatPlatform extends GetView<ChatController> {
                 children: [
                   Image.asset('assets/images/logo.png', width: 200, height: 200),
                   TypewriterText(
-                    text: "Hi ${controller.currentUser.value.fullName?? "User"}👋! What would you like to work on today?",
+                    text: "${AppLocalizations.of(context).hi} ${controller.currentUser.value.fullName?? "User"}👋! ${AppLocalizations.of(context).what_you_want_question}",
                     speed: Duration(milliseconds: 50),
                     startDelay: Duration(seconds: 1), // speed between each character
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
@@ -140,7 +140,7 @@ class ChatPlatform extends GetView<ChatController> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-             Expanded(child: chatList()),
+             Expanded(child: chatList(context)),
 
               Obx((){
                 if(controller.fileName.value == ""){
@@ -161,7 +161,12 @@ class ChatPlatform extends GetView<ChatController> {
                         SizedBox(
                           width: Get.width/1.8,
                           child: Text(controller.fileName.value, overflow: TextOverflow.ellipsis)
-                        )
+                        ),
+                        Spacer(),
+                        IconButton(
+                            onPressed: (){
+                              controller.fileName.value = "";
+                            }, icon: Icon(Icons.close))
                       ]
                     )
                   );
@@ -169,7 +174,7 @@ class ChatPlatform extends GetView<ChatController> {
 
               }),
               MessageBar(
-                messageBarHintText: AppLocalizations.of(context).ask_any_question,
+                messageBarHintText: AppLocalizations.of(context).ask_anything,
                 onSend: (_) async{
                   if(controller.filePath.isEmpty){
                     controller.messagesSent.add(Message(text: controller.msgController.text, sender: 'user', document: ''));

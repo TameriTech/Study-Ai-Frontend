@@ -30,7 +30,7 @@ class ChangePasswordView extends GetView<ProfileController> {
                   Container(
 
                     child: IconButton(
-                      onPressed: () => Get.back(),
+                      onPressed: () => Navigator.of(context).pop(),
                       icon: Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 12,),
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints(),
@@ -42,7 +42,7 @@ class ChangePasswordView extends GetView<ProfileController> {
                   ),
                   SizedBox(width: 16),
                   Text(
-                    'Change Password',
+                    AppLocalizations.of(context).change_password,
                     style: Get.textTheme.titleMedium,
                   ),
                 ],
@@ -58,7 +58,7 @@ class ChangePasswordView extends GetView<ProfileController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'To change password, enter current and new password',
+                    AppLocalizations.of(context).change_password_message,
                     style: TextStyle(
                         color: Color(0xff2A2A2A),
                         fontSize: 16,
@@ -77,8 +77,8 @@ class ChangePasswordView extends GetView<ProfileController> {
                       color: Theme.of(context).focusColor,
                       icon: Icon(controller.hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined),
                     ),
-                    labelText: "Enter Current Password",
-                    hintText: "Enter password",
+                    labelText: AppLocalizations.of(context).currrent_pwd,
+                    hintText: AppLocalizations.of(context).enter_password,
                     suffix: Icon(null),
                     readOnly: false,
                     isFirst: true,
@@ -103,8 +103,8 @@ class ChangePasswordView extends GetView<ProfileController> {
                       color: Theme.of(context).focusColor,
                       icon: Icon(controller.hidePassword.value ? Icons.visibility_outlined : Icons.visibility_off_outlined),
                     ),
-                    labelText: "Enter New Password",
-                    hintText: "Enter password",
+                    labelText: AppLocalizations.of(context).enter_new_password,
+                    hintText: AppLocalizations.of(context).enter_password,
                     suffix: Icon(null),
                     readOnly: false,
                     isFirst: true,
@@ -123,8 +123,8 @@ class ChangePasswordView extends GetView<ProfileController> {
                   // Confirm New Password
                   Obx(() => TextFieldWidget(
                     textController: controller.confirmPasswordController,
-                    labelText: "Confirm New Password",
-                    hintText: "Enter password",
+                    labelText: AppLocalizations.of(context).confirm_new_password,
+                    hintText: AppLocalizations.of(context).enter_password,
                     suffix: Icon(null),
                     readOnly: false,
                     isFirst: true,
@@ -179,7 +179,7 @@ class ChangePasswordView extends GetView<ProfileController> {
                     child:controller.onResetPassword.value
                         ? SpinKitThreeBounce(color: Colors.white, size: 20)
                         : Text(
-                      'Save',
+                      AppLocalizations.of(context).save,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,

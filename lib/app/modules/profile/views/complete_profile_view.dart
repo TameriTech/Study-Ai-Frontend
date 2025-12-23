@@ -48,20 +48,23 @@ class CompleteProfileView extends GetView<ProfileController> {
                                     borderRadius: BorderRadius.circular(8)),
                               ),
                               SizedBox(width: 16),
-                              Text(
-                                'Select school Level',
-                                style: Get.textTheme.titleMedium,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.69,
+                                child: Text(
+                                  AppLocalizations.of(context).select_school_level,
+                                  style: Get.textTheme.titleMedium,
+                                ),
                               ),
                             ],
                             crossAxisAlignment: CrossAxisAlignment.center,
                           );
                         case 1:
                         // Determine the header title based on selected level
-                          String headerTitle = controller.selectedSchoolLevel.value == 'Primary Education'
-                              ? 'Select Class Level'
-                              : controller.selectedSchoolLevel.value == 'Postgraduate'
-                              ? 'Academic Level'
-                              : 'Select Class Level';
+                          String headerTitle = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+                              ? AppLocalizations.of(context).select_class_level
+                              : controller.selectedSchoolLevel.value == AppLocalizations.of(context).post_graduate
+                              ? AppLocalizations.of(context).school_level
+                              : AppLocalizations.of(context).select_class_level;
                           return  Row(
                             children: [
                               Container(
@@ -77,18 +80,21 @@ class CompleteProfileView extends GetView<ProfileController> {
                                 ),
                               ),
                               SizedBox(width: 16),
-                              Text(
-                                headerTitle,
-                                style: Get.textTheme.titleMedium,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.69,
+                                child: Text(
+                                  headerTitle,
+                                  style: Get.textTheme.titleMedium,
+                                ),
                               ),
                             ],
                           );
                         case 2:
-                          String headerTitle = controller.selectedSchoolLevel.value == 'Primary Education'
-                              ? 'Select Class Level'
-                              : controller.selectedSchoolLevel.value == 'Postgraduate'
-                              ? 'Academic Level'
-                              : 'Select Class Level';
+                          String headerTitle = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+                              ? AppLocalizations.of(context).select_class_level
+                              : controller.selectedSchoolLevel.value == AppLocalizations.of(context).post_graduate
+                              ? AppLocalizations.of(context).school_level
+                              : AppLocalizations.of(context).select_class_level;
                           return  Row(
                             children: [
                               Container(
@@ -104,9 +110,12 @@ class CompleteProfileView extends GetView<ProfileController> {
                                 ),
                               ),
                               SizedBox(width: 16),
-                              Text(
-                                headerTitle,
-                                style: Get.textTheme.titleMedium,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.69,
+                                child: Text(
+                                  headerTitle,
+                                  style: Get.textTheme.titleMedium,
+                                ),
                               ),
                             ],
                           );
@@ -129,9 +138,12 @@ class CompleteProfileView extends GetView<ProfileController> {
                                     borderRadius: BorderRadius.circular(8)),
                               ),
                               SizedBox(width: 16),
-                              Text(
-                                'Select school Level',
-                                style: Get.textTheme.titleMedium,
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.69,
+                                child: Text(
+                                  AppLocalizations.of(context).select_school_level,
+                                  style: Get.textTheme.titleMedium,
+                                ),
                               ),
                             ],
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -189,11 +201,11 @@ class CompleteProfileView extends GetView<ProfileController> {
                       style: TextStyle(fontSize: 14, height: 1.4),
                       children: [
                         TextSpan(
-                          text: '1 of 2 steps',
+                          text: AppLocalizations.of(context).one_two_steps,
                           style: TextStyle(color: Color(0xff121214), fontWeight: FontWeight.normal, fontSize: 14, fontFamily: 'Inter'),
                         ),
                         TextSpan(
-                          text: ' - Next: Select class.',
+                          text: ' ${AppLocalizations.of(context).next_select_class}',
                           style: TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                         ),
                       ],
@@ -201,7 +213,7 @@ class CompleteProfileView extends GetView<ProfileController> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'what is your school level?',
+                    AppLocalizations.of(context).school_level_question,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: 'Inter'),
                   ),
                   SizedBox(height: 24),
@@ -249,7 +261,7 @@ class CompleteProfileView extends GetView<ProfileController> {
                 disabledBackgroundColor: Color(0xFFD3D3D3),
               ),
               child: Text(
-                  'Next',
+                  AppLocalizations.of(context).next,
                   style: Get.textTheme.labelMedium
               ),
             ),
@@ -318,15 +330,15 @@ class CompleteProfileView extends GetView<ProfileController> {
 
 
       // Determine the question based on selected level
-      String question = controller.selectedSchoolLevel.value == 'Primary Education'
-          ? 'what is your primary education level?'
-          : controller.selectedSchoolLevel.value == 'High School'
-          ? 'what is your high school education level?'
-          : controller.selectedSchoolLevel.value == 'Senior High School'
-          ? 'what is your senior high school education level?'
-          : controller.selectedSchoolLevel.value == 'Undergraduate'
-          ? 'what is your undergraduate level?'
-          : 'what is your postgraduate level?';
+      String question = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+          ? AppLocalizations.of(context).primary_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).high_school_student
+          ? AppLocalizations.of(context).high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).senior_high_school
+          ? AppLocalizations.of(context).senior_high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).undergraduate
+          ? AppLocalizations.of(context).undergraduate_level_question
+          : AppLocalizations.of(context).postgraduate_level_question;
 
       return Column(
         children: [
@@ -344,11 +356,11 @@ class CompleteProfileView extends GetView<ProfileController> {
                         style: TextStyle(fontSize: 14, height: 1.4, fontFamily: 'Inter'),
                         children: [
                           TextSpan(
-                            text: '2 of 2 steps',
+                            text: AppLocalizations.of(context).two_two_steps,
                             style: TextStyle(color: Color(0xff121214), fontWeight: FontWeight.normal, fontSize: 14, fontFamily: 'Inter'),
                           ),
                           TextSpan(
-                            text: ' - Final step',
+                            text: ' ${AppLocalizations.of(context).final_step}',
                             style:  TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                           ),
                         ],
@@ -436,7 +448,7 @@ class CompleteProfileView extends GetView<ProfileController> {
                   disabledBackgroundColor: Color(0xFFD3D3D3),
                 ),
                 child: Text(
-                  'Next',
+                  AppLocalizations.of(context).next,
                   style: Get.textTheme.labelMedium,
                 ),
               ),
@@ -452,15 +464,15 @@ class CompleteProfileView extends GetView<ProfileController> {
     return Obx(() {
 
 
-      String question = controller.selectedSchoolLevel.value == 'Primary Education'
-          ? 'what is your primary education level?'
-          : controller.selectedSchoolLevel.value == 'High School'
-          ? 'what is your high school education level?'
-          : controller.selectedSchoolLevel.value == 'Senior High School'
-          ? 'what is your senior high school education level?'
-          : controller.selectedSchoolLevel.value == 'Undergraduate'
-          ? 'what is your undergraduate level?'
-          : 'what is your postgraduate level?';
+      String question = controller.selectedSchoolLevel.value == AppLocalizations.of(context).primary_education
+          ? AppLocalizations.of(context).primary_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).high_school_student
+          ? AppLocalizations.of(context).high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).senior_high_school
+          ? AppLocalizations.of(context).senior_high_school_education_question
+          : controller.selectedSchoolLevel.value == AppLocalizations.of(context).undergraduate
+          ? AppLocalizations.of(context).undergraduate_level_question
+          : AppLocalizations.of(context).postgraduate_level_question;
 
       return Column(
         children: [
@@ -476,11 +488,11 @@ class CompleteProfileView extends GetView<ProfileController> {
                       style: TextStyle(fontSize: 14, height: 1.4),
                       children: [
                         TextSpan(
-                          text: '2 of 2 steps',
+                          text: AppLocalizations.of(context).two_two_steps,
                           style: TextStyle(color: Color(0xff121214), fontWeight: FontWeight.normal, fontSize: 14, fontFamily: 'Inter'),
                         ),
                         TextSpan(
-                          text: ' - Final step',
+                          text: ' ${AppLocalizations.of(context).final_step}',
                           style: TextStyle(color: Color(0xff9C9C9C), fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'Inter'),
                         ),
                       ],
@@ -511,13 +523,13 @@ class CompleteProfileView extends GetView<ProfileController> {
                     child: Column(
                       children: [
                         Text(
-                          'The details you provide help us deliver a more personalized and relevant experience.',
+                          AppLocalizations.of(context).setting_up_profile_message,
                           style: Get.textTheme.titleSmall,
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 32),
                         Text(
-                          'Setting up your profile',
+                          AppLocalizations.of(context).setting_profile,
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -563,7 +575,7 @@ class CompleteProfileView extends GetView<ProfileController> {
                   disabledBackgroundColor: disableButtonColor,
                 ),
                 child: Text(
-                    'Next',
+                    AppLocalizations.of(context).next,
                     style: Get.textTheme.labelMedium
                 ),
               ),
@@ -602,7 +614,7 @@ class CompleteProfileView extends GetView<ProfileController> {
                 ),
                 SizedBox(height: 40),
                 Text(
-                  'All set! Your account info has\nbeen completed successfully',
+                  '${AppLocalizations.of(context).account_completed_first_part}\n${AppLocalizations.of(context).account_completed_second_part}',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -634,7 +646,7 @@ class CompleteProfileView extends GetView<ProfileController> {
                   elevation: 0,
                 ),
                 child: Text(
-                    'Continue',
+                    AppLocalizations.of(context).continu,
                     style: Get.textTheme.labelMedium
                 ),
               ),

@@ -12,6 +12,7 @@ import '../../color_constants.dart';
 import '../exceptions/network_exceptions.dart';
 import '../routes/app_routes.dart';
 import '../services/global_services.dart';
+import '../../l10n/app_localizations.dart';
 
 
 class LaravelApiClient extends GetxService {
@@ -56,12 +57,12 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);;
     }on DioException catch (e) {
       if (e.response?.statusCode == 400) {
-        throw "A user with this email already exists";
+        throw AppLocalizations.of(Get.context!).user_with_email_exists;
       } else if (e.response?.statusCode == 403) {
-        throw "A user with this email already exists";
+        throw AppLocalizations.of(Get.context!).user_with_email_exists;
       } else {
         throw NetworkExceptions.getDioException(e);
       }
@@ -99,12 +100,12 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     }on DioException catch (e) {
       if (e.response?.statusCode == 400) {
-        throw "A user with this email already exists";
+        throw AppLocalizations.of(Get.context!).user_with_email_exists;
       } else if (e.response?.statusCode == 403) {
-        throw "A user with this email already exists";
+        throw AppLocalizations.of(Get.context!).user_with_email_exists;
       } else {
         throw NetworkExceptions.getDioException(e);
       }
@@ -144,11 +145,11 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw  FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     }on DioException catch (e) {
       print(e.response?.statusCode);
        if (e.response?.statusCode == 401) {
-        throw "Invalid credentials";
+        throw AppLocalizations.of(Get.context!).invalid_credentials;
       } else {
         throw NetworkExceptions.getDioException(e);
       }
@@ -185,7 +186,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     }on DioException catch (e) {
       print(e.response?.statusCode);
       if (e.response?.statusCode == 401) {
@@ -226,11 +227,11 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     }on DioException catch (e) {
       print(e.response?.statusCode);
       if (e.response?.statusCode == 401) {
-        throw "Invalid credentials";
+        throw AppLocalizations.of(Get.context!).invalid_credentials;
       } else {
         throw NetworkExceptions.getDioException(e);
       }
@@ -266,7 +267,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
@@ -306,7 +307,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
@@ -317,7 +318,7 @@ class LaravelApiClient extends GetxService {
     print('user id is : $id');
     try {
       if (pdfFile == null || !await File(pdfFile!.path).exists()) {
-        throw Exception("Fichier PDF introuvable");
+        throw Exception(AppLocalizations.of(Get.context!).pdf_file_not_found);
       }
 
       var headers = {
@@ -344,7 +345,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw Exception(e);
     }
@@ -389,7 +390,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       print(e);
       throw NetworkExceptions.getDioException(e);
@@ -424,7 +425,7 @@ class LaravelApiClient extends GetxService {
       }on SocketException catch (e) {
         throw SocketException(e.toString());
       } on FormatException catch (_) {
-        throw const FormatException("Unable to process the data");
+        throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
       } catch (e) {
         attempt++;
         if (attempt >= maxRetries) {
@@ -464,7 +465,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
@@ -494,7 +495,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
@@ -525,7 +526,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
@@ -560,7 +561,7 @@ class LaravelApiClient extends GetxService {
       }on SocketException catch (e) {
         throw SocketException(e.toString());
       } on FormatException catch (_) {
-        throw const FormatException("Unable to process the data");
+        throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
       } catch (e) {
         attempt++;
         if (attempt >= maxRetries) {
@@ -599,7 +600,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       attempt++;
       if (attempt >= maxRetries) {
@@ -625,6 +626,7 @@ class LaravelApiClient extends GetxService {
           headers: headers,
         ),
       );
+      print("Status code is: ${response.statusCode}");
 
       if (response.statusCode == 200) {
         List<dynamic> quizzes = [];
@@ -645,10 +647,18 @@ class LaravelApiClient extends GetxService {
         print(response.statusMessage);
       }
     }on SocketException catch (e) {
+      print("error is $e");
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
-    } catch (e) {
+      print("Format exception");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
+    } on DioException catch (e){
+      if(e.type == DioExceptionType.badResponse){
+        List<dynamic> quizzes = [];
+        return quizzes;
+      }
+    }
+    catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
   }
@@ -690,7 +700,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
@@ -727,7 +737,7 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
@@ -761,7 +771,7 @@ class LaravelApiClient extends GetxService {
       }on SocketException catch (e) {
         throw SocketException(e.toString());
       } on FormatException catch (_) {
-        throw const FormatException("Unable to process the data");
+        throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
       } catch (e) {
         attempt++;
         if (attempt >= maxRetries) {
@@ -799,20 +809,22 @@ class LaravelApiClient extends GetxService {
     }on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+      throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
     } catch (e) {
       throw NetworkExceptions.getDioException(e);
     }//
   }
 
   requestQuizzResult(int courseId)async{
+    String language = Get.locale.toString()=='fr'? 'fr':'en';
     const maxRetries = 3;
     int attempt = 0;
     while (attempt < maxRetries) {
       try{
         var headers = {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept-Language': language
         };
 
         var response = await httpClient.request(
@@ -833,7 +845,7 @@ class LaravelApiClient extends GetxService {
       }on SocketException catch (e) {
         throw SocketException(e.toString());
       } on FormatException catch (_) {
-        throw const FormatException("Unable to process the data");
+        throw FormatException(AppLocalizations.of(Get.context!).unable_to_process_data);
       } catch (e) {
         attempt++;
         if (attempt >= maxRetries) {

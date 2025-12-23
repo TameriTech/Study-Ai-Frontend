@@ -12,6 +12,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../app/modules/root/controllers/root_controller.dart';
 import '../color_constants.dart';
 import 'ui.dart';
+import '../../l10n/app_localizations.dart';
 
 class Helper {
   late DateTime currentBackPressTime;
@@ -26,7 +27,7 @@ class Helper {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      Get.showSnackbar(Ui.defaultSnackBar(message: "Tap again to leave!".tr));
+      Get.showSnackbar(Ui.defaultSnackBar(message: AppLocalizations.of(Get.context!).tap_again_to_leave));
       return false;
     }
 

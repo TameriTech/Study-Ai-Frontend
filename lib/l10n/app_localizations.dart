@@ -485,13 +485,13 @@ abstract class AppLocalizations {
   /// No description provided for @smart_study_assistant_message.
   ///
   /// In en, this message translates to:
-  /// **'Your smart study assistant to help you understand, revise and progress.'**
+  /// **'Welcome to your smart study assistant'**
   String get smart_study_assistant_message;
 
   /// No description provided for @ask_question_upload_file.
   ///
   /// In en, this message translates to:
-  /// **'Ask questions or upload pdf file: Let\'\'s work together.'**
+  /// **'Upload a PDF or ask questions any question, Let\'\'s study smarter together.'**
   String get ask_question_upload_file;
 
   /// No description provided for @discussion_history.
@@ -1994,6 +1994,12 @@ abstract class AppLocalizations {
   /// **'Change username'**
   String get change_username;
 
+  /// No description provided for @change_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get change_password;
+
   /// No description provided for @change_username_message.
   ///
   /// In en, this message translates to:
@@ -2042,11 +2048,11 @@ abstract class AppLocalizations {
   /// **'Create personalized quizzes tailored to'**
   String get create_quizz_message_first_part;
 
-  /// No description provided for @create_quizz_message_ssecond_part.
+  /// No description provided for @create_quizz_message_second_part.
   ///
   /// In en, this message translates to:
   /// **'your needs'**
-  String get create_quizz_message_ssecond_part;
+  String get create_quizz_message_second_part;
 
   /// No description provided for @number_of_questions.
   ///
@@ -2075,7 +2081,7 @@ abstract class AppLocalizations {
   /// No description provided for @loading_results.
   ///
   /// In en, this message translates to:
-  /// **'Loading results'**
+  /// **'Loading results...'**
   String get loading_results;
 
   /// No description provided for @your_score_is.
@@ -2113,6 +2119,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AI chat'**
   String get ai_chat;
+
+  /// No description provided for @pages.
+  ///
+  /// In en, this message translates to:
+  /// **'pages'**
+  String get pages;
+
+  /// No description provided for @hi.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi'**
+  String get hi;
+
+  /// No description provided for @what_you_want_question.
+  ///
+  /// In en, this message translates to:
+  /// **'What would u want to work on today?'**
+  String get what_you_want_question;
+
+  /// No description provided for @ask_anything.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask anything'**
+  String get ask_anything;
+
+  /// No description provided for @camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get camera;
+
+  /// No description provided for @photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get photos;
+
+  /// No description provided for @files.
+  ///
+  /// In en, this message translates to:
+  /// **'Files'**
+  String get files;
+
+  /// No description provided for @unauthorized_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized request'**
+  String get unauthorized_request;
+
+  /// No description provided for @an_error_occurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occured'**
+  String get an_error_occurred;
+
+  /// No description provided for @conflict_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error due to a conflict'**
+  String get conflict_error;
+
+  /// No description provided for @connection_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection request timeout'**
+  String get connection_timeout;
+
+  /// No description provided for @internal_server_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal Server Error'**
+  String get internal_server_error;
+
+  /// No description provided for @service_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Service unavailable'**
+  String get service_unavailable;
+
+  /// No description provided for @invalid_credentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Credentials'**
+  String get invalid_credentials;
+
+  /// No description provided for @invalid_status_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Received invalid status code'**
+  String get invalid_status_code;
+
+  /// No description provided for @request_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Cancelled'**
+  String get request_cancelled;
+
+  /// No description provided for @connection_request_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection request timeout'**
+  String get connection_request_timeout;
+
+  /// No description provided for @no_internet_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get no_internet_connection;
+
+  /// No description provided for @send_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Send timeout in connection with API server'**
+  String get send_timeout;
+
+  /// No description provided for @unexpected_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected error occurred'**
+  String get unexpected_error;
+
+  /// No description provided for @unable_to_process_data.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to process the data'**
+  String get unable_to_process_data;
+
+  /// No description provided for @pdf_file_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF file not found'**
+  String get pdf_file_not_found;
+
+  /// No description provided for @user_with_email_exists.
+  ///
+  /// In en, this message translates to:
+  /// **'A user with this email already exists'**
+  String get user_with_email_exists;
+
+  /// No description provided for @tap_again_to_leave.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap again to leave!'**
+  String get tap_again_to_leave;
 }
 
 class _AppLocalizationsDelegate

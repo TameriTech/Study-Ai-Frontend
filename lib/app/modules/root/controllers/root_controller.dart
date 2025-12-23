@@ -92,7 +92,7 @@ class RootController extends GetxController {
         }
       case 1:
         {
-          //await Get.find<QuizzController>().refreshDashboard();
+          await Get.find<QuizController>().resetFields();
           break;
         }
       case 2:

@@ -147,7 +147,7 @@ class ChatController extends GetxController{
 class Message {
   final String text;
   final String sender;
-  final String document;
+  String document;
 
   Message({required this.text, required this.sender, required this.document});
 }

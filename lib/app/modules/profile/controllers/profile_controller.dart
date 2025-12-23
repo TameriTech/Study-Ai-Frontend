@@ -151,6 +151,14 @@ class ProfileController extends GetxController {
   var registrationProgress = 0.0.obs;
   Timer? _progressTimer;
 
+  @override
+  void dispose() {
+    oldPasswordController.dispose();
+    confirmPasswordController.dispose();
+    newPasswordController.dispose();
+    super.dispose();
+  }
+
   // ============ NEW: Complete Profile Flow Methods ============
 
   void selectSchoolLevel(String level, String icon, List<String> classes) {
@@ -193,8 +201,8 @@ class ProfileController extends GetxController {
   void _startLoadingProgress() {
     registrationProgress.value = 0.0;
 
+    _completeRegistration();
     _progressTimer = Timer.periodic(Duration(milliseconds: 500), (timer) {
-      _completeRegistration();
       if (registrationProgress.value < 1.0) {
         registrationProgress.value += 0.02; // Increment by 2%
       } else {
@@ -257,6 +265,7 @@ class ProfileController extends GetxController {
   }
 
   Future updatePassword() async {
+    print("Password has changed a little bit: ${oldPassword.value}, ${confirmPassword.value}, ${newPassword.value}");
     onResetPassword.value = true;
     try {
       var headersList = {
@@ -264,7 +273,7 @@ class ProfileController extends GetxController {
       };
 
       var url = Uri.parse(
-          '${GlobalService().baseUrl}/update-password/?user_id=${currentUser.value.userId}&old_password=${oldPassword.value}&new_password=${newPassword.value}%40&confirm_password=${confirmPassword.value}%40'
+          '${GlobalService().baseUrl}/update-password/?user_id=${currentUser.value.userId}&old_password=${oldPassword.value}&new_password=${newPassword.value}&confirm_password=${confirmPassword.value}'
       );
 
       var req = http.Request('POST', url);
@@ -277,7 +286,7 @@ class ProfileController extends GetxController {
         var msg = jsonDecode(resBody)['message'];
         Get.showSnackbar(Ui.SuccessSnackBar(message: msg));
         onResetPassword.value = false;
-        Get.back(); // Close the dialog
+        Navigator.of(Get.context!).pop(); // Close the dialog
         print(msg);
       } else {
         Get.showSnackbar(Ui.ErrorSnackBar(message: res.reasonPhrase.toString()));
@@ -325,7 +334,7 @@ class ProfileController extends GetxController {
       } else {
         final resBody = await response.stream.bytesToString();
         print("Failed! $resBody");
-        Get.showSnackbar(Ui.ErrorSnackBar(message: "Failed to delete account"));
+        Get.showSnackbar(Ui.ErrorSnackBar(message: AppLocalizations.of(Get.context!).failed_delete_account));
       }
     } catch (e) {
       print(e);
